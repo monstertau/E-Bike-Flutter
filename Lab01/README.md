@@ -34,7 +34,7 @@ Homework week 01 of Team 10 -  ITSS Software Development Course
 #### Return Bikes, Return Deposit Money
 [Flow Of Events](./VuTrungDung/Flow-Of-Events.png)
 
-### 2.2. Activity Diagram
+### 2.3. Activity Diagram
 #### Search for docking station
 ![](./NguyenNgocQuy/Search-for-a-docking-station.png)
 #### View Dock's Information
