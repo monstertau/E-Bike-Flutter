@@ -21,7 +21,7 @@ Homework week 01 of Team 10 -  ITSS Software Development Course
     + Write Flow Of Events and Activity Diagram of Use Case:
         + Search for docking station
         + View detail information of rented bikes
-## 2. Work Sumary
+## 2. Work Summary
 ### 2.1. Use case Diagram 
 ![](./EcoBikeRental-UC.png)
 ### 2.2. Flow Of Events
@@ -30,7 +30,7 @@ Homework week 01 of Team 10 -  ITSS Software Development Course
 #### View Dock's Information & View Bike's Information
 [Flow Of Events](./NguyenTrungNghia/FlowOfEvents.pdf)
 #### Rent Bikes, Choose Payment Method & Deduct Money
-[Flow Of Events]()
+[Flow Of Events](./NguyenXuanHoang/UseCase-Specitfication.pdf)
 #### Return Bikes, Return Deposit Money
 [Flow Of Events](./VuTrungDung/Flow-Of-Events.png)
 
@@ -42,11 +42,11 @@ Homework week 01 of Team 10 -  ITSS Software Development Course
 #### View Bike's Information
 ![](./NguyenTrungNghia/detailBikeInfo.png)
 #### Rent Bikes
-![]()
+![](./NguyenXuanHoang/Renting_Bike.png)
 #### Choose Payment Method
-![]()
+![](./NguyenXuanHoang/Choose_Payment.png)
 #### Deduct Money
-![]()
+![](./NguyenXuanHoang/Deduct_money.png)
 #### Return Bikes
 ![](./VuTrungDung/Return-Bikes-Activity-Diagram.png)
 #### Return Deposit Money
