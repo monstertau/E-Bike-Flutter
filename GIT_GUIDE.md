@@ -47,4 +47,10 @@ Then push to your branch after commiting changes:
 ~~~bash
 git push origin <YourBranch>
 ~~~
-After pushing changes to your branch, create `Pull Request` to merge branch from your branch to master branch :
+After pushing changes to your branch, create **Pull Request** to merge branch from your branch to master branch :
+- Choose **Pull Request** Tab,then click to New pull request
+![](./GIT_GUIDE_1.png)
+- After that, a new **Open a pull request** window will open. In here write out title of your pull request, and click **Create pull request**
+![](./GIT_GUIDE_2.png)
+- All Done! Now every commit to your branch will be tracked to this pull request, and remember to remind your team members to review code and accept merge request to master branch
+![](./GIT_GUIDE_3.png)
