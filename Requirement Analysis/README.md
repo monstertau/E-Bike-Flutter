@@ -13,17 +13,25 @@ o Return Bike
     + Write Use Case Specification and Activity Diagram of Use Case:
         + Return Bike
         + Return Deposit Money (Inclusion of return bike)
-    + Refactor files and write readme
+    + Refactor files, Review work and write readme
+    + Complete the Software Requirement Specification (SRS):
+        +  2.Overall Description
 - **Nguyen Xuan Hoang**
     + Write Use Case Specification and Activity Diagram of Use Case:
         + Rent Bike
         + Choose Payment Method (Inclusion of Rent bike)
+    + Complete the Software Requirement Specification (SRS):
+        + 3.Detailed Requirements 
 - **Nguyen Trung Nghia**
     + Write Use Case Specification and Activity Diagram of Use Case:
         + View Bike in Station
         + Deduct Money (Inclusion of Rent bike)
+    + Complete the Software Requirement Specification (SRS):
+        + 4.Supplementary specification 
 - **Nguyen Ngoc Quy**
     + Write Use Case Specification and Activity Diagram of Use Case:
         + View Bike Information
-    + Complete the Software Requirement Specification (SRS) 
+    + Complete the Software Requirement Specification (SRS):
+        + 1.Introduction
 ## Revisions
+- In this lab, everyone will review each member's tasks and discussing with the team about the other one's task.
