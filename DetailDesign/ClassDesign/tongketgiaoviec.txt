@@ -22,6 +22,6 @@
 	- Nghĩa: DockView,DockController và DockStation Model
 	- Quý: BikeView,BikeController và Bike Model,InvoiceView,
 Invoice Model
-	- Xuân Hoàng: PaymentView,PaymentController và Payment Model
+	- Xuân Hoàng: PaymentView, PaymentController và Payment Model
 	- Dũng: RentingView, RentingController và 
 
