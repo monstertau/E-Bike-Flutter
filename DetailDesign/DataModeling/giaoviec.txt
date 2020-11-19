@@ -1,0 +1,17 @@
+- ER Diagram: Lam viec nhom
+- Database Design: Cung lam viec nhom
+- Detail DB: Tung nguoi
+- Hoan thanh SDD: tao 1 google docs xong lai len chinh sua nhu hom truoc
+
+
+- ER Diagram: done - tô màu chỉnh sửa cho đẹp
+- Database Design: 20/11 làm chung tiếp - vẽ bảng db và tạo script 
+- Detail Design: 
+	mai vẽ xong rồi giao
+- SDD:
+	tạo template - Dũng
+	Phần 1-2 - Anh quý
+	Phần 3 - Nghĩa
+	Phần 4 - UI, Data Modeling - Xuân hoàng 
+	Phần 4 - Class Diagram - dũng
+	Phần 5 -  Dũng
