@@ -5,9 +5,12 @@
 
 
 - ER Diagram: done - tô màu chỉnh sửa cho đẹp
-- Database Design: 20/11 làm chung tiếp - vẽ bảng db và tạo script 
+- Database Design: done 
 - Detail Design: 
-	mai vẽ xong rồi giao
+	Card, Payment Card - Dung
+	Payment, PaymentBike - Nghia
+	...Bike - Quy
+	DockStation, BikeInDock - Hoang
 - SDD:
 	tạo template - Dũng
 	Phần 1-2 - Anh quý
