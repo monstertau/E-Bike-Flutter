@@ -1,0 +1,20 @@
+- ER Diagram: Lam viec nhom
+- Database Design: Cung lam viec nhom
+- Detail DB: Tung nguoi
+- Hoan thanh SDD: tao 1 google docs xong lai len chinh sua nhu hom truoc
+
+
+- ER Diagram: done - tô màu chỉnh sửa cho đẹp
+- Database Design: done 
+- Detail Design: 
+	Card, Payment Card - Dung
+	Payment, PaymentBike - Nghia
+	...Bike - Quy
+	DockStation, BikeInDock - Hoang
+- SDD:
+	tạo template - Dũng
+	Phần 1-2 - Anh quý
+	Phần 3 - Nghĩa
+	Phần 4 - UI, Data Modeling - Xuân hoàng 
+	Phần 4 - Class Diagram - dũng
+	Phần 5 -  Dũng
