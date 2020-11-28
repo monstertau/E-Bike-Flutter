@@ -12,13 +12,14 @@ class PaymentController extends ControllerMVC {
     _card = value;
   }
 
-  void deductMoney(amount, card) {
+  Map deductMoney(card, amount) {
     //TODO
-
+    return {"success": false};
   }
 
-  void returnDepositeMoney(card, amount) {
+  Map returnDepositeMoney(card, amount) {
     //TODO
+    return {"success": false};
   }
 
   bool validateCardCode(cardCode) {
@@ -82,4 +83,6 @@ class PaymentController extends ControllerMVC {
     //TODO
     return true;
   }
+
+  void createPayment(amount, contents, cardCode, cvvCode, dateExpired, owner) {}
 }
