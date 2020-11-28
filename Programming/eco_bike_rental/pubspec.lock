@@ -185,11 +185,7 @@ packages:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.3.0-nullsafety.3"
-=======
     version: "1.3.0-nullsafety.6"
->>>>>>> 49a525370ccbe372f84191d0414521460ea303dd
   mime:
     dependency: transitive
     description:
@@ -320,11 +316,7 @@ packages:
       name: stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.10.0-nullsafety.1"
-=======
     version: "1.10.0-nullsafety.6"
->>>>>>> 49a525370ccbe372f84191d0414521460ea303dd
   stream_channel:
     dependency: transitive
     description:
@@ -417,8 +409,4 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-<<<<<<< HEAD
-  dart: ">=2.10.0-110 <2.11.0"
-=======
   dart: ">=2.12.0-0.0 <3.0.0"
->>>>>>> 49a525370ccbe372f84191d0414521460ea303dd
