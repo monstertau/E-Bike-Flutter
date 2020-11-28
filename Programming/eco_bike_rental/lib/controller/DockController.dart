@@ -6,13 +6,21 @@ class DockController extends ControllerMVC {
   DockStation dockModel;
 
   DockController([StateMVC state]) : super(state) {
-    dockModel = DockStation();
+    dockModel = DockStation.origin();
   }
 
   // int requestDockID() {
   //
   //   return
   // }
+
+
+  bool validateBikeList() {
+
+  }
+  bool validateDockList() {
+
+  }
 
   List getAllBikes(int dockID) {
     // TODO: implement this

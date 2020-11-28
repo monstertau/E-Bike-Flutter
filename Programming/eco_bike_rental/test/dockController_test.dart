@@ -7,9 +7,9 @@ void main() {
       // Setup
       DockController dockController = new DockController();
       // Implement
-      List actual = dockController.getAllBikes();
+      List actual = dockController.getAllBikes(123);
       // Verify
-      expect(actual, 1);
+      expect(actual, List());
     });
     test('get all docks test', () {
       // Setup
