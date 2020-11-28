@@ -15,7 +15,7 @@ void main() {
       cardCodes.forEach((element) {
         test("Test $element", () {
           bool isValid =
-              paymentController.validateCardCode(element.elementAt(0));
+          paymentController.validateCardCode(element.elementAt(0));
           bool expectedValue = element.elementAt(1);
           expect(isValid, expectedValue);
         });
@@ -46,12 +46,11 @@ void main() {
         {"1220", true}
       ];
       DateTime now = new DateTime.now();
-      print(now.year.toString().substring(now.year.toString().length - 2));
 
       dateExpireds.forEach((element) {
         test("Test $element", () {
           bool isValid =
-              paymentController.validateDateExpired(element.elementAt(0));
+          paymentController.validateDateExpired(element.elementAt(0));
           bool expectedValue = element.elementAt(1);
           expect(isValid, expectedValue);
         });
@@ -73,13 +72,31 @@ void main() {
     });
   });
 
+  CreditCard card =
+  new CreditCard("12312312_group1_2020", 123, "1222", "NGUYEN XUAN HOANG");
   group('Deduct Money Test', () {
-    test('Deduct 0', () {});
-    test('Deduct 10000', () {});
+    test('Deduct 0', () {
+      Map status = paymentController.deductMoney(card, 0);
+      expect(status["success"], true);
+    });
+    test('Deduct 10000', () {
+      Map status = paymentController.deductMoney(card, 1000);
+      expect(status["success"], true);
+    });
+    test('Deduct more than money in bank', () {
+      Map status = paymentController.deductMoney(card, 1000000);
+      expect(status["success"], false);
+    });
   });
 
   group('Deposite Money Test', () {
-    test('Deposite 0', () {});
-    test('Deduct 10000', () {});
+    test('Deposite 0', () {
+      Map status = paymentController.returnDepositeMoney(card, 0);
+      expect(status["success"], true);
+    });
+    test('Deposite 10000', () {
+      Map status = paymentController.returnDepositeMoney(card, 10000);
+      expect(status["success"], true);
+    });
   });
 }
