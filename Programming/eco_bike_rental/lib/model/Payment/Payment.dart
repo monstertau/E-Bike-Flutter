@@ -2,6 +2,7 @@ import '../Bike/Bike.dart';
 
 class Payment {
   Bike _bike;
+
   // CreditCard _card;
 
   int _deductAmount;

@@ -37,7 +37,8 @@ class DockStation {
   set lstBike(List<Bike> value) {
     _lstBike = value;
   }
-  List getAllDock(){
+
+  List getAllDock() {
     // TODO: implement this
   }
 }
