@@ -9,24 +9,90 @@ class DockController extends ControllerMVC {
     dockModel = DockStation.origin();
   }
 
-  // int requestDockID() {
+  //must return a list<object>
+  //foreach.split()
+  // class Bike {
+  // int _id;
   //
-  //   return
-  // }
+  // String _barcode;
+  // String _color;
+  // String _category;
+  // int _bikeValue;
+  // int _baseRentAmount;
+  // int _addRentAmount;
+  // bool _lock;
+  bool validateListBike(List<Bike> listBike) {
+    listBike.forEach((element) {
+      if(element.id == null) return false;
+      else if(!(element.id is int)) return false;
 
+      if(element.barcode == null) return false;
+      else if(!(element.barcode is String)) return false;
 
-  bool validateBikeList() {
+      if(element.color == null) return false;
+      else if(!(element.color is String)) return false;
 
+      if(element.category == null) return false;
+      else if(!(element.category is String)) return false;
+
+      if(element.bikeValue == null) return false;
+      else if(!(element.bikeValue is int)) return false;
+
+      if(element.baseRentAmount == null) return false;
+      else if(!(element.baseRentAmount is int)) return false;
+
+      if(element.addRentAmount == null) return false;
+      else if(!(element.addRentAmount is int)) return false;
+
+      if(element.lock == null) return false;
+      else if(!(element.lock is bool)) return false;
+    });
+    return true;
   }
-  bool validateDockList() {
 
+  // class DockStation {
+  // int id;
+  // String _dockName;
+  // String _dockArea;
+  // int _dockSize;
+  // String _dockAddress;
+  // List<Bike> _lstBike;
+  bool validateListDock(List<DockStation> listDock) {
+    listDock.forEach((element) {
+      if(element.id == null) return false;
+      else if(!(element.id is int)) return false;
+
+      if(element.dockName == null) return false;
+      else if(!(element.dockName is String)) return false;
+
+      if(element.dockArea == null) return false;
+      else if(!(element.dockArea is String)) return false;
+
+      if(element.dockSize == null) return false;
+      else if(!(element.dockSize is int)) return false;
+
+      if(element.dockAddress == null) return false;
+      else if(!(element.dockAddress is String)) return false;
+
+      if(element.lstBike == null) return false;
+      else if(!(element.lstBike is List<Bike>)) return false;
+    });
+    return true;
   }
 
   List getAllBikes(int dockID) {
     // TODO: implement this
     // return dockModel.lstBike;
-    List<String> dockStations = dockModel.getAllDock();
-    return List();
+    // List<String> dockStations = dockModel.getAllDock();
+    DockStation aDock = new DockStation.origin();
+    List<DockStation> aDockList = aDock.getAllDock();
+    aDockList.forEach((element)
+    {
+      if (element.id == dockID) return element.lstBike;
+      // else return null;
+    });
+
+    return List<Bike>();
   }
 
   List getAllDocks() {
