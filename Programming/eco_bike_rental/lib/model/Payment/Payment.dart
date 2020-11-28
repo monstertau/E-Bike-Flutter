@@ -1,11 +1,19 @@
 import '../Bike/Bike.dart';
+import 'CreditCard.dart';
 
 class Payment {
   Bike _bike;
-  // CreditCard _card;
+  CreditCard _card;
 
   int _deductAmount;
   int _depositeAmount;
+
+  CreditCard get card => _card;
+
+  set card(CreditCard value) {
+    _card = value;
+  }
+
   DateTime _startRentTime;
   DateTime _endRentTime;
   String _paymentStatus;
