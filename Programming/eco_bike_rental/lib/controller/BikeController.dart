@@ -14,6 +14,12 @@ class BikeController extends ControllerMVC {
     return List();
   }
 
+  List getRentedBikeInfo() {
+    // TODO: implement this
+    // return bikeModel.lstInfo;
+    return List();
+  }
+
   bool getBikeLockStatus() {
     // TODO: implement this
     // return bikeModel.lock;
