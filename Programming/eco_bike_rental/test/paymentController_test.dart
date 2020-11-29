@@ -15,7 +15,7 @@ void main() {
       cardCodes.forEach((element) {
         test("Test $element", () {
           bool isValid =
-          paymentController.validateCardCode(element.elementAt(0));
+              paymentController.validateCardCode(element.elementAt(0));
           bool expectedValue = element.elementAt(1);
           expect(isValid, expectedValue);
         });
@@ -50,7 +50,7 @@ void main() {
       dateExpireds.forEach((element) {
         test("Test $element", () {
           bool isValid =
-          paymentController.validateDateExpired(element.elementAt(0));
+              paymentController.validateDateExpired(element.elementAt(0));
           bool expectedValue = element.elementAt(1);
           expect(isValid, expectedValue);
         });
@@ -73,7 +73,7 @@ void main() {
   });
 
   CreditCard card =
-  new CreditCard("12312312_group1_2020", 123, "1222", "NGUYEN XUAN HOANG");
+      new CreditCard("12312312_group1_2020", 123, "1222", "NGUYEN XUAN HOANG");
   group('Deduct Money Test', () {
     test('Deduct 0', () {
       Map status = paymentController.deductMoney(card, 0);

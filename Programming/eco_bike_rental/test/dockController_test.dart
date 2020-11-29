@@ -20,5 +20,4 @@ void main() {
       expect(actual, new List());
     });
   });
-
 }

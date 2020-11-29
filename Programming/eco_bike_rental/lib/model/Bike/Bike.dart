@@ -8,10 +8,14 @@ class Bike {
   int _baseRentAmount;
   int _addRentAmount;
   bool _lock;
+
   Bike.newBike();
-  Bike.init(this._id, this._barcode, this._color, this._category, this._bikeValue,
-      this._baseRentAmount, this._addRentAmount, this._lock);
+
+  Bike.init(this._id, this._barcode, this._color, this._category,
+      this._bikeValue, this._baseRentAmount, this._addRentAmount, this._lock);
+
   Bike.newBarcode(this._barcode);
+
   int get id => _id;
 
   set id(int value) {
