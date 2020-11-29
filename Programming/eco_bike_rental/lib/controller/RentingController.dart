@@ -5,7 +5,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 class RentingController extends ControllerMVC {
   RentingController([StateMVC state]) : super(state) {
     bikeModel = Bike.newBike();
-    dockModel = DockStation();
+    dockModel = DockStation.origin();
   }
 
   Bike bikeModel;
@@ -20,12 +20,12 @@ class RentingController extends ControllerMVC {
     // TODO: implement this
   }
 
-  bool lockBike(String rentalCode) {
+  bool lockBike(Bike bike) {
     // TODO: implement this
     return false;
   }
 
-  bool unlockBike(String rentalCode) {
+  bool unlockBike(Bike bike) {
     // TODO: implement this
     return false;
   }
@@ -54,3 +54,4 @@ class RentingController extends ControllerMVC {
     return 0;
   }
 }
+
