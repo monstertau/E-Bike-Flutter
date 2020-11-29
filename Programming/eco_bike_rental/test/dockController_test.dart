@@ -6,29 +6,26 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Dock Controller Test', () {
     //Example invalid data
-    Object invalidBikeObject;
-    invalidBikeObject = {'abc',123};
-    List<Bike> listBikeNull;
-    List<Object> invalidListBike;
-    invalidListBike.add(invalidBikeObject);
-    List<DockStation> listDockNull;
+
     //End example data
 
     test('get all bikes test', () {
       // Setup
+      List expected = List();
       DockController dockController = new DockController();
       // Implement
-      List actual = dockController.getAllBikes(909);
+      List actual = dockController.getAllBikes(123);
       // Verify
-      expect(actual, invalidListBike);
+      expect(actual, expected);
     });
     test('get all docks test', () {
       // Setup
+      List expected = List();
       DockController dockController = new DockController();
       // Implement
       List actual = dockController.getAllDocks();
       // Verify
-      expect(actual, listDockNull);
+      expect(actual, expected);
     });
   });
 

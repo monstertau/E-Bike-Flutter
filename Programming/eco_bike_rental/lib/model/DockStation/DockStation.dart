@@ -10,12 +10,6 @@ class DockStation {
 
   int get dockID => id;
   DockStation.origin(){
-    id = 0;
-    _dockName = 'ABC';
-    _dockSize = 27;
-    _dockAddress = 'B1';
-    _dockArea = '20x20';
-    _lstBike = null;
   }
   DockStation(this.id, this._dockName, this._dockArea, this._dockAddress, this._dockSize, this._lstBike);
 
@@ -48,7 +42,11 @@ class DockStation {
   set lstBike(List<Bike> value) {
     _lstBike = value;
   }
-
+  DockStation getDockById(int id){
+    // TODO: fix this
+    List<Bike> aListBike = new List<Bike>();
+    return new DockStation(123,'abc','12x12','abc123',23,aListBike);
+  }
   List getAllDock() {
   //   // TODO: implement this
   //   //db = new dbconnect();

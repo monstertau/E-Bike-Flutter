@@ -22,6 +22,7 @@ class DockController extends ControllerMVC {
   // int _addRentAmount;
   // bool _lock;
   bool validateListBike(List<Bike> listBike) {
+    // bo di nhe,
     listBike.forEach((element) {
       if(element.id == null) return false;
       else if(!(element.id is int)) return false;
@@ -82,17 +83,18 @@ class DockController extends ControllerMVC {
 
   List getAllBikes(int dockID) {
     // TODO: implement this
+    DockStation dock =  dockModel.getDockById(dockID);
+    return dock.lstBike;
     // return dockModel.lstBike;
     // List<String> dockStations = dockModel.getAllDock();
-    DockStation aDock = new DockStation.origin();
-    List<DockStation> aDockList = aDock.getAllDock();
-    aDockList.forEach((element)
-    {
-      if (element.id == dockID) return element.lstBike;
-      // else return null;
-    });
-
-    return List<Bike>();
+    // DockStation aDock = new DockStation.origin();
+    // List<DockStation> aDockList = aDock.getAllDock();
+    // aDockList.forEach((element)
+    // {
+    //   // code sai roi nay
+    //   if (element.id == dockID) return element.lstBike;
+    //   // else return null;
+    // });
   }
 
   List getAllDocks() {
