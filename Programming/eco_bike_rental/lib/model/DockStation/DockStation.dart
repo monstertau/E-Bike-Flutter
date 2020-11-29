@@ -8,6 +8,8 @@ class DockStation {
   String _dockAddress;
   List<Bike> _lstBike;
 
+  int get dockID => id;
+
   String get dockName => _dockName;
 
   set dockName(String value) {
@@ -40,5 +42,12 @@ class DockStation {
 
   List getAllDock() {
     // TODO: implement this
+    //db = new dbconnect();
+    //list<String> result;
+    //result = dbconnect->getAllRow(DockStation);
+    //return result;
+
+    List<String> result = new List<String>();
+    return result;
   }
 }
