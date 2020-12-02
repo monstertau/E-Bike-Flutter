@@ -60,4 +60,5 @@ class Payment {
   set deductAmount(int value) {
     _deductAmount = value;
   }
+
 }
