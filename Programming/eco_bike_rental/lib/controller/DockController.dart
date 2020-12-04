@@ -97,7 +97,7 @@ class DockController extends ControllerMVC {
     // });
   }
 
-  List getAllDocks() {
+  Future<List> getAllDocks() {
     // TODO: implement this
     // return dock.getAllDock();
     return dockModel.getAllDock();
