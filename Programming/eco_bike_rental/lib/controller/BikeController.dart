@@ -3,7 +3,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 class BikeController extends ControllerMVC {
   BikeController([StateMVC state]) : super(state) {
-    bikeModel = Bike();
+    bikeModel = Bike.newBike();
   }
 
   Bike bikeModel;
