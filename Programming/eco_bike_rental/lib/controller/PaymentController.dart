@@ -37,8 +37,9 @@ class PaymentController extends ControllerMVC {
   bool valideCvvCode(cvvCode) {
     //TODO
     try {
-      if (cvvCode == null || !(cvvCode is int)) return false;
-      if (cvvCode.toString().length > 3) return false;
+      if (cvvCode == null) return false;
+      int.parse(cvvCode);
+      if (cvvCode.length != 3) return false;
       return true;
     } catch (e) {
       return false;
@@ -81,6 +82,7 @@ class PaymentController extends ControllerMVC {
 
   bool checkAccountInfo(card) {
     //TODO
+    print(card);
     return true;
   }
 
