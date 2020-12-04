@@ -18,12 +18,12 @@ void main() {
       // Verify
       expect(actual, expected);
     });
-    test('get all docks test', () {
+    test('get all docks test', () async {
       // Setup
       List expected = List();
       DockController dockController = new DockController();
       // Implement
-      List actual = dockController.getAllDocks();
+      var actual = await dockController.getAllDocks();
       // Verify
       expect(actual, expected);
     });
