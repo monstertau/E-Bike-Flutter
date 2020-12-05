@@ -4,7 +4,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 class PaymentController extends ControllerMVC {
   CreditCard _card;
 
-//bankInterface
+// ignore: todo
+//TODO: bankInterface
 
   CreditCard get card => _card;
 
@@ -12,16 +13,27 @@ class PaymentController extends ControllerMVC {
     _card = value;
   }
 
+  // Description: Deduct money from card
+  // @param: - creditCard card - card information
+  //         - Int amount - amount of money 
+  // @return - Map message information
   Map deductMoney(card, amount) {
     //TODO
     return {"success": false};
   }
 
+  // Description: Deposite money to card
+  // @param: - creditCard card - card information
+  //         - Int amount - amount of money 
+  // @return - Map message information
   Map returnDepositeMoney(card, amount) {
     //TODO
     return {"success": false};
   }
 
+  // Description: validate cardCode of CreditCard
+  // @param: - String cardCode - card code of CreditCard
+  // @return - true if valid
   bool validateCardCode(cardCode) {
     //TODO
     RegExp regexCardCode =
@@ -34,6 +46,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
+  // Description: validate cvvCode of CreditCard
+  // @param: - String cvvCode - cvv code of CreditCard
+  // @return - true if valid
   bool valideCvvCode(cvvCode) {
     //TODO
     try {
@@ -46,6 +61,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
+  // Description: validate dateExpired of CreditCard
+  // @param: - String dateExpired - expired date of CreditCard
+  // @return - true if valid
   bool validateDateExpired(dateExpired) {
     //TODO
     if (dateExpired == null) return false;
@@ -69,6 +87,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
+  // Description: validate owner of CreditCard
+  // @param: - String owner - owner of CreditCard
+  // @return - true if valid
   bool validateOwner(owner) {
     //TODO
     RegExp ownerRegex = new RegExp(r"^[a-zA-Z ]*$");
@@ -80,11 +101,20 @@ class PaymentController extends ControllerMVC {
     }
   }
 
+  // Description: validate the Account Info
+  // @param: - CreditCard card - credit card need to check
+  // @return - true if valid
   bool checkAccountInfo(card) {
     //TODO
     print(card);
     return true;
   }
 
-  void createPayment(amount, contents, cardCode, cvvCode, dateExpired, owner) {}
+  // Description: create new payment
+  // @param: - int amount - amount of money
+  //         - String contents - contents of payment
+  //         - CreditCard card - credit card
+  
+
+  void createPayment(amount, contents, card) {}
 }

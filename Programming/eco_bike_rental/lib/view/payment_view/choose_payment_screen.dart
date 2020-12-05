@@ -1,5 +1,6 @@
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/utils/API.dart';
 import 'package:flutter/material.dart';
 
 class ChoosePaymentScreen extends StatefulWidget {
@@ -34,7 +35,8 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           int.parse(cvvCodeController.text),
           dateExpiredController.text,
           ownerController.text);
-      paymentController.checkAccountInfo(card);
+      // paymentController.checkAccountInfo(card);
+      API().Patch("test");
     }
   }
 
