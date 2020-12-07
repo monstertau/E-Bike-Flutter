@@ -1,6 +1,9 @@
+import 'dart:js';
+
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/bike_view/bike_screen.dart';
 import 'package:eco_bike_rental/view/payment_view/choose_payment_screen.dart';
+import 'package:eco_bike_rental/view/payment_view/invoice_screen.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
 import 'package:eco_bike_rental/view/bike_view/rented_bike_screen.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +41,8 @@ class AppRouter {
       case rentedBikeRoute:
         String id = settings.arguments;
         return MaterialPageRoute(builder: (context) => RentedBikeScreen());
+      case invoiceRoute:
+        return MaterialPageRoute(builder: (context) => InvoiceScreen());
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(
