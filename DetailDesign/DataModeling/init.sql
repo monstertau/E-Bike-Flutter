@@ -8,9 +8,9 @@ create table "ecoBikeSystem"."DockStation"
 );
 
 create unique index dockstation_id_uindex
-	on "ecoBikeSystem"."DockStation" (id);
+	on "ecoBikeSystem".dockstation (id);
 
-alter table "ecoBikeSystem"."DockStation"
+alter table "ecoBikeSystem".dockstation
 	add constraint dockstation_pk
 		primary key (id);
 
@@ -44,7 +44,7 @@ create table "ecoBikeSystem"."BikeInDock"
 				on update cascade on delete cascade,
 	"DockId" int not null
 		constraint bikeindock_dockstation_id_fk
-			references "ecoBikeSystem"."DockStation"
+			references "ecoBikeSystem".dockstation
 				on update cascade on delete cascade,
 	constraint bikeindock_pk
 		primary key ("BikeId", "DockId")
