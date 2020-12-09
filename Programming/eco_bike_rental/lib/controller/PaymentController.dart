@@ -1,11 +1,13 @@
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
+import 'package:eco_bike_rental/subsystem/interbank/InterbankBoundary.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class PaymentController extends ControllerMVC {
   CreditCard _card;
 
 // ignore: todo
-//TODO: bankInterface
+  InterbankSubsystem _interbank;
 
   CreditCard get card => _card;
 
@@ -15,20 +17,36 @@ class PaymentController extends ControllerMVC {
 
   // Description: Deduct money from card
   // @param: - creditCard card - card information
-  //         - Int amount - amount of money 
+  //         - Int amount - amount of money
   // @return - Map message information
-  Map deductMoney(card, amount) {
+  Future<Map> deductMoney(card, amount) async {
     //TODO
-    return {"success": false};
+    Map result;
+    this._interbank = new InterbankSubsystem();
+    try {
+      result = await _interbank.pay(card, amount);
+    } catch (e) {
+      print(e);
+      result = {"success": false, "message": e.toString()};
+    }
+    return result;
   }
 
   // Description: Deposite money to card
   // @param: - creditCard card - card information
-  //         - Int amount - amount of money 
+  //         - Int amount - amount of money
   // @return - Map message information
-  Map returnDepositeMoney(card, amount) {
+  Future<Map> returnDepositeMoney(card, amount) async {
     //TODO
-    return {"success": false};
+    Map result;
+    this._interbank = new InterbankSubsystem();
+    try {
+      result = await _interbank.refund(card, amount);
+    } catch (e) {
+      print(e);
+      result = {"success": false, "message": e.toString()};
+    }
+    return result;
   }
 
   // Description: validate cardCode of CreditCard
@@ -114,7 +132,6 @@ class PaymentController extends ControllerMVC {
   // @param: - int amount - amount of money
   //         - String contents - contents of payment
   //         - CreditCard card - credit card
-  
 
   void createPayment(amount, contents, card) {}
 }

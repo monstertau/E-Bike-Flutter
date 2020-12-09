@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/bike_view/bike_screen.dart';
@@ -41,8 +40,8 @@ class AppRouter {
       case rentedBikeRoute:
         String id = settings.arguments;
         return MaterialPageRoute(builder: (context) => RentedBikeScreen());
-      case invoiceRoute:
-        return MaterialPageRoute(builder: (context) => InvoiceScreen());
+      // case invoiceRoute:
+      //   return MaterialPageRoute(builder: (context) => InvoiceScreen());
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(
