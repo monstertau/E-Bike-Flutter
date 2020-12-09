@@ -1,5 +1,5 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-import 'package:eco_bike_rental/model/DB/db.dart';
+import 'package:eco_bike_rental/model/DB/db_interface.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
 class DockStation {
@@ -62,27 +62,6 @@ class DockStation {
   Future<List> getAllDock() async {
     // TODO: implement this
     List lstDock = new List<DockStation>();
-    var con = DBConnection.getConnection();
-    try {
-      await con.open();
-      List<Map<String, Map<String, dynamic>>> results = await con
-          .mappedResultsQuery('SELECT * FROM "ecoBikeSystem"."dockstation"');
-      await con.close();
 
-      for (final row in results) {
-        int id = row["dockstation"]["id"];
-        String name = row["dockstation"]["name"];
-        String area = row["dockstation"]["area"];
-        int size = row["dockstation"]["size"];
-        String address = row["dockstation"]["address"];
-
-        DockStation dock = new DockStation(id, name, area, address, size);
-        lstDock.add(dock);
-      }
-
-      return lstDock;
-    } catch (Exception) {
-      logger.e(Exception.toString());
-    }
   }
 }

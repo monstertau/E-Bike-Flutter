@@ -1,0 +1,18 @@
+runtime: nodejs
+env: flex
+skip_files:
+- ^node_modules/.*$
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 2
+beta_settings:
+  cloud_sql_instances: lunar-bonus-297614:asia-east2:eco-bike-rental=tcp:5432
+env_variables:
+  DB_USER: monstertau
+  DB_PASS: trungdung99
+  DB_NAME: postgres
+  DB_HOST: 172.17.0.1
+  DB_PORT: 5432
+  IDENTIFIER: GROUP10
+  PUBLIC_KEY: group10
+  PRIVATE_KEY: guessmypass
