@@ -9,15 +9,15 @@ class DatabaseSubsystem implements DatabaseSubsystemInterface {
   }
 
   @override
-  Future<Map> getAllDock() async{
+  Future<List> getAllDock() async {
     // TODO: implement getAllDock
     Map response = await _con.getAllDock();
-    return response;
+    return response["docks"];
   }
 
   @override
-  Future<Map> getDetailDock(String dockId) {
-    // TODO: implement getDetailDock
-    throw UnimplementedError();
+  Future<List> getDetailDock(String dockId) async {
+    Map response = await _con.getDetailDock(dockId);
+    return response["bikes"];
   }
 }

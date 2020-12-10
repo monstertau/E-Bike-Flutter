@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/bike_view/bike_screen.dart';
 import 'package:eco_bike_rental/view/payment_view/choose_payment_screen.dart';
