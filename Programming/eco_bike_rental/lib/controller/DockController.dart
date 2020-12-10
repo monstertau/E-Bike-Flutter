@@ -111,15 +111,10 @@ class DockController extends ControllerMVC {
     // });
   }
 
-  List<DockStation> getAllDocks() {
+  Future<List<DockStation>> getAllDocks() async {
     // TODO: implement this
     // return dock.getAllDock();
-    List lstDock = new List<DockStation>();
-
-    lstDock.add(new DockStation(1, "Dock1", "252x252", "HN", 40));
-    lstDock.add(new DockStation(2, "Dock2", "252x252", "HN", 42));
-    lstDock.add(new DockStation(3, "Dock3", "252x252", "HCM", 41));
-    return lstDock;
-    // return dockModel.getAllDock();
+    List docks = await dockModel.getAllDock();
+    return docks;
   }
 }

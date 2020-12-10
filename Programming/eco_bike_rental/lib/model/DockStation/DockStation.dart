@@ -1,5 +1,6 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DB/db_interface.dart';
+import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
 class DockStation {
@@ -8,40 +9,30 @@ class DockStation {
   String _dockArea;
   int _dockSize;
   String _dockAddress;
+  String _available;
+
   List<Bike> _lstBike;
 
-  int get dockID => id;
+  final DatabaseSubsystemInterface database = new DatabaseSubsystem();
 
   DockStation.origin();
 
   DockStation(this.id, this._dockName, this._dockArea, this._dockAddress,
-      this._dockSize) {
+      this._dockSize, this._available) {
     this._lstBike = new List<Bike>();
   }
 
-  String get dockName => _dockName;
+  int get dockID => id;
 
-  set dockName(String value) {
-    _dockName = value;
-  }
+  String get available => _available;
+
+  String get dockName => _dockName;
 
   String get dockArea => _dockArea;
 
   String get dockAddress => _dockAddress;
 
-  set dockAddress(String value) {
-    _dockAddress = value;
-  }
-
   int get dockSize => _dockSize;
-
-  set dockSize(int value) {
-    _dockSize = value;
-  }
-
-  set dockArea(String value) {
-    _dockArea = value;
-  }
 
   List<Bike> get lstBike => _lstBike;
 
@@ -54,14 +45,25 @@ class DockStation {
   }
 
   DockStation getDockById(int id) {
-    // TODO: fix this
-    List<Bike> aListBike = new List<Bike>();
-    return new DockStation(123, 'abc', '12x12', 'abc123', 23);
+    // // TODO: fix this
+    // List<Bike> aListBike = new List<Bike>();
+    // return new DockStation(123, 'abc', '12x12', 'abc123', 23);
   }
 
   Future<List> getAllDock() async {
     // TODO: implement this
     List lstDock = new List<DockStation>();
-
+    List dbDocks = await database.getAllDock();
+    for (Map dbDock in dbDocks) {
+      DockStation dock = new DockStation(
+          dbDock["id"],
+          dbDock["name"],
+          dbDock["area"],
+          dbDock["address"],
+          dbDock["size"],
+          dbDock["available"]);
+      lstDock.add(dock);
+    }
+    return lstDock;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
+import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -22,32 +23,43 @@ class _ListDockScreenState extends State<ListDockScreen> {
       ),
       body: Container(
           alignment: Alignment.center,
-          child: DataTable(
-            showCheckboxColumn: false,
-            sortAscending: true,
-            sortColumnIndex: 0,
-            columns: [
-              DataColumn(label: Text("Name")),
-              DataColumn(label: Text("Address")),
-              DataColumn(label: Text("Area")),
-              DataColumn(label: Text("Available"), numeric: true),
-            ],
-            rows: dockController
-                .getAllDocks()
-                .map((e) => DataRow(
-                        onSelectChanged: (selected) {
-                          if (selected) {
-                            Navigator.pushNamed(context, detailedDockRoute,
-                                arguments: e.id);
-                          }
-                        },
-                        cells: [
-                          DataCell(Text(e.dockName)),
-                          DataCell(Text(e.dockAddress)),
-                          DataCell(Text(e.dockArea)),
-                          DataCell(Text(e.dockSize.toString()))
-                        ]))
-                .toList(),
+          child: FutureBuilder(
+            future: dockController.getAllDocks(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData != null) {
+                List<DockStation> lstDock = snapshot.data;
+                return DataTable(
+                  showCheckboxColumn: false,
+                  sortAscending: true,
+                  sortColumnIndex: 0,
+                  columns: [
+                    DataColumn(label: Text("Name")),
+                    DataColumn(label: Text("Address")),
+                    DataColumn(label: Text("Area")),
+                    DataColumn(label: Text("Available"), numeric: true),
+                  ],
+                  rows: lstDock
+                      .map((e) => DataRow(
+                              onSelectChanged: (selected) {
+                                if (selected) {
+                                  Navigator.pushNamed(
+                                      context, detailedDockRoute,
+                                      arguments: e.id);
+                                }
+                              },
+                              cells: [
+                                DataCell(Text(e.dockName)),
+                                DataCell(Text(e.dockAddress)),
+                                DataCell(Text(e.dockArea)),
+                                DataCell(Text("${e.available}/${e.dockSize}"))
+                              ]))
+                      .toList(),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
           )),
     );
   }

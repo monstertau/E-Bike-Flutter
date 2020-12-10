@@ -1,6 +1,7 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
+import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -24,6 +25,7 @@ void main() {
       DockController dockController = new DockController();
       // Implement
       var actual = await dockController.getAllDocks();
+
       // Verify
       expect(actual, expected);
     });

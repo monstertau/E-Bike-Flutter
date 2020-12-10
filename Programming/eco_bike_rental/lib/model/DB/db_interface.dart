@@ -3,7 +3,7 @@ import 'package:postgres/postgres.dart';
 
 abstract class DatabaseSubsystemInterface {
 
-  Future<Map> getAllDock();
+  Future<List> getAllDock();
 
-  Future<Map> getDetailDock(String dockId);
+  Future<List> getDetailDock(String dockId);
 }
