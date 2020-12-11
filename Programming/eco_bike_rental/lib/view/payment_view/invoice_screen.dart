@@ -1,13 +1,24 @@
+import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class InvoiceScreen extends StatefulWidget {
+  final Map invoice;
+
+  InvoiceScreen({Key key, @required this.invoice}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _InvoiceSreen();
 }
 
+// TextEditingValue card =
 class _InvoiceSreen extends State<InvoiceScreen> {
+  final logger = new Logger();
+
   @override
   Widget build(BuildContext context) {
+    logger.i(widget.invoice);
+    var data = widget.invoice;
     return Scaffold(
       appBar: AppBar(
         title: Text("Invoice"),
@@ -18,18 +29,21 @@ class _InvoiceSreen extends State<InvoiceScreen> {
             padding: const EdgeInsets.all(20.0),
             children: [
               Center(
+                  // child: FractionallySizedBox(
+                  //     heightFactor: 0.3,
+                  //     widthFactor: 0.7,
                   child: Container(
-                      height: MediaQuery.of(context).size.height * 0.27,
                       margin: EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                           color: Colors.deepPurpleAccent,
                           borderRadius: BorderRadius.circular(4.0)),
                       child: Column(
-                        children: <Widget>[_cusRow1(), _cusRow2()],
-                      ))),
+                        children: <Widget>[_cusRow1(data), _cusRow2(data)],
+                      ))
+                  // )
+                  ),
               Center(
                   child: Container(
-                height: MediaQuery.of(context).size.height * 0.25,
                 margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
                 child: Column(
                   children: <Widget>[
@@ -38,13 +52,13 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            _colorRow("Deduct Money", "-", "246,0000 VND",
-                                Colors.red),
-                            _colorRow("Deposite Money", "+", "200,000 VND",
+                            _colorRow("Deduct Money", "- ",
+                                data['amount'].toString() + " VND", Colors.red),
+                            _colorRow("Deposite Money", "+ ", "200,000 VND",
                                 Colors.green),
                             Divider(),
                             _colorRow(
-                                "Subtotal", "-", "46,0000 VND", Colors.red),
+                                "Subtotal", "- ", "46,0000 VND", Colors.red),
                           ],
                         ),
                       )
@@ -54,8 +68,8 @@ class _InvoiceSreen extends State<InvoiceScreen> {
               )),
               Center(
                   child: Container(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                      margin:
+                          EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
                       child: Column(
                         children: <Widget>[
                           Column(children: [
@@ -74,7 +88,28 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                             )
                           ]),
                         ],
-                      )))
+                      ))),
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(6.0)),
+                  margin: EdgeInsets.only(top: 25.0),
+                  child: FlatButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, homeRoute);
+                      },
+                      icon: Icon(
+                        Icons.home,
+                        size: 32,
+                        color: Colors.white,
+                      ),
+                      label: Text(
+                        "Back To Home",
+                        style: TextStyle(fontSize: 24.0, color: Colors.white),
+                      )),
+                ),
+              )
             ]),
       ),
     );
@@ -103,7 +138,7 @@ Widget _colorRow(label, sign, money, color) {
       child: Container(
           child: Text(
         label,
-        style: TextStyle(fontSize: 26),
+        style: TextStyle(fontSize: 20),
       )),
     ),
     Expanded(
@@ -114,14 +149,14 @@ Widget _colorRow(label, sign, money, color) {
             sign + money,
             style: TextStyle(
               color: color,
-              fontSize: 26,
+              fontSize: 20,
             ),
           )),
     )
   ]);
 }
 
-Widget _cusRow1() {
+Widget _cusRow1(info) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -138,13 +173,13 @@ Widget _cusRow1() {
                       style: TextStyle(
                           // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
-                          fontSize: 32,
+                          fontSize: 24,
                           color: Colors.white),
                     )),
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "05-12-2020",
+                      info['createdAt'].toString().split(" ")[0],
                       style: TextStyle(
                           // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
@@ -159,11 +194,11 @@ Widget _cusRow1() {
         child: Container(
           alignment: Alignment.topRight,
           child: Text(
-            "NGUYEN XUAN HOANG",
+            info['owner'],
             style: TextStyle(
                 // fontWeight: FontWeight.w500,
                 letterSpacing: 1.5,
-                fontSize: 32,
+                fontSize: 16,
                 color: Colors.white),
           ),
         ),
@@ -172,7 +207,7 @@ Widget _cusRow1() {
   );
 }
 
-Widget _cusRow2() {
+Widget _cusRow2(info) {
   return Row(
     children: [
       Expanded(
@@ -193,7 +228,7 @@ Widget _cusRow2() {
               style: TextStyle(
                   // fontWeight: FontWeight.w500,
                   letterSpacing: 1.5,
-                  fontSize: 50,
+                  fontSize: 40,
                   color: Colors.white),
             ),
           ))

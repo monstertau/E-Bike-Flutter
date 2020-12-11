@@ -1,7 +1,12 @@
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/API.dart';
+import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+import 'invoice_screen.dart';
 
 class ChoosePaymentScreen extends StatefulWidget {
   @override
@@ -20,7 +25,9 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   bool _validatecn = true;
   bool _validatecvv = true;
   bool _validatede = true;
-  void _processCard() {
+
+  void _processCard() async {
+    final logger = new Logger();
     setState(() {
       _validatename = !paymentController.validateOwner(ownerController.text);
       _validatede =
@@ -35,8 +42,23 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           int.parse(cvvCodeController.text),
           dateExpiredController.text,
           ownerController.text);
-      // paymentController.checkAccountInfo(card);
-      API().Patch("test");
+      var result = await paymentController.deductMoney(card, 10000);
+      if (result['success']) {
+        // Navigator.pushNamed(context, invoiceRoute);
+        //TODO: create new payment
+        // Payment payment = new Payment(new Bike, _card, _deductAmount, _startRentTime, _paymentStatus, _rentalCode)
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InvoiceScreen(invoice: result['data']),
+          ),
+        );
+      } else {
+        logger.i(result['message']);
+      }
+      // InterbankSubsystem interbanl = new Inbank
+      // API().Patch("test");
+      // print()
     }
   }
 
@@ -159,6 +181,7 @@ class _DropdownCustomState extends State<DropdownCustom> {
 
 class TestIcon extends StatelessWidget {
   final IconData iconName;
+
   const TestIcon({Key key, this.iconName}) : super(key: key);
 
   @override
