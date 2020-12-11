@@ -37,8 +37,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _lastSelected = 0;
   List<Widget> _listScreen = [
     ListDockScreen(),
-    // RentedBikeScreen(),
-    InvoiceScreen(),
+    RentedBikeScreen(),
     BarcodeScreen(),
   ];
 
