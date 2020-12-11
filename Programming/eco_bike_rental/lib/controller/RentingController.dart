@@ -7,7 +7,7 @@ class RentingController extends ControllerMVC {
   RentingController([StateMVC state]) : super(state) {
     bikeModel = Bike.newBike();
     dockModel = DockStation.origin();
-    paymentModel = Payment();
+    // paymentModel = Payment();
   }
 
   Bike bikeModel;
