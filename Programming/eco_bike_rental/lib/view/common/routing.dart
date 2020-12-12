@@ -37,7 +37,7 @@ class AppRouter {
       case choosePaymentRoute:
         return MaterialPageRoute(builder: (context) => ChoosePaymentScreen());
       case rentedBikeRoute:
-        String id = settings.arguments;
+        // String id = settings.arguments;
         return MaterialPageRoute(builder: (context) => RentedBikeScreen());
       // case invoiceRoute:
       //   return MaterialPageRoute(builder: (context) => InvoiceScreen());

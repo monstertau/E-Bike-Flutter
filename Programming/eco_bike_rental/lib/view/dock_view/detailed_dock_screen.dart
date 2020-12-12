@@ -24,7 +24,7 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
           onPressed: () {
             // push navigator to navigate to page
             // argument = id of bike
-            Navigator.pushNamed(context, detailedBikeRoute, arguments: 1);
+            Navigator.pushNamed(context, detailedBikeRoute, arguments: 2);
           },
           child: Text("Bike screen"),
         ),

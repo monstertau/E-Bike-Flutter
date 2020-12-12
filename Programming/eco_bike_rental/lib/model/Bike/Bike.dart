@@ -63,4 +63,8 @@ class Bike {
   set color(String value) {
     _color = value;
   }
+
+  Future<Bike> getBikeById(int id) async {
+    return bike;
+  }
 }
