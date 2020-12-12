@@ -21,6 +21,9 @@ class Payment {
 
   Bike get bike => _bike;
 
+  Payment(this._bike, this._card, this._deductAmount, this._startRentTime,
+      this._paymentStatus, this._rentalCode);
+
   set bike(Bike value) {
     _bike = value;
   }

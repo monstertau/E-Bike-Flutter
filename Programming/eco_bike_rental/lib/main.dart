@@ -1,3 +1,4 @@
+import 'package:eco_bike_rental/view/payment_view/invoice_screen.dart';
 import 'package:eco_bike_rental/view/renting_view/barcode_screen.dart';
 import 'package:eco_bike_rental/view/common/bottom_bar.dart';
 import 'package:eco_bike_rental/view/dock_view/list_dock_screen.dart';
