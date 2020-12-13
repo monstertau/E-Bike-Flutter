@@ -5,5 +5,5 @@ abstract class DatabaseSubsystemInterface {
 
   Future<List> getAllDock();
 
-  Future<List> getDetailDock(String dockId);
+  Future<List> getDetailDock(int dockId);
 }

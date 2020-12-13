@@ -10,7 +10,7 @@ void main() {
     logger.i(res);
   });
   test("Test Get Detail Dock", () async {
-    var res = await con.getDetailDock("1");
+    var res = await con.getDetailDock(1);
     logger.i(res);
   });
 }
