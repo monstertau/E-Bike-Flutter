@@ -20,4 +20,10 @@ class DatabaseSubsystem implements DatabaseSubsystemInterface {
     Map response = await _con.getDetailDock(dockId);
     return response["bikes"];
   }
+
+  @override
+  Future<Map> getBike(int id) async {
+    Map response = await _con.getBike(id);
+    return response["bike"];
+  }
 }

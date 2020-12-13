@@ -6,7 +6,6 @@ class DetailedDockScreen extends StatefulWidget {
 
   const DetailedDockScreen({Key key, this.id}) : super(key: key);
 
-
   @override
   _DetailedDockScreenState createState() => _DetailedDockScreenState();
 }
@@ -24,7 +23,7 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
           onPressed: () {
             // push navigator to navigate to page
             // argument = id of bike
-            Navigator.pushNamed(context, detailedBikeRoute, arguments: 2);
+            Navigator.pushNamed(context, detailedBikeRoute, arguments: 1);
           },
           child: Text("Bike screen"),
         ),

@@ -64,7 +64,7 @@ class Bike {
     _color = value;
   }
 
-  Future<Bike> getBikeById(int id) async {
-    return bike;
-  }
+  // Future<Bike> getBikeById(int id) async {
+  //   return bike;
+  // }
 }
