@@ -11,7 +11,7 @@ exports.test = async (req, res) => {
 exports.getAll = async (req, res) => {
   const queryAll = `SELECT d.id, name, area, size, address, count(b.id) as available
       FROM ("ecoBikeSystem"."DockStation" as d
-      JOIN "ecoBikeSystem"."BikeInDock" as BID on d.id = BID."DockId")
+      LEFT OUTER JOIN "ecoBikeSystem"."BikeInDock" as BID on d.id = BID."DockId")
            LEFT OUTER JOIN "ecoBikeSystem"."Bike" as b on b.id = BID."BikeId" AND b.lock = true
   GROUP BY d.id
   ORDER BY d.id;`;

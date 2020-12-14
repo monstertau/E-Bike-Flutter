@@ -1,26 +1,22 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:uuid/uuid.dart';
 
-class RentingController extends ControllerMVC {
-  RentingController([StateMVC state]) : super(state) {
+class RentingController {
+  RentingController() {
     bikeModel = Bike.newBike();
     dockModel = DockStation.origin();
-    // paymentModel = Payment();
   }
 
   Bike bikeModel;
   DockStation dockModel;
   Payment paymentModel;
 
-  bool requestRentBike(String barcode) {
+  Future<Bike> requestRentBike(String barcode) async {
     // TODO: implement this
-    return false;
-  }
-
-  void rentBike() {
-    // TODO: implement this
+    Bike bike = await bikeModel.getBikeByBarcode(barcode);
+    return bike;
   }
 
   bool lockBike(Bike bike) {
@@ -51,13 +47,20 @@ class RentingController extends ControllerMVC {
   void returnBike(DockStation dock, Bike bike) {
     // TODO: implement this
   }
-
+  String generateRentalCode(){
+    var uuid = Uuid();
+    return uuid.v1();
+  }
   int calculateRentingAmount(String startTime, String endTime) {
     // TODO: implement this
     DateTime start = DateTime.parse(startTime);
     DateTime end = DateTime.parse(endTime);
     end.difference(start);
     return 0;
+  }
+
+  double calculateDepositMoney(double baseRentAmount) {
+    return baseRentAmount * 40 / 100;
   }
 
   DateTime setStartRentingTime(String time) {

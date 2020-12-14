@@ -29,6 +29,81 @@ class _ListDockScreenState extends State<ListDockScreen> {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData != null) {
                 List<DockStation> lstDock = snapshot.data;
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "Name",
+                            style: TextStyle(
+                                height: 3.0,
+                                fontSize: 15.2,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "Address",
+                            style: TextStyle(
+                                height: 3.0,
+                                fontSize: 15.2,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "Area",
+                            style: TextStyle(
+                                height: 3.0,
+                                fontSize: 15.2,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                            child: Text(
+                          "Available",
+                          style: TextStyle(
+                              height: 3.0,
+                              fontSize: 15.2,
+                              fontWeight: FontWeight.bold),
+                        ))
+                      ],
+                    ),
+                    Divider(),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: lstDock.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, detailedDockRoute,
+                                  arguments: lstDock[index].id);
+                            },
+                            child: Card(
+                              child: ListTile(
+                                title: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Text(lstDock[index].dockName)),
+                                    Expanded(
+                                        child: Text(lstDock[index].dockAddress)),
+                                    Expanded(
+                                        child: Text(lstDock[index].dockArea)),
+                                    Expanded(
+                                        child: Text(
+                                            "${lstDock[index].available}/${lstDock[index].dockSize}"))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        padding: EdgeInsets.only(bottom: 13.0),
+                      ),
+                    )
+                  ],
+                );
                 return DataTable(
                   showCheckboxColumn: false,
                   sortAscending: true,

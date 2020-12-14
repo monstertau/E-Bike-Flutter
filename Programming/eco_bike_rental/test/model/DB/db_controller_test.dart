@@ -13,4 +13,8 @@ void main() {
     var res = await con.getDetailDock(1);
     logger.i(res);
   });
+  test("Test Bike By Barcode", () async {
+    var res = await con.getBikeByBarcode("abcde");
+    logger.i(res);
+  });
 }
