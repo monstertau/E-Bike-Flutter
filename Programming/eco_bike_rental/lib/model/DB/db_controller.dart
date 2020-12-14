@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:eco_bike_rental/model/DB/db_boundary.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
-import 'package:http/http.dart' as http;
 
 class DatabaseSubsystemController {
   DatabaseBoundary _databaseBoundary = new DatabaseBoundary();
@@ -14,6 +13,12 @@ class DatabaseSubsystemController {
   Future<Map> getDetailDock(int dockId) async {
     var response = await _databaseBoundary.get(getDockDetailPath,
         optionalQuery: "?id=$dockId");
+    return jsonDecode(response.body);
+  }
+
+  Future<Map> getBikeByBarcode(String barcode) async {
+    var response = await _databaseBoundary.get(getBarcodeBikePath,
+        optionalQuery: "?barcode=${barcode}");
     return jsonDecode(response.body);
   }
 
