@@ -81,4 +81,24 @@ class Bike {
         res["lock"]);
     return bike;
   }
+
+  Future<Bike> getBikeById(int id) async {
+    // // TODO: fix this
+    List lstBike = new List<Bike>();
+    List dbBikes = await _database.getDetailDock(id);
+    for (Map dbBike in dbBikes) {
+      Bike bike = new Bike.init(
+          dbBike["id"],
+          dbBike["barcode"],
+          dbBike["color"],
+          dbBike["category"],
+          dbBike["bikeValue"],
+          dbBike["baseRentAmount"],
+          dbBike["addRentAmount"],
+          dbBike["lock"]);
+      lstBike.add(bike);
+    }
+    return Bike.init(_id, _barcode, _color, _category, _bikeValue,
+        _baseRentAmount, _addRentAmount, _lock);
+  }
 }

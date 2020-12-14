@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:eco_bike_rental/model/DB/db_boundary.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
@@ -21,5 +22,4 @@ class DatabaseSubsystemController {
         optionalQuery: "?barcode=${barcode}");
     return jsonDecode(response.body);
   }
-
 }
