@@ -24,6 +24,8 @@ if (process.env.NODE_ENV !== "production") {
  * Controllers (route handlers).
  */
 const dockController = require("./controllers/dock.controller");
+const bikeController = require("./controllers/bike.controller");
+
 /**
  * Create Express server.
  */
@@ -98,9 +100,9 @@ app.use(
  * Primary app routes.
  */
 app.get("/test", dockController.test);
-app.get("/dock/get-all", HMACAuth, dockController.getAll);
-app.get("/dock/get-detail", HMACAuth, dockController.getDetail);
-// app.get("/dock/get-bike-in-dock",dockController.getBikeInDock);
+app.get("/dock/get-all", dockController.getAll);
+app.get("/dock/get-detail", dockController.getDetail);
+app.get("/bike/search",bikeController.search);
 /**
  * Error Handler.
  */

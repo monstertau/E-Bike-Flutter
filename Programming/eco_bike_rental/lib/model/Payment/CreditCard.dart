@@ -5,7 +5,7 @@ class CreditCard {
   String _owner;
   int _cvvCode;
   String _dateExpired;
-
+  CreditCard.init();
   CreditCard(this._cardCode, this._cvvCode, this._dateExpired, this._owner);
 
   String get owner => _owner;

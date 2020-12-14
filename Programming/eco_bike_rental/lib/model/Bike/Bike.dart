@@ -1,13 +1,17 @@
+import 'package:eco_bike_rental/model/DB/db_interface.dart';
+import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
+
 class Bike {
   int _id;
 
   String _barcode;
   String _color;
   String _category;
-  int _bikeValue;
-  int _baseRentAmount;
-  int _addRentAmount;
+  double _bikeValue;
+  double _baseRentAmount;
+  double _addRentAmount;
   bool _lock;
+  DatabaseSubsystemInterface _database = new DatabaseSubsystem();
 
   Bike.newBike();
 
@@ -36,21 +40,21 @@ class Bike {
     _lock = value;
   }
 
-  int get addRentAmount => _addRentAmount;
+  double get addRentAmount => _addRentAmount;
 
-  set addRentAmount(int value) {
+  set addRentAmount(double value) {
     _addRentAmount = value;
   }
 
-  int get baseRentAmount => _baseRentAmount;
+  double get baseRentAmount => _baseRentAmount;
 
-  set baseRentAmount(int value) {
+  set baseRentAmount(double value) {
     _baseRentAmount = value;
   }
 
-  int get bikeValue => _bikeValue;
+  double get bikeValue => _bikeValue;
 
-  set bikeValue(int value) {
+  set bikeValue(double value) {
     _bikeValue = value;
   }
 
@@ -64,7 +68,17 @@ class Bike {
     _color = value;
   }
 
-  // Future<Bike> getBikeById(int id) async {
-  //   return bike;
-  // }
+  Future<Bike> getBikeByBarcode(String barcode) async {
+    Map res = await _database.getBikeByBarcode(barcode);
+    Bike bike = new Bike.init(
+        res["id"],
+        res["barcode"],
+        res["color"],
+        res["category"],
+        res["bikeValue"],
+        res["baseRentAmount"],
+        res["additionalRentAmount"],
+        res["lock"]);
+    return bike;
+  }
 }

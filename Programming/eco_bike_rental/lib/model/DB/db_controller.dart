@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:eco_bike_rental/model/DB/db_boundary.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
@@ -11,26 +10,16 @@ class DatabaseSubsystemController {
     return jsonDecode(response.body);
   }
 
-  Future<Map> getDetailDock(String dockId) async {
+  Future<Map> getDetailDock(int dockId) async {
     var response = await _databaseBoundary.get(getDockDetailPath,
-        optionalQuery: "?id=${dockId}");
+        optionalQuery: "?id=$dockId");
     return jsonDecode(response.body);
   }
 
-  Future<Map> getBike(int id) async {
-    Map response = {
-      "success": true,
-      "bike": {
-        "id": 1,
-        "barcode": "abcde",
-        "color": "red",
-        "category": "EBike",
-        "bikeValue": 200000,
-        "baseRentAmount": 20000,
-        "additionalRentAmount": 1000,
-        "lock": true
-      },
-    };
-    return response;
+  Future<Map> getBikeByBarcode(String barcode) async {
+    var response = await _databaseBoundary.get(getBarcodeBikePath,
+        optionalQuery: "?barcode=${barcode}");
+    return jsonDecode(response.body);
   }
+
 }

@@ -19,3 +19,4 @@ final logger = Logger();
 const String baseUrl = "https://lunar-bonus-297614.df.r.appspot.com";
 const String getAllDockPath = "/dock/get-all";
 const String getDockDetailPath = "/dock/get-detail";
+const String getBarcodeBikePath = "/bike/search";

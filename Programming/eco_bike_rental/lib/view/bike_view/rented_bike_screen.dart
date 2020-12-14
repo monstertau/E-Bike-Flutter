@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'text_item.dart';
+
 import 'image_banner.dart';
 
 class RentedBikeScreen extends StatefulWidget {
@@ -25,6 +25,18 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
           TextItem('Time Rented', '5h'),
           TextItem('Payment Amount', '50USD'),
         ],
+      ),
+    );
+  }
+
+  Widget TextItem(String key, String value) {
+    return Container(
+      color: Colors.grey[400],
+      padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
+      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [Text(key), Text(value)],
       ),
     );
   }
