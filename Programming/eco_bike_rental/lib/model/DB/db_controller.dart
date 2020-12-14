@@ -10,9 +10,9 @@ class DatabaseSubsystemController {
     return jsonDecode(response.body);
   }
 
-  Future<Map> getDetailDock(String dockId) async {
+  Future<Map> getDetailDock(int dockId) async {
     var response = await _databaseBoundary.get(getDockDetailPath,
-        optionalQuery: "?id=${dockId}");
+        optionalQuery: "?id=$dockId");
     return jsonDecode(response.body);
   }
 
@@ -21,4 +21,5 @@ class DatabaseSubsystemController {
         optionalQuery: "?barcode=${barcode}");
     return jsonDecode(response.body);
   }
+
 }
