@@ -2,6 +2,7 @@ import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+///
 class DockController extends ControllerMVC {
   DockStation dockModel;
 
@@ -9,20 +10,9 @@ class DockController extends ControllerMVC {
     dockModel = DockStation.origin();
   }
 
-  //must return a list<object>
-  //foreach.split()
-  // class Bike {
-  // int _id;
-  //
-  // String _barcode;
-  // String _color;
-  // String _category;
-  // int _bikeValue;
-  // int _baseRentAmount;
-  // int _addRentAmount;
-  // bool _lock;
+///method for validate attributes in listBike
   bool validateListBike(List<Bike> listBike) {
-    // bo di nhe,
+
     listBike.forEach((element) {
       if (element.id == null)
         return false;
@@ -59,13 +49,7 @@ class DockController extends ControllerMVC {
     return true;
   }
 
-  // class DockStation {
-  // int id;
-  // String _dockName;
-  // String _dockArea;
-  // int _dockSize;
-  // String _dockAddress;
-  // List<Bike> _lstBike;
+  ///method for validate attributes in listDock
   bool validateListDock(List<DockStation> listDock) {
     listDock.forEach((element) {
       if (element.id == null)
@@ -95,31 +79,18 @@ class DockController extends ControllerMVC {
     return true;
   }
 
-  List getAllBikes(int dockID) {
+  ///method for getting all bikes in dock by dockID
+  Future<List<Bike>> getAllBikes(int dockID) async {
     // TODO: implement this
-    DockStation dock = dockModel.getDockById(dockID);
+    DockStation dock = await dockModel.getDockById(dockID);
     return dock.lstBike;
-    // return dockModel.lstBike;
-    // List<String> dockStations = dockModel.getAllDock();
-    // DockStation aDock = new DockStation.origin();
-    // List<DockStation> aDockList = aDock.getAllDock();
-    // aDockList.forEach((element)
-    // {
-    //   // code sai roi nay
-    //   if (element.id == dockID) return element.lstBike;
-    //   // else return null;
-    // });
-  }
 
-  List<DockStation> getAllDocks() {
+  }
+  ///method for getting all docks
+  Future<List<DockStation>> getAllDocks() async {
     // TODO: implement this
     // return dock.getAllDock();
-    List lstDock = new List<DockStation>();
-
-    lstDock.add(new DockStation(1, "Dock1", "252x252", "HN", 40));
-    lstDock.add(new DockStation(2, "Dock2", "252x252", "HN", 42));
-    lstDock.add(new DockStation(3, "Dock3", "252x252", "HCM", 41));
-    return lstDock;
-    // return dockModel.getAllDock();
+    List docks = await dockModel.getAllDock();
+    return docks;
   }
 }

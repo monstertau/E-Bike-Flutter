@@ -1,5 +1,6 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-import 'package:eco_bike_rental/model/DB/db.dart';
+import 'package:eco_bike_rental/model/DB/db_interface.dart';
+import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
 class DockStation {
@@ -8,40 +9,31 @@ class DockStation {
   String _dockArea;
   int _dockSize;
   String _dockAddress;
+  String _available;
+
   List<Bike> _lstBike;
 
-  int get dockID => id;
+  final DatabaseSubsystemInterface database = new DatabaseSubsystem();
 
   DockStation.origin();
-
+  DockStation.full(this.id, this._dockName, this._dockArea, this._dockAddress,
+      this._dockSize, this._available, this._lstBike);
   DockStation(this.id, this._dockName, this._dockArea, this._dockAddress,
-      this._dockSize) {
+      this._dockSize, this._available){
     this._lstBike = new List<Bike>();
   }
 
-  String get dockName => _dockName;
+  int get dockID => id;
 
-  set dockName(String value) {
-    _dockName = value;
-  }
+  String get available => _available;
+
+  String get dockName => _dockName;
 
   String get dockArea => _dockArea;
 
   String get dockAddress => _dockAddress;
 
-  set dockAddress(String value) {
-    _dockAddress = value;
-  }
-
   int get dockSize => _dockSize;
-
-  set dockSize(int value) {
-    _dockSize = value;
-  }
-
-  set dockArea(String value) {
-    _dockArea = value;
-  }
 
   List<Bike> get lstBike => _lstBike;
 
@@ -53,36 +45,42 @@ class DockStation {
     this._lstBike.add(bike);
   }
 
-  DockStation getDockById(int id) {
-    // TODO: fix this
-    List<Bike> aListBike = new List<Bike>();
-    return new DockStation(123, 'abc', '12x12', 'abc123', 23);
+  Future<DockStation> getDockById(int id) async {
+    // // TODO: fix this
+    // List<Bike> aListBike = new List<Bike>();
+    // return new DockStation(123, 'abc', '12x12', 'abc123', 23);
+    List lstBike = new List<Bike>();
+    List dbBikes = await database.getDetailDock(id);
+    for (Map dbBike in dbBikes) {
+
+      Bike bike = new Bike.init(
+          dbBike["id"],
+          dbBike["barcode"],
+          dbBike["color"],
+          dbBike["category"],
+          dbBike["bikeValue"],
+          dbBike["baseRentAmount"],
+          dbBike["addRentAmount"],
+          dbBike["lock"]);
+      lstBike.add(bike);
+    }
+    return DockStation.full(id, _dockName, _dockArea, _dockAddress, _dockSize, _available, lstBike);
   }
 
   Future<List> getAllDock() async {
     // TODO: implement this
     List lstDock = new List<DockStation>();
-    var con = DBConnection.getConnection();
-    try {
-      await con.open();
-      List<Map<String, Map<String, dynamic>>> results = await con
-          .mappedResultsQuery('SELECT * FROM "ecoBikeSystem"."dockstation"');
-      await con.close();
-
-      for (final row in results) {
-        int id = row["dockstation"]["id"];
-        String name = row["dockstation"]["name"];
-        String area = row["dockstation"]["area"];
-        int size = row["dockstation"]["size"];
-        String address = row["dockstation"]["address"];
-
-        DockStation dock = new DockStation(id, name, area, address, size);
-        lstDock.add(dock);
-      }
-
-      return lstDock;
-    } catch (Exception) {
-      logger.e(Exception.toString());
+    List dbDocks = await database.getAllDock();
+    for (Map dbDock in dbDocks) {
+      DockStation dock = new DockStation(
+          dbDock["id"],
+          dbDock["name"],
+          dbDock["area"],
+          dbDock["address"],
+          dbDock["size"],
+          dbDock["available"]);
+      lstDock.add(dock);
     }
+    return lstDock;
   }
 }

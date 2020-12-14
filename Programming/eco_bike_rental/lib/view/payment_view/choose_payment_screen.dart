@@ -44,7 +44,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           ownerController.text);
       var result = await paymentController.deductMoney(card, 10000);
       if (result['success']) {
-        // Navigator.pushNamed(context, invoiceRoute);
+        Navigator.pushNamed(context, invoiceRoute);
         //TODO: create new payment
         // Payment payment = new Payment(new Bike, _card, _deductAmount, _startRentTime, _paymentStatus, _rentalCode)
         Navigator.push(

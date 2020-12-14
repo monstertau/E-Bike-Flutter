@@ -1,3 +1,4 @@
+import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/payment_view/invoice_screen.dart';
 import 'package:eco_bike_rental/view/renting_view/barcode_screen.dart';
 import 'package:eco_bike_rental/view/common/bottom_bar.dart';
@@ -38,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   List<Widget> _listScreen = [
     ListDockScreen(),
     RentedBikeScreen(),
-    BarcodeScreen(),
   ];
 
   void _selectedTab(int index) {
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            _lastSelected = 2;
+            Navigator.pushNamed(context, barcodeRoute);
           });
         },
         child: Icon(Icons.qr_code_scanner),
