@@ -14,17 +14,20 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
       appBar: AppBar(
         title: Text("Rented Bike Screen"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ImageBanner("lib/assets/images/bike.jpg", 'Bike 1', true),
-          TextItem('Color', 'Blue'),
-          TextItem('Distance travelled', '500m'),
-          TextItem('Battery Status', '50%'),
-          TextItem('Time Rented', '5h'),
-          TextItem('Payment Amount', '50USD'),
-        ],
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ImageBanner("lib/assets/images/bike.jpg", 'Bike 1', true),
+            TextItem('Color', 'Blue'),
+            TextItem('Distance travelled', '500m'),
+            TextItem('Battery Status', '50%'),
+            TextItem('Time Rented', '5h'),
+            TextItem('Payment Amount', '50USD'),
+          ],
+        ),
       ),
     );
   }
