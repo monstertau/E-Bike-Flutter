@@ -1,4 +1,6 @@
+import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
 import 'package:eco_bike_rental/subsystem/interbank/InterbankBoundary.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -132,6 +134,7 @@ class PaymentController extends ControllerMVC {
   // @param: - int amount - amount of money
   //         - String contents - contents of payment
   //         - CreditCard card - credit card
-
-  void createPayment(amount, contents, card) {}
+  Payment createPayment(Bike bike,double depositMoney,DateTime start,String rentalCode ) {
+    return new Payment(bike, CreditCard.init(), 0, start, "0", rentalCode);
+  }
 }
