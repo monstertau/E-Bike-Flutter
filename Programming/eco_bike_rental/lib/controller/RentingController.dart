@@ -59,7 +59,7 @@ class RentingController {
     return 0;
   }
 
-  double calculateDepositMoney(double baseRentAmount) {
+  double calculateDepositMoney(int baseRentAmount) {
     return baseRentAmount * 40 / 100;
   }
 

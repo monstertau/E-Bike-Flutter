@@ -7,9 +7,9 @@ class Bike {
   String _barcode;
   String _color;
   String _category;
-  double _bikeValue;
-  double _baseRentAmount;
-  double _addRentAmount;
+  int _bikeValue;
+  int _baseRentAmount;
+  int _addRentAmount;
   bool _lock;
   DatabaseSubsystemInterface _database = new DatabaseSubsystem();
 
@@ -40,21 +40,21 @@ class Bike {
     _lock = value;
   }
 
-  double get addRentAmount => _addRentAmount;
+  int get addRentAmount => _addRentAmount;
 
-  set addRentAmount(double value) {
+  set addRentAmount(int value) {
     _addRentAmount = value;
   }
 
-  double get baseRentAmount => _baseRentAmount;
+  int get baseRentAmount => _baseRentAmount;
 
-  set baseRentAmount(double value) {
+  set baseRentAmount(int value) {
     _baseRentAmount = value;
   }
 
-  double get bikeValue => _bikeValue;
+  int get bikeValue => _bikeValue;
 
-  set bikeValue(double value) {
+  set bikeValue(int value) {
     _bikeValue = value;
   }
 

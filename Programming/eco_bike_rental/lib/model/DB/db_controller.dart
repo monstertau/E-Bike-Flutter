@@ -22,4 +22,11 @@ class DatabaseSubsystemController {
     return jsonDecode(response.body);
   }
 
+  Future<Map> checkLockedCard(String cardCode) async {
+    var response = await _databaseBoundary.get(checkLockedCardPath,
+        optionalQuery: "?cardCode=${cardCode}"
+    );
+    return jsonDecode(response.body);
+  }
+
 }

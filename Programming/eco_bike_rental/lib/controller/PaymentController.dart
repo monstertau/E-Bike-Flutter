@@ -1,4 +1,5 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
+import 'package:eco_bike_rental/model/DB/db_interface.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
@@ -34,11 +35,11 @@ class PaymentController extends ControllerMVC {
     return result;
   }
 
-  // Description: Deposite money to card
+  // Description: Deposit money to card
   // @param: - creditCard card - card information
   //         - Int amount - amount of money
   // @return - Map message information
-  Future<Map> returnDepositeMoney(card, amount) async {
+  Future<Map> returnDepositMoney(card, amount) async {
     //TODO
     Map result;
     this._interbank = new InterbankSubsystem();
@@ -69,7 +70,7 @@ class PaymentController extends ControllerMVC {
   // Description: validate cvvCode of CreditCard
   // @param: - String cvvCode - cvv code of CreditCard
   // @return - true if valid
-  bool valideCvvCode(cvvCode) {
+  bool validateCvvCode(cvvCode) {
     //TODO
     try {
       if (cvvCode == null) return false;
@@ -121,20 +122,20 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-  // Description: validate the Account Info
-  // @param: - CreditCard card - credit card need to check
+  // Description: check card on use
+  // @param: - Strign cardCode - credit card need to check
   // @return - true if valid
-  bool checkAccountInfo(card) {
-    //TODO
-    print(card);
-    return true;
-  }
+  // bool checkLockedCard(String cardCode) {
+  //   //TODO
+
+
 
   // Description: create new payment
   // @param: - int amount - amount of money
   //         - String contents - contents of payment
   //         - CreditCard card - credit card
-  Payment createPayment(Bike bike,double depositMoney,DateTime start,String rentalCode ) {
+  Payment createPayment(
+      Bike bike, double depositMoney, DateTime start, String rentalCode) {
     return new Payment(bike, CreditCard.init(), 0, start, "0", rentalCode);
   }
 }

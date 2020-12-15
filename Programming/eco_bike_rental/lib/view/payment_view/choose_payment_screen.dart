@@ -9,6 +9,9 @@ import 'package:logger/logger.dart';
 import 'invoice_screen.dart';
 
 class ChoosePaymentScreen extends StatefulWidget {
+  Payment _payment;
+  ChoosePaymentScreen(Payment payment);
+
   @override
   _ChoosePaymentScreenState createState() => _ChoosePaymentScreenState();
 }
@@ -34,7 +37,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           paymentController.validateDateExpired(dateExpiredController.text);
       _validatecn =
           paymentController.validateCardCode(cardnumberController.text);
-      _validatecvv = paymentController.valideCvvCode(cvvCodeController.text);
+      _validatecvv = paymentController.validateCvvCode(cvvCodeController.text);
     });
     if (_validatecvv && _validatede && _validatename && _validatecn) {
       CreditCard card = new CreditCard(
@@ -42,20 +45,25 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           int.parse(cvvCodeController.text),
           dateExpiredController.text,
           ownerController.text);
-      var result = await paymentController.deductMoney(card, 10000);
-      if (result['success']) {
-        Navigator.pushNamed(context, invoiceRoute);
-        //TODO: create new payment
-        // Payment payment = new Payment(new Bike, _card, _deductAmount, _startRentTime, _paymentStatus, _rentalCode)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => InvoiceScreen(invoice: result['data']),
-          ),
-        );
-      } else {
-        logger.i(result['message']);
+      if (await card.checkInUse()) {
+        var result = await paymentController.deductMoney(card, 10000);
+        if (result['success']) {
+          Navigator.pushNamed(context, invoiceRoute);
+          //TODO: create new payment
+          print(widget._payment);
+          // widget._payment.
+          // Payment payment = new Payment(new Bike, _card, _deductAmount, _startRentTime, _paymentStatus, _rentalCode)
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => InvoiceScreen(invoice: result['data']),
+            ),
+          );
+        } else {
+          logger.i(result['message']);
+        }
       }
+
       // InterbankSubsystem interbanl = new Inbank
       // API().Patch("test");
       // print()

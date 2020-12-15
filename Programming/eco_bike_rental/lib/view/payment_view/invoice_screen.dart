@@ -54,7 +54,7 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                           children: <Widget>[
                             _colorRow("Deduct Money", "- ",
                                 data['amount'].toString() + " VND", Colors.red),
-                            _colorRow("Deposite Money", "+ ", "200,000 VND",
+                            _colorRow("Deposit Money", "+ ", "200,000 VND",
                                 Colors.green),
                             Divider(),
                             _colorRow(

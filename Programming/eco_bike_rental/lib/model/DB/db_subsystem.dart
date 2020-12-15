@@ -27,4 +27,11 @@ class DatabaseSubsystem implements DatabaseSubsystemInterface {
     Map response = await _con.getBikeByBarcode(barcode);
     return response["bike"];
   }
+
+  @override
+  Future<Map> checkLockCard(String cardCode) async {
+    // TODO: implement checkLockCard
+    Map response = await _con.checkLockedCard(cardCode);
+    return response['locked'];
+  }
 }

@@ -89,13 +89,13 @@ void main() {
     });
   });
 
-  group('Deposite Money Test', () {
-    test('Deposite 0', () {
-      Map status = paymentController.returnDepositeMoney(card, 0);
+  group('Deposit Money Test', () {
+    test('Deposit 0', () {
+      Map status = paymentController.returnDepositMoney(card, 0);
       expect(status["success"], true);
     });
-    test('Deposite 10000', () {
-      Map status = paymentController.returnDepositeMoney(card, 10000);
+    test('Deposit 10000', () {
+      Map status = paymentController.returnDepositMoney(card, 10000);
       expect(status["success"], true);
     });
   });
