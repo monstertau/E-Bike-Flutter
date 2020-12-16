@@ -9,4 +9,6 @@ abstract class DatabaseSubsystemInterface {
   Future<Map> getBikeByBarcode(String barcode);
 
   Future<Map> checkLockCard(String cardCode);
+
+  Future<Map> savePayment(Map payment);
 }

@@ -23,6 +23,7 @@ class CreditCard {
 
   Future<bool> checkInUse() async {
     var tmp = await database.checkLockCard(this._cardCode);
-    return tmp['lock'];
+    print(tmp);
+    return tmp['isLock'];
   }
 }

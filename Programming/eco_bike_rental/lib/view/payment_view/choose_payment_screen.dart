@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
@@ -5,21 +7,34 @@ import 'package:eco_bike_rental/utils/API.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'invoice_screen.dart';
+import 'dart:developer';
 
 class ChoosePaymentScreen extends StatefulWidget {
   Payment _payment;
-  ChoosePaymentScreen(Payment payment);
+
+  ChoosePaymentScreen(this._payment);
 
   @override
   _ChoosePaymentScreenState createState() => _ChoosePaymentScreenState();
 }
 
-TextEditingController ownerController = new TextEditingController();
-TextEditingController dateExpiredController = new TextEditingController();
-TextEditingController cardnumberController = new TextEditingController();
-TextEditingController cvvCodeController = new TextEditingController();
+// TextEditingController ownerController = new TextEditingController();
+// TextEditingController dateExpiredController = new TextEditingController();
+// TextEditingController cardnumberController = new TextEditingController();
+// TextEditingController cvvCodeController = new TextEditingController();
+
+TextEditingController ownerController =
+    new TextEditingController(text: 'Group 10');
+TextEditingController dateExpiredController =
+    new TextEditingController(text: '1125');
+TextEditingController cardnumberController =
+    new TextEditingController(text: '121319_group10_2020');
+TextEditingController cvvCodeController =
+    new TextEditingController(text: "323");
+
 String dropdownValue = 'One';
 PaymentController paymentController = new PaymentController();
 
@@ -45,18 +60,43 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           int.parse(cvvCodeController.text),
           dateExpiredController.text,
           ownerController.text);
-      if (await card.checkInUse()) {
+      if (!await card.checkInUse()) {
         var result = await paymentController.deductMoney(card, 10000);
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
           //TODO: create new payment
-          print(widget._payment);
-          // widget._payment.
-          // Payment payment = new Payment(new Bike, _card, _deductAmount, _startRentTime, _paymentStatus, _rentalCode)
+          logger.i(widget._payment.bike.barcode);
+          Map invoice = {
+            "payment": {
+              "rentalCode": widget._payment.rentalCode,
+              "depositAmount": widget._payment.depositAmount,
+              "startRentTime":
+                  widget._payment.startRentTime.toString().split('.')[0],
+              "endRentTime":
+                  widget._payment.startRentTime.toString().split('.')[0],
+              "bikeId": widget._payment.bike.id,
+              "status": 1,
+              "card": {
+                "cardCode": card.cardCode,
+                "cardName": card.owner,
+                "dateExpired": card.dateExpired,
+                "cvvCode": card.cvvCode
+              }
+            }
+          };
+          //save to DB
+          paymentController.save(invoice);
+
+          //save to share preference
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString("rentalCode", widget._payment.rentalCode);
+
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InvoiceScreen(invoice: result['data']),
+              // builder: (context) => InvoiceScreen(invoice: result['data']),
+              builder: (context) => InvoiceScreen(
+                  invoice: invoice['payment'], bike: widget._payment.bike),
             ),
           );
         } else {

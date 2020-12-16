@@ -1,11 +1,14 @@
+import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InvoiceScreen extends StatefulWidget {
   final Map invoice;
+  final Bike bike;
 
-  InvoiceScreen({Key key, @required this.invoice}) : super(key: key);
+  InvoiceScreen({Key key, @required this.invoice, this.bike}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _InvoiceSreen();
@@ -14,10 +17,8 @@ class InvoiceScreen extends StatefulWidget {
 // TextEditingValue card =
 class _InvoiceSreen extends State<InvoiceScreen> {
   final logger = new Logger();
-
   @override
   Widget build(BuildContext context) {
-    logger.i(widget.invoice);
     var data = widget.invoice;
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +39,11 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                           color: Colors.deepPurpleAccent,
                           borderRadius: BorderRadius.circular(4.0)),
                       child: Column(
-                        children: <Widget>[_cusRow1(data), _cusRow2(data)],
+                        children: <Widget>[
+                          _cusRow1(data['rentalCode'], data['startRentTime'],
+                              data['card']['cardName']),
+                          _cusRow2(data)
+                        ],
                       ))
                   // )
                   ),
@@ -52,10 +57,15 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            _colorRow("Deduct Money", "- ",
-                                data['amount'].toString() + " VND", Colors.red),
                             _colorRow("Deposit Money", "+ ", "200,000 VND",
                                 Colors.green),
+                            _colorRow(
+                                "Deduct Money",
+                                data['amount'] != null ? "- " : "",
+                                data['amount'] != null
+                                    ? data['amount'].toString() + " VND"
+                                    : "",
+                                Colors.red),
                             Divider(),
                             _colorRow(
                                 "Subtotal", "- ", "46,0000 VND", Colors.red),
@@ -77,12 +87,14 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                             Container(
                               child: Column(
                                 children: <Widget>[
-                                  _colorRow(
-                                      "Barcode", "", "3jk6ad2", Colors.black),
-                                  _colorRow("Bike Information", "", "E-bike",
+                                  _colorRow("Barcode", "", widget.bike.barcode,
                                       Colors.black),
-                                  _colorRow(
-                                      "Time Rented", "", "3h11m", Colors.black),
+                                  _colorRow("Bike Category", "",
+                                      widget.bike.category, Colors.black),
+                                  // _colorRow(
+                                  //     "Time Rented", "", "3h11m", Colors.black),
+                                  _colorRow("Bike Color", "", widget.bike.color,
+                                      Colors.black),
                                 ],
                               ),
                             )
@@ -97,7 +109,8 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                   margin: EdgeInsets.only(top: 25.0),
                   child: FlatButton.icon(
                       onPressed: () {
-                        Navigator.pushNamed(context, homeRoute);
+                        Navigator.pushNamedAndRemoveUntil(context, homeRoute,
+                            (Route<dynamic> route) => false);
                       },
                       icon: Icon(
                         Icons.home,
@@ -156,7 +169,7 @@ Widget _colorRow(label, sign, money, color) {
   ]);
 }
 
-Widget _cusRow1(info) {
+Widget _cusRow1(iid, startTime, owner) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -169,7 +182,7 @@ Widget _cusRow1(info) {
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Invoice - 0046",
+                      "Invoice - $iid",
                       style: TextStyle(
                           // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
@@ -179,7 +192,7 @@ Widget _cusRow1(info) {
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      info['createdAt'].toString().split(" ")[0],
+                      startTime.toString().split(" ")[0],
                       style: TextStyle(
                           // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
@@ -194,7 +207,7 @@ Widget _cusRow1(info) {
         child: Container(
           alignment: Alignment.topRight,
           child: Text(
-            info['owner'],
+            owner,
             style: TextStyle(
                 // fontWeight: FontWeight.w500,
                 letterSpacing: 1.5,

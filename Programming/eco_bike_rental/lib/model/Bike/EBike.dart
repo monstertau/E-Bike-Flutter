@@ -10,7 +10,7 @@ class EBike extends Bike {
   }
 
   EBike.init(int id, String barcode, String color, String category,
-      double bikeValue, double baseRentAmount, double addRentAmount, bool lock)
+      int bikeValue, int baseRentAmount, int addRentAmount, bool lock)
       : super.init(id, barcode, color, category, bikeValue, baseRentAmount,
             addRentAmount, lock);
 }

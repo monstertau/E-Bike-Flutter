@@ -5,19 +5,22 @@ class Payment {
   Bike _bike;
   CreditCard _card;
 
-  int _deductAmount;
-  int _depositAmount;
+  double _deductAmount;
+  double _depositAmount;
   DateTime _startRentTime;
   DateTime _endRentTime;
   String _paymentStatus;
   String _rentalCode;
 
   Bike get bike => _bike;
+
   CreditCard get card => _card;
+
   set card(CreditCard value) {
     _card = value;
   }
-  Payment(this._bike, this._card, this._deductAmount, this._startRentTime,
+
+  Payment(this._bike, this._card, this._startRentTime, this._depositAmount,
       this._paymentStatus, this._rentalCode);
 
   set bike(Bike value) {
@@ -42,22 +45,21 @@ class Payment {
     _endRentTime = value;
   }
 
+  double get deductAmount => _deductAmount;
+
   DateTime get startRentTime => _startRentTime;
+
+  set deductAmount(double value) {
+    _deductAmount = value;
+  }
 
   set startRentTime(DateTime value) {
     _startRentTime = value;
   }
 
-  int get depositAmount => _depositAmount;
-
-  set depositAmount(int value) {
+  set depositAmount(double value) {
     _depositAmount = value;
   }
 
-  int get deductAmount => _deductAmount;
-
-  set deductAmount(int value) {
-    _deductAmount = value;
-  }
-
+  double get depositAmount => _depositAmount;
 }

@@ -1,5 +1,7 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DB/db_interface.dart';
+import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
+import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
@@ -13,6 +15,7 @@ class PaymentController extends ControllerMVC {
   InterbankSubsystem _interbank;
 
   CreditCard get card => _card;
+  final DatabaseSubsystemInterface db = new DatabaseSubsystem();
 
   set card(CreditCard value) {
     _card = value;
@@ -29,7 +32,7 @@ class PaymentController extends ControllerMVC {
     try {
       result = await _interbank.pay(card, amount);
     } catch (e) {
-      print(e);
+      // print(e);
       result = {"success": false, "message": e.toString()};
     }
     return result;
@@ -46,7 +49,7 @@ class PaymentController extends ControllerMVC {
     try {
       result = await _interbank.refund(card, amount);
     } catch (e) {
-      print(e);
+      // print(e);
       result = {"success": false, "message": e.toString()};
     }
     return result;
@@ -128,14 +131,19 @@ class PaymentController extends ControllerMVC {
   // bool checkLockedCard(String cardCode) {
   //   //TODO
 
-
-
   // Description: create new payment
   // @param: - int amount - amount of money
   //         - String contents - contents of payment
   //         - CreditCard card - credit card
   Payment createPayment(
       Bike bike, double depositMoney, DateTime start, String rentalCode) {
-    return new Payment(bike, CreditCard.init(), 0, start, "0", rentalCode);
+    return new Payment(
+        bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
+  }
+
+  // Future<Map>
+  void save(Map payment) async {
+    var result = await db.savePayment(payment);
+    // return result['success'];
   }
 }
