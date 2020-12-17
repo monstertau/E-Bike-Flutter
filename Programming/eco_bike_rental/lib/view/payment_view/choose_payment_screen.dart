@@ -117,15 +117,16 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
       appBar: AppBar(
         title: Text("Choose Payment Screen"),
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TestIcon(iconName: Icons.credit_card),
-            Column(
+            SingleChildScrollView(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 DropdownCustom(),
                 TextField(
                   controller: cardnumberController,
@@ -160,7 +161,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                       errorText: _validatename ? null : 'Invalid Card Owner'),
                 ),
               ],
-            ),
+            )),
             Row(
               // width: 133,
               mainAxisAlignment: MainAxisAlignment.end,

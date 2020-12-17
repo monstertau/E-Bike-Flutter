@@ -17,6 +17,7 @@ class InvoiceScreen extends StatefulWidget {
 // TextEditingValue card =
 class _InvoiceSreen extends State<InvoiceScreen> {
   final logger = new Logger();
+
   @override
   Widget build(BuildContext context) {
     var data = widget.invoice;
@@ -170,6 +171,7 @@ Widget _colorRow(label, sign, money, color) {
 }
 
 Widget _cusRow1(iid, startTime, owner) {
+  var id = iid.split("-")[iid.split("-").length-1];
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -182,11 +184,11 @@ Widget _cusRow1(iid, startTime, owner) {
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Invoice - $iid",
+                      "Invoice - ***** $id",
                       style: TextStyle(
                           // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
-                          fontSize: 24,
+                          fontSize: 20,
                           color: Colors.white),
                     )),
                 Align(
@@ -196,7 +198,7 @@ Widget _cusRow1(iid, startTime, owner) {
                       style: TextStyle(
                           // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
-                          fontSize: 18,
+                          fontSize: 22,
                           color: Colors.white),
                     )),
               ],
