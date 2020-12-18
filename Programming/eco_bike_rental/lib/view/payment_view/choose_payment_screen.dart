@@ -61,7 +61,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           dateExpiredController.text,
           ownerController.text);
       if (!await card.checkInUse()) {
-        var result = await paymentController.deductMoney(card, 10000);
+        var result = await paymentController.deductMoney(card, widget._payment.depositAmount);
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
           //TODO: create new payment
@@ -117,15 +117,16 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
       appBar: AppBar(
         title: Text("Choose Payment Screen"),
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TestIcon(iconName: Icons.credit_card),
-            Column(
+            SingleChildScrollView(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 DropdownCustom(),
                 TextField(
                   controller: cardnumberController,
@@ -160,7 +161,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                       errorText: _validatename ? null : 'Invalid Card Owner'),
                 ),
               ],
-            ),
+            )),
             Row(
               // width: 133,
               mainAxisAlignment: MainAxisAlignment.end,

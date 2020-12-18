@@ -11,7 +11,7 @@ const String invoiceRoute = "/invoice";
 const String rentedBikeRoute = "/rented-detail";
 const String returnBikeRoute = "/return-bike";
 const String confirmReturnRoute = "/confirm-return";
-
+const String chooseReturnDockRoute = '/choose-return-dock';
 // setup logger
 final logger = Logger();
 
