@@ -30,7 +30,7 @@ class RentingController {
   }
 
   Bike getRentedBikeInformation(String rentalCode) {
-    // TODO: implement this
+
     return Bike.newBike();
   }
 
@@ -39,7 +39,7 @@ class RentingController {
     return List();
   }
 
-  bool requestReturnBike(Bike bike) {
+  bool requestReturnBike(DockStation dock) {
     // TODO: implement this
     return false;
   }

@@ -104,33 +104,6 @@ class _ListDockScreenState extends State<ListDockScreen> {
                     )
                   ],
                 );
-                return DataTable(
-                  showCheckboxColumn: false,
-                  sortAscending: true,
-                  sortColumnIndex: 0,
-                  columns: [
-                    DataColumn(label: Text("Name")),
-                    DataColumn(label: Text("Address")),
-                    DataColumn(label: Text("Area")),
-                    DataColumn(label: Text("Available"), numeric: true),
-                  ],
-                  rows: lstDock
-                      .map((e) => DataRow(
-                              onSelectChanged: (selected) {
-                                if (selected) {
-                                  Navigator.pushNamed(
-                                      context, detailedDockRoute,
-                                      arguments: e.id);
-                                }
-                              },
-                              cells: [
-                                DataCell(Text(e.dockName)),
-                                DataCell(Text(e.dockAddress)),
-                                DataCell(Text(e.dockArea)),
-                                DataCell(Text("${e.available}/${e.dockSize}"))
-                              ]))
-                      .toList(),
-                );
               } else {
                 return CircularProgressIndicator();
               }

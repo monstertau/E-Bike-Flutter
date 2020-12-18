@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'image_banner.dart';
 
 class RentedBikeScreen extends StatefulWidget {
@@ -8,8 +8,10 @@ class RentedBikeScreen extends StatefulWidget {
 }
 
 class _RentedBikeScreenState extends State<RentedBikeScreen> {
+  final RentingController rentingController = new RentingController();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Rented Bike Screen"),

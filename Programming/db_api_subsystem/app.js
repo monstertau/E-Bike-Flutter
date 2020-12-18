@@ -25,7 +25,8 @@ if (process.env.NODE_ENV !== "production") {
  */
 const dockController = require("./controllers/dock.controller");
 const bikeController = require("./controllers/bike.controller");
-
+const cardController = require("./controllers/card.controller");
+const paymentController = require("./controllers/payment.controller");
 /**
  * Create Express server.
  */
@@ -103,6 +104,9 @@ app.get("/test", dockController.test);
 app.get("/dock/get-all", dockController.getAll);
 app.get("/dock/get-detail", dockController.getDetail);
 app.get("/bike/search",bikeController.search);
+app.get("/card/check-locked",cardController.checkLock);
+app.post("/payment/create",paymentController.createPayment);
+app.post("/payment/search",paymentController.searchPayment);
 /**
  * Error Handler.
  */

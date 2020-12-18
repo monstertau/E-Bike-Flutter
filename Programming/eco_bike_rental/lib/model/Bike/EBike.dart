@@ -9,8 +9,10 @@ class EBike extends Bike {
     _battery = value;
   }
 
-  EBike.init(int id, String barcode, String color, String category,
-      int bikeValue, int baseRentAmount, int addRentAmount, bool lock)
-      : super.init(id, barcode, color, category, bikeValue, baseRentAmount,
-            addRentAmount, lock);
+  EBike.init(int id, String barcode, String color, String category, bool lock,
+      int battery)
+      : super.init(id, barcode, color, category, lock) {
+    this._battery = battery;
+    super.setAmount(700000, (10000 * 1.5).round(), (3000 * 1.5).round());
+  }
 }
