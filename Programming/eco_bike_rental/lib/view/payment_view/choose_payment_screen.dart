@@ -61,7 +61,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           dateExpiredController.text,
           ownerController.text);
       if (!await card.checkInUse()) {
-        var result = await paymentController.deductMoney(card, 10000);
+        var result = await paymentController.deductMoney(card, widget._payment.depositAmount);
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
           //TODO: create new payment
