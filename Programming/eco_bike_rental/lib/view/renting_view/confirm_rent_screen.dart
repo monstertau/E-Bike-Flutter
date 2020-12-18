@@ -1,6 +1,8 @@
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
+import 'package:eco_bike_rental/model/Bike/EBike.dart';
+import 'package:eco_bike_rental/model/Bike/TwinEBike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,9 +23,18 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String battery = "None";
     var depositMoney =
         rentingController.calculateDepositMoney(widget.bike.bikeValue);
     DateTime startRent = DateTime.now();
+    if (widget.bike is EBike) {
+      EBike b = widget.bike;
+      battery = "${b.battery}";
+    }
+    if (widget.bike is TwinEBike) {
+      TwinEBike b = widget.bike;
+      battery = "${b.battery}";
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Confirm Rent Bike ${widget.bike.id}"),
@@ -35,9 +46,9 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
             ItemList("Type", "${widget.bike.category}", Colors.grey[200]),
             ItemList("Barcode", "#${widget.bike.barcode}", Colors.grey[200]),
             ItemList("Color", "${widget.bike.color}", Colors.grey[200]),
-            ItemList("Battery Status", "42%", Colors.grey[200]),
+            ItemList("Battery Status", "${battery}%", Colors.grey[200]),
             ItemList("Start Rent From",
-                "${startRent.toString().substring(0, 10)}", Colors.grey[200]),
+                "${startRent.toString().substring(0, 19)}", Colors.grey[200]),
             ItemList("Deposit Money", "${depositMoney}", Colors.grey[200]),
             ItemList("Basic Rent Amount", "${widget.bike.baseRentAmount}",
                 Colors.grey[200]),
@@ -90,4 +101,3 @@ class ItemList extends StatelessWidget {
 
   ItemList(this._key, this._value, this._color);
 }
-

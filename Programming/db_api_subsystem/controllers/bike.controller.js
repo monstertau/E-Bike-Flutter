@@ -20,6 +20,17 @@ exports.search = async (req, res) => {
             message:"bike_already_rented"
         })
     }
+    if(rows[0].category == "Ebike"){
+      const queryEbike = `SELECT "battery" FROM ("ecoBikeSystem"."Bike" b JOIN "ecoBikeSystem"."Ebike" eb on b.id = eb.id) WHERE b.id = $1 ORDER BY b.id;`
+      const queryEbikeRes = await queryDb(queryEbike,[rows[0].id])
+      rows[0].battery = queryEbikeRes.rows[0].battery
+      // console.log(row)
+    }
+    if(rows[0].category == "TwinEbike"){
+      const queryTwinEbike = `SELECT "battery" FROM ("ecoBikeSystem"."Bike" b JOIN "ecoBikeSystem"."TwinEbike" teb on b.id = teb.id) WHERE b.id = $1 ORDER BY b.id;`
+      const queryTwinEbikeRes = await queryDb(queryTwinEbike,[rows[0].id])
+      rows[0].battery = queryTwinEbikeRes.rows[0].battery
+    }
     return res.status(200).json({
       success: true,
       bike: rows[0],
