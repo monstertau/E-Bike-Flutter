@@ -14,7 +14,7 @@ exports.search = async (req, res) => {
             message:"wrong_barcode"
         })
     }
-    if (!rows[0].lock){
+    if (!rows[0].lockbike){
         return res.status(400).json({
             success:false,
             message:"bike_already_rented"

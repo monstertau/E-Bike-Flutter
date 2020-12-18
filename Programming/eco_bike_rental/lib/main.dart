@@ -43,14 +43,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _lastSelected = 0;
   List<Widget> _listScreen = [
     ListDockScreen(),
-    // RentedBikeScreen(),
-    ConfirmReturnScreen(new Payment(
-        new Bike.init(1, "abcde", "red", "E-bike", false),
-        new CreditCard("121319_group10_2020", 323, "1125", "Group 10"),
-        DateTime.now().subtract(Duration(minutes: 30)),
-        10000,
-        "test",
-        "abcde"))
+    RentedBikeScreen(),
+    // ConfirmReturnScreen(new Payment(
+    //     new Bike.init(1, "abcde", "red", "E-bike", false),
+    //     new CreditCard("121319_group10_2020", 323, "1125", "Group 10"),
+    //     DateTime.now().subtract(Duration(minutes: 30)),
+    //     10000,
+    //     "test",
+    //     "abcde"))
   ];
 
   void _selectedTab(int index) {

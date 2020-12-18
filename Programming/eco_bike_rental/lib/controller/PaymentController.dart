@@ -136,7 +136,7 @@ class PaymentController extends ControllerMVC {
   //         - String contents - contents of payment
   //         - CreditCard card - credit card
   Payment createPayment(
-      Bike bike, double depositMoney, DateTime start, String rentalCode) {
+      Bike bike, int depositMoney, DateTime start, String rentalCode) {
     return new Payment(
         bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
   }
@@ -146,4 +146,5 @@ class PaymentController extends ControllerMVC {
     var result = await db.savePayment(payment);
     // return result['success'];
   }
+
 }

@@ -42,4 +42,10 @@ class DatabaseSubsystem implements DatabaseSubsystemInterface {
     return response;
   }
 
+  @override
+  Future<Map> searchPayment(String rentalCode) async {
+    // TODO: implement searchPayment
+    Map response = await _con.searchPayment(rentalCode);
+    return response["payment"];
+  }
 }

@@ -57,7 +57,11 @@ exports.createPayment = async (req, res) => {
 };
 exports.searchPayment = async (req, res) => {
   const { rentalCode } = req.body;
-  const querySearchPayment = `SELECT * FROM "ecoBikeSystem"."Payment" P JOIN "ecoBikeSystem"."Bike" B on B.id = P."bikeId" WHERE P."rentalCode" = $1;`;
+  const querySearchPayment = `SELECT *
+  FROM "ecoBikeSystem"."Payment" P
+           JOIN "ecoBikeSystem"."Bike" B on B.id = P."bikeId"
+           JOIN "ecoBikeSystem"."Card" C on P."cardId" = C.id
+  WHERE P."rentalCode" = $1;`;
   try {
     const { rows } = await queryDb(querySearchPayment, [rentalCode]);
     if (rows.length != 0) {
@@ -67,8 +71,17 @@ exports.searchPayment = async (req, res) => {
         color: payment.color,
         barcode: payment.barcode,
         category: payment.category,
+        lock:payment.lockbike
       };
-
+      const card = {
+        id: payment.cardId,
+        cardCode: payment.cardCode,
+        cardName: payment.cardName,
+        dateExpired: payment.dateExpired,
+        cvvCode: payment.cvvCode,
+        lock:payment.lock,
+      };
+      console.log(payment);
       if (payment.category == "Ebike") {
         const queryEbike = `SELECT "battery" FROM ("ecoBikeSystem"."Bike" b JOIN "ecoBikeSystem"."Ebike" eb on b.id = eb.id) WHERE b.id = $1 ORDER BY b.id;`;
         const queryEbikeRes = await queryDb(queryEbike, [payment.bikeId]);
@@ -92,6 +105,7 @@ exports.searchPayment = async (req, res) => {
           endRentTime: payment.endRentTime,
           status: payment.status,
           bike: bike,
+          card: card,
         },
       });
     } else {
