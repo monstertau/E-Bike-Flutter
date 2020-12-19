@@ -84,7 +84,6 @@ class DockController extends ControllerMVC {
     // TODO: implement this
     DockStation dock = await dockModel.getDockById(dockID);
     return dock.lstBike;
-
   }
   ///method for getting all docks
   Future<List<DockStation>> getAllDocks() async {

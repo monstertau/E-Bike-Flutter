@@ -17,4 +17,8 @@ void main() {
     var res = await con.getBikeByBarcode("abcde");
     logger.i(res);
   });
+  test("Test Payment By rentalCode", () async {
+    var res = await con.searchPayment("rentalCode");
+    logger.i(res);
+  });
 }

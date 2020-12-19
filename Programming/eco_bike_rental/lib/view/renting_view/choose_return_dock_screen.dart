@@ -1,25 +1,20 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
-import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
-class ListDockScreen extends StatefulWidget {
+class ChooseReturnDockScreen extends StatefulWidget {
   @override
-  _ListDockScreenState createState() => _ListDockScreenState();
+  _ChooseReturnDockScreenState createState() => _ChooseReturnDockScreenState();
 }
 
-class _ListDockScreenState extends State<ListDockScreen> {
+class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
   final DockController dockController = new DockController();
-  final logger = Logger();
-  int _id;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: complete design screen
     return Scaffold(
       appBar: AppBar(
-        title: Text("List Dock Screen"),
+        title: Text("Choose A Dock For Returning"),
       ),
       body: Container(
           alignment: Alignment.center,
@@ -77,8 +72,8 @@ class _ListDockScreenState extends State<ListDockScreen> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Navigator.pushNamed(context, detailedDockRoute,
-                                  arguments: lstDock[index].id);
+                              // Navigator.pushNamed(context, detailedDockRoute,
+                              //     arguments: lstDock[index].id);
                             },
                             child: Card(
                               child: ListTile(
@@ -87,7 +82,8 @@ class _ListDockScreenState extends State<ListDockScreen> {
                                     Expanded(
                                         child: Text(lstDock[index].dockName)),
                                     Expanded(
-                                        child: Text(lstDock[index].dockAddress)),
+                                        child:
+                                            Text(lstDock[index].dockAddress)),
                                     Expanded(
                                         child: Text(lstDock[index].dockArea)),
                                     Expanded(

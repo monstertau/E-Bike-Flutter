@@ -43,7 +43,7 @@ class DatabaseBoundary {
     }
   }
 
-  Future<http.Response> post(String path, Map<String, String> body) async {
+  Future<http.Response> post(String path, Map body) async {
     String auth = generateSignature("POST", jsonEncode(body), path);
     final response = await http.post(_makeUrl(path),
         headers: {

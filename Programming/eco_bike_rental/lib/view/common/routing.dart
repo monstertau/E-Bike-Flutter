@@ -4,8 +4,10 @@ import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/bike_view/bike_screen.dart';
 import 'package:eco_bike_rental/view/payment_view/choose_payment_screen.dart';
 import 'package:eco_bike_rental/view/payment_view/invoice_screen.dart';
+import 'package:eco_bike_rental/view/renting_view/choose_return_dock_screen.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
 import 'package:eco_bike_rental/view/bike_view/rented_bike_screen.dart';
+import 'package:eco_bike_rental/view/renting_view/confirm_return_screen.dart';
 import 'package:flutter/material.dart';
 import '../renting_view/barcode_screen.dart';
 import '../dock_view/detailed_dock_screen.dart';
@@ -34,17 +36,32 @@ class AppRouter {
         Bike bike = settings.arguments;
         return MaterialPageRoute(
             builder: (context) => ConfirmRentBikeScreen(
-                  bike:bike,
+                  bike: bike,
                 ));
         break;
       case choosePaymentRoute:
         Payment payment = settings.arguments;
-        return MaterialPageRoute(builder: (context) => ChoosePaymentScreen());
+        return MaterialPageRoute(
+            builder: (context) => ChoosePaymentScreen(payment));
+        break;
       case rentedBikeRoute:
         String id = settings.arguments;
         return MaterialPageRoute(builder: (context) => RentedBikeScreen());
+        break;
+
       case invoiceRoute:
         return MaterialPageRoute(builder: (context) => InvoiceScreen());
+        break;
+
+      case confirmReturnRoute:
+        Payment payment = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => ConfirmReturnScreen(payment));
+        break;
+      case chooseReturnDockRoute:
+        return MaterialPageRoute(
+            builder: (context) => ChooseReturnDockScreen());
+        break;
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(
