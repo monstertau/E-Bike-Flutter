@@ -19,6 +19,7 @@ class InvoiceScreen extends StatefulWidget {
 // TextEditingValue card =
 class _InvoiceSreen extends State<InvoiceScreen> {
   final logger = new Logger();
+
   @override
   Widget build(BuildContext context) {
     logger.i(widget.invoice);

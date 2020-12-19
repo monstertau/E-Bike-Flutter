@@ -26,7 +26,7 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
     String battery = "None";
     var depositMoney =
         rentingController.calculateDepositMoney(widget.bike.bikeValue);
-    DateTime startRent = DateTime.now();
+    DateTime startRent = DateTime.now().toUtc();
     if (widget.bike is EBike) {
       EBike b = widget.bike;
       battery = "${b.battery}";

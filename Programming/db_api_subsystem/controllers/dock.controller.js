@@ -11,7 +11,7 @@ exports.test = async (req, res) => {
 exports.getAll = async (req, res) => {
   const queryAll = `SELECT d.id, name, area, size, address, count(b.id) as available
   FROM "ecoBikeSystem"."DockStation" as d
-           LEFT OUTER JOIN "ecoBikeSystem"."Bike" as b on b."dockId" = d.id AND b.lock = true
+           LEFT OUTER JOIN "ecoBikeSystem"."Bike" as b on b."dockId" = d.id AND b.lockbike = true
   GROUP BY d.id
   ORDER BY d.id;`;
   try {
@@ -38,7 +38,7 @@ exports.getDetail = async (req, res) => {
       error: "missing_query_param",
     });
   }
-  const queryDetail = `SELECT b.id, barcode, color, category, "bikeValue", "baseRentAmount", "additionalRentAmount", lock FROM "ecoBikeSystem"."DockStation" as d
+  const queryDetail = `SELECT b.id, barcode, color, category, "bikeValue", "baseRentAmount", "additionalRentAmount", "lockbike" FROM "ecoBikeSystem"."DockStation" as d
   JOIN "ecoBikeSystem"."Bike" b on b."dockId" = d.id AND b."dockId" = $1 ORDER BY b.id;`;
   try {
     const { rows } = await queryDb(queryDetail, [id]);
