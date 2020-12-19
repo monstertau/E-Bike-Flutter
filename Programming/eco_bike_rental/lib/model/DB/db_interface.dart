@@ -11,4 +11,6 @@ abstract class DatabaseSubsystemInterface {
   Future<Map> checkLockCard(String cardCode);
 
   Future<Map> savePayment(Map payment);
+
+  Future<Map> updatePayment(Map payment);
 }

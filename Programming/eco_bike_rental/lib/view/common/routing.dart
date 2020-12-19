@@ -50,7 +50,8 @@ class AppRouter {
         break;
 
       case invoiceRoute:
-        return MaterialPageRoute(builder: (context) => InvoiceScreen());
+        Payment payment = settings.arguments;
+        return MaterialPageRoute(builder: (context) => InvoiceScreen(payment));
         break;
 
       case confirmReturnRoute:

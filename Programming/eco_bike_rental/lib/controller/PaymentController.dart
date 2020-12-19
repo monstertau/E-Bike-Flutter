@@ -144,6 +144,12 @@ class PaymentController extends ControllerMVC {
   // Future<Map>
   void save(Map payment) async {
     var result = await db.savePayment(payment);
+    print(result);
     // return result['success'];
+  }
+
+  void update(Map payment) async {
+    var result = await db.updatePayment(payment);
+    print(result);
   }
 }

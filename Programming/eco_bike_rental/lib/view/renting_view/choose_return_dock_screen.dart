@@ -74,6 +74,7 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                             onTap: () {
                               // Navigator.pushNamed(context, detailedDockRoute,
                               //     arguments: lstDock[index].id);
+                              Navigator.pop(context, lstDock[index].dockName);
                             },
                             child: Card(
                               child: ListTile(

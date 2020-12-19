@@ -42,4 +42,9 @@ class DatabaseSubsystem implements DatabaseSubsystemInterface {
     return response;
   }
 
+  Future<Map> updatePayment(Map payment) async {
+    // TODO: implement updatePayment
+    Map response = await _con.updatePayment(payment);
+    return response;
+  }
 }
