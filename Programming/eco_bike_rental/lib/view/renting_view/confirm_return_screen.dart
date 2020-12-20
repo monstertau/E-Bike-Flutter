@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js';
 
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';

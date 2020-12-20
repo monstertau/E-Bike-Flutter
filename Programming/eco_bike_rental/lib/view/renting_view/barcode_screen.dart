@@ -1,5 +1,6 @@
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
+import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class BarcodeScreen extends StatefulWidget {
@@ -14,7 +15,9 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
 
   Widget _buildBarCode() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Barcode'),
+      textAlign: TextAlign.center,
+      decoration:
+          InputDecoration(labelText: 'Barcode', border: OutlineInputBorder()),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Barcode is required';
@@ -32,8 +35,10 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Barcode Screen"),
+      appBar: CustomAppBar(
+        title: "Enter Barcode",
+        centerTitle: true,
+        oneScreen: false,
       ),
       body: Container(
         margin: EdgeInsets.all(24),
@@ -44,18 +49,23 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
             children: <Widget>[
               _buildBarCode(),
               SizedBox(height: 80),
-              MaterialButton(
+              FlatButton(
                 child: setupButtonChild(),
+                color: Colors.blue,
+                textColor: Colors.white,
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
                 onPressed: () {
                   if (!_formKey.currentState.validate()) {
                     return;
                   }
                   _formKey.currentState.save();
                   setState(() {
-                    if(_state == 0){
+                    if (_state == 0) {
                       _state = 1;
                       rentingController.requestRentBike(_barCode).then((value) {
-                        Navigator.pushNamed(context, confirmRentingRoute,arguments: value);
+                        Navigator.pushNamed(context, confirmRentingRoute,
+                            arguments: value);
                         setState(() {
                           _state = 0;
                         });
@@ -65,18 +75,20 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
                 },
               )
             ],
-          ),),
+          ),
+        ),
       ),
-
     );
   }
 
   Widget setupButtonChild() {
-    if (_state == 0) {
-      return Text('Confirm renting',
-        style: TextStyle(color: Colors.blue, fontSize: 16),
-      );
-    }
-    return CircularProgressIndicator();
+    return Container(
+      padding: EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
+      child: _state == 0
+          ? Text('Confirm renting', style: TextStyle(fontSize: 16))
+          : CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ),
+    );
   }
 }

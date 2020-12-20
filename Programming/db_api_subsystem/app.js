@@ -107,6 +107,7 @@ app.get("/bike/search",bikeController.search);
 app.get("/card/check-locked",cardController.checkLock);
 app.post("/payment/create",paymentController.createPayment);
 app.post("/payment/search",paymentController.searchPayment);
+app.post("/payment/update",paymentController.updatePayment);
 /**
  * Error Handler.
  */

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
+import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,58 +65,56 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_state == 0) {
-      return Scaffold(
-          appBar: AppBar(
-            title: Text("Rented Bike Screen"),
-          ),
-          body: Center(child: Text("No rented bike yet.")));
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Rented Bike Screen"),
-        ),
-        body: SingleChildScrollView(
-          child: FutureBuilder(
-              future: _payment,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData != null) {
-                  Payment payment = snapshot.data;
-                  Duration rentTime = rentingController.calculateRentingTime(
-                      payment.startRentTime, _rentEndTime);
-                  int rentingAmount = rentingController.calculateRentingAmount(
-                      rentTime,
-                      payment.bike.baseRentAmount,
-                      payment.bike.addRentAmount);
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ImageBanner("lib/assets/images/bike.jpg",
-                          'Bike ${payment.bike.barcode}', true),
-                      TextItem('Color', '${payment.bike.color}'),
-                      TextItem('Battery Status', '50%'),
-                      TextItem('Time Rented', _formatDateTime(rentTime)),
-                      TextItem('Payment Amount', '$rentingAmount VND'),
-                      RaisedButton(
-                        onPressed: () {
-                          payment.deductAmount = rentingAmount;
-                          payment.endRentTime = _rentEndTime;
-                          Navigator.pushNamed(context, confirmReturnRoute,
-                              arguments: payment);
-                        },
-                        child: Text("Confirm return bike"),
-                      )
-                    ],
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
-        ),
-      );
-    }
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: "Rented Bike",
+        centerTitle: true,
+        oneScreen: true,
+      ),
+      body: _state == 0
+          ? Center(child: Text("No rented bike yet."))
+          : SingleChildScrollView(
+              child: FutureBuilder(
+                  future: _payment,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData != null) {
+                      Payment payment = snapshot.data;
+                      Duration rentTime =
+                          rentingController.calculateRentingTime(
+                              payment.startRentTime, _rentEndTime);
+                      int rentingAmount =
+                          rentingController.calculateRentingAmount(
+                              rentTime,
+                              payment.bike.baseRentAmount,
+                              payment.bike.addRentAmount);
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ImageBanner("lib/assets/images/bike.jpg",
+                              'Bike ${payment.bike.barcode}', true),
+                          TextItem('Color', '${payment.bike.color}'),
+                          TextItem('Battery Status', '50%'),
+                          TextItem('Time Rented', _formatDateTime(rentTime)),
+                          TextItem('Payment Amount', '$rentingAmount VND'),
+                          RaisedButton(
+                            onPressed: () {
+                              payment.deductAmount = rentingAmount;
+                              payment.endRentTime = _rentEndTime;
+                              Navigator.pushNamed(context, confirmReturnRoute,
+                                  arguments: payment);
+                            },
+                            child: Text("Confirm return bike"),
+                          )
+                        ],
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
+            ),
+    );
   }
 
   Widget TextItem(String key, String value) {
