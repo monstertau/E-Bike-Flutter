@@ -10,7 +10,7 @@ class Payment {
   Bike _bike;
   CreditCard _card;
 
-  int _deductAmount;
+  int _rentAmount;
   int _depositAmount;
   DateTime _startRentTime;
   DateTime _endRentTime;
@@ -28,16 +28,20 @@ class Payment {
 
   CreditCard get card => _card;
 
+  set card(CreditCard value) {
+    _card = value;
+  }
+
   String get rentalCode => _rentalCode;
 
   String get paymentStatus => _paymentStatus;
 
   DateTime get endRentTime => _endRentTime;
 
-  int get deductAmount => _deductAmount;
+  int get rentAmount => _rentAmount;
 
-  set deductAmount(int value) {
-    _deductAmount = value;
+  set rentAmount(int value) {
+    _rentAmount = value;
   }
 
   DateTime get startRentTime => _startRentTime;
@@ -45,9 +49,11 @@ class Payment {
   set startRentTime(DateTime value) {
     _startRentTime = value;
   }
+
   set endRentTime(DateTime value) {
     _endRentTime = value;
   }
+
   int get depositAmount => _depositAmount;
 
   Future<Payment> getPaymentInfo(String rentalCode) async {
@@ -66,5 +72,42 @@ class Payment {
     return payment;
   }
 
+  void save() async {
+    Map invoice = {
+      "payment": {
+        "rentalCode": this.rentalCode,
+        "depositAmount": this.depositAmount,
+        "startRentTime": this.startRentTime.toString().split('.')[0],
+        "endRentTime": this.startRentTime.toString().split('.')[0],
+        "bikeId": this.bike.id,
+        "status": 1,
+        "card": {
+          "cardCode": card.cardCode,
+          "cardName": card.owner,
+          "dateExpired": card.dateExpired,
+          "cvvCode": card.cvvCode
+        }
+      }
+    };
+    var result = await _database.savePayment(invoice);
+    print(result);
+    // return result['success'];
+  }
 
+  void update(dockId) async {
+    Map invoice = {
+      "payment": {
+        "rentalCode": this.rentalCode,
+        "rentAmount": this.rentAmount,
+        "endRentTime": this.startRentTime.toUtc().toString().split('.')[0],
+        "status": 2,
+        "card": {
+          "cardCode": this.card.cardCode,
+        },
+        "bike": {"barcode": this.bike.barcode, "dockId": dockId}
+      }
+    };
+    var result = await _database.updatePayment(invoice);
+    print(result);
+  }
 }

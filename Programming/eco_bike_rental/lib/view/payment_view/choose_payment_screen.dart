@@ -27,13 +27,13 @@ class ChoosePaymentScreen extends StatefulWidget {
 // TextEditingController cvvCodeController = new TextEditingController();
 
 TextEditingController ownerController =
-new TextEditingController(text: 'Group 10');
+    new TextEditingController(text: 'Group 10');
 TextEditingController dateExpiredController =
-new TextEditingController(text: '1125');
+    new TextEditingController(text: '1125');
 TextEditingController cardnumberController =
-new TextEditingController(text: '121319_group10_2020');
+    new TextEditingController(text: '121319_group10_2020');
 TextEditingController cvvCodeController =
-new TextEditingController(text: "323");
+    new TextEditingController(text: "323");
 
 String dropdownValue = 'One';
 PaymentController paymentController = new PaymentController();
@@ -67,27 +67,28 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           Navigator.pushNamed(context, invoiceRoute);
           //TODO: create new payment
           logger.i(widget._payment.bike.barcode);
-          Map invoice = {
-            "payment": {
-              "rentalCode": widget._payment.rentalCode,
-              "depositAmount": widget._payment.depositAmount,
-              "startRentTime":
-              widget._payment.startRentTime.toString().split('.')[0],
-              "endRentTime":
-              widget._payment.startRentTime.toString().split('.')[0],
-              "bikeId": widget._payment.bike.id,
-              "status": 1,
-              "card": {
-                "cardCode": card.cardCode,
-                "cardName": card.owner,
-                "dateExpired": card.dateExpired,
-                "cvvCode": card.cvvCode
-              }
-            }
-          };
+          // Map invoice = {
+          //   "payment": {
+          //     "rentalCode": widget._payment.rentalCode,
+          //     "depositAmount": widget._payment.depositAmount,
+          //     "startRentTime":
+          //         widget._payment.startRentTime.toString().split('.')[0],
+          //     "endRentTime":
+          //         widget._payment.startRentTime.toString().split('.')[0],
+          //     "bikeId": widget._payment.bike.id,
+          //     "status": 1,
+          //     "card": {
+          //       "cardCode": card.cardCode,
+          //       "cardName": card.owner,
+          //       "dateExpired": card.dateExpired,
+          //       "cvvCode": card.cvvCode
+          //     }
+          //   }
+          // };
           //save to DB
-          paymentController.save(invoice);
-
+          // paymentController.save(invoice);
+          widget._payment.card = card;
+          widget._payment.save();
           //save to share preference
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.setString("rentalCode", widget._payment.rentalCode);
@@ -100,8 +101,10 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           //         invoice: invoice['payment'], bike: widget._payment.bike),
           //   ),
           // );
-          Navigator.pushNamed(
-              context, invoiceRoute, arguments: widget._payment);
+          // Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, invoiceRoute, (Route<dynamic> route) => false,
+              arguments: widget._payment);
         } else {
           logger.i(result['message']);
         }
@@ -127,50 +130,44 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
             TestIcon(iconName: Icons.credit_card),
             SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    DropdownCustom(),
-                    TextField(
-                      controller: cardnumberController,
-                      // obscureText: false,
-                      decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'Enter Card Number',
-                          errorText: _validatecn
-                              ? null
-                              : 'Invalid Card Number'),
-                    ),
-                    TextField(
-                      controller: dateExpiredController,
-                      // obscureText: false,
-                      decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'Date Expired',
-                          errorText: _validatede
-                              ? null
-                              : 'Invalid Date Expired'),
-                    ),
-                    TextField(
-                      controller: cvvCodeController,
-                      // obscureText: false,
-                      decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'CVV Code',
-                          errorText: _validatecvv ? null : 'Invalid Cvv Code'),
-                    ),
-                    TextField(
-                      controller: ownerController,
-                      // obscureText: false,
-                      decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'Enter Name on the Card',
-                          errorText: _validatename
-                              ? null
-                              : 'Invalid Card Owner'),
-                    ),
-                  ],
-                )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                DropdownCustom(),
+                TextField(
+                  controller: cardnumberController,
+                  // obscureText: false,
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Enter Card Number',
+                      errorText: _validatecn ? null : 'Invalid Card Number'),
+                ),
+                TextField(
+                  controller: dateExpiredController,
+                  // obscureText: false,
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Date Expired',
+                      errorText: _validatede ? null : 'Invalid Date Expired'),
+                ),
+                TextField(
+                  controller: cvvCodeController,
+                  // obscureText: false,
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'CVV Code',
+                      errorText: _validatecvv ? null : 'Invalid Cvv Code'),
+                ),
+                TextField(
+                  controller: ownerController,
+                  // obscureText: false,
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Enter Name on the Card',
+                      errorText: _validatename ? null : 'Invalid Card Owner'),
+                ),
+              ],
+            )),
             Row(
               // width: 133,
               mainAxisAlignment: MainAxisAlignment.end,

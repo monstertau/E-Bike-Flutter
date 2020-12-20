@@ -60,8 +60,9 @@ class AppRouter {
             builder: (context) => ConfirmReturnScreen(payment));
         break;
       case chooseReturnDockRoute:
+        int index = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => ChooseReturnDockScreen());
+            builder: (context) => ChooseReturnDockScreen(index));
         break;
       default:
         return MaterialPageRoute(

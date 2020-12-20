@@ -37,4 +37,10 @@ class DatabaseSubsystemController {
     var response = await _databaseBoundary.post(updatePaymentPath, payment);
     return jsonDecode(response.body);
   }
+
+  Future<Map> searchPayment(String rentalCode) async {
+    Map body = {"rentalCode": "${rentalCode}"};
+    var response = await _databaseBoundary.post(searchPaymentPath, body);
+    return jsonDecode(response.body);
+  }
 }

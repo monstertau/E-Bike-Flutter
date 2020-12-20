@@ -22,4 +22,5 @@ const String getDockDetailPath = "/dock/get-detail";
 const String getBarcodeBikePath = "/bike/search";
 const String checkLockedCardPath = "/card/check-locked";
 const String savePaymentPath = '/payment/create';
-const String updatePaymentPath = '/payment/';
+const String updatePaymentPath = '/payment/update';
+const String searchPaymentPath = '/payment/search';

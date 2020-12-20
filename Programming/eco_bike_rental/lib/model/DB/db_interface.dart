@@ -13,4 +13,6 @@ abstract class DatabaseSubsystemInterface {
   Future<Map> savePayment(Map payment);
 
   Future<Map> updatePayment(Map payment);
+
+  Future<Map> searchPayment(String rentalCode);
 }

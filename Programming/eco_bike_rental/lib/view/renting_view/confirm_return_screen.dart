@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js';
 
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
@@ -21,15 +20,22 @@ class ConfirmReturnScreen extends StatefulWidget {
   _ConfirmReturnScreenState createState() => _ConfirmReturnScreenState();
 }
 
-String _dockName = "Choose dock";
+String _dockName;
+int index = -1;
 
 class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   String _timeString;
+  int _initTime;
   PaymentController paymentController = new PaymentController();
 
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    _initTime = 0;
+    Timer.periodic(
+        Duration(seconds: 1),
+        (Timer t) => {
+              if (mounted) {_getTime()}
+            });
     super.initState();
   }
 
@@ -48,10 +54,15 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   }
 
   void _getTime() {
+    if (_initTime > 300) {
+      // dispose();
+      Navigator.pop(context, "test");
+    }
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     setStateIfMounted(() {
       _timeString = formattedDateTime;
+      _initTime += 1;
     });
   }
 
@@ -60,43 +71,25 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   }
 
   void _confirmReturn(context) async {
-    if (_dockName != "Choose dock") {
+    if (_dockName != null) {
       //TODO: return money
-      Map res = await paymentController.returnDepositMoney(
-          widget._payment.card, widget._payment.depositAmount);
+      // paymentController.returnDepositMoney(widget._payment.card, widget.)
+      Map res = await paymentController.returnDepositMoney(widget._payment.card,
+          widget._payment.depositAmount, widget._payment.rentAmount);
       if (res['success']) {
-        Map invoice = {
-          "payment": {
-            "rentalCode": widget._payment.rentalCode,
-            "depositAmount": widget._payment.depositAmount,
-            "deductAmount": widget._payment.deductAmount,
-            "startRentTime":
-                widget._payment.startRentTime.toString().split('.')[0],
-            "endRentTime":
-                widget._payment.startRentTime.toString().split('.')[0],
-            "bikeId": widget._payment.bike.id,
-            "status": 1,
-            "card": {
-              "cardCode": widget._payment.card.cardCode,
-              // "cardName": widget._payment.card.owner,
-              // "dateExpired": widget._payment.card.dateExpired,
-              // "cvvCode": widget._payment.card.cvvCode
-            },
-            "bike": {"barcode": widget._payment.bike.barcode}
-          }
-        };
-
-        // paymentController.update(invoice);
-
+        widget._payment.update(index);
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.remove("rentalCode");
 
-        Navigator.popAndPushNamed(context, invoiceRoute,
+        Navigator.pushNamedAndRemoveUntil(
+            context, invoiceRoute, (Route<dynamic> route) => false,
             arguments: widget._payment);
       } else {
         //TODO: Handle Error
         print(res['message']);
       }
+    } else {
+      print("Please choose dock");
     }
   }
 
@@ -111,8 +104,10 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
         child: Column(
           children: [
             ItemList("Type", widget._payment.bike.category, Colors.grey[200]),
-            ItemList("Start Rent From",
-                widget._payment.startRentTime.toString(), Colors.grey[200]),
+            ItemList(
+                "Start Rent From",
+                widget._payment.startRentTime.toLocal().toString(),
+                Colors.grey[200]),
             ItemList("Time Rented", _timeString, Colors.grey[200]),
             // ItemList("Return to Dock", "Thanh Xuan", Colors.grey[200]),
             ItemChoose(context, "Return to Dock", Colors.grey[200]),
@@ -121,8 +116,12 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
                 "Card Number", widget._payment.card.cardCode, Colors.grey[200]),
             ItemList("Deposit Amount", widget._payment.depositAmount.toString(),
                 Colors.grey[200]),
-            ItemList("Renting Price", "-", Colors.grey[200]),
-            ItemList("Total", "+", Colors.red[200]),
+            ItemList("Renting Price", "${widget._payment.rentAmount}",
+                Colors.grey[200]),
+            ItemList(
+                "Return",
+                "${widget._payment.depositAmount - widget._payment.rentAmount}",
+                Colors.red[200]),
             RaisedButton(
               onPressed: () {
                 _confirmReturn(context);
@@ -149,13 +148,18 @@ Widget ItemChoose(context, title, color) {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         OutlineButton(
-          onPressed: () {
-            Navigator.pushNamed(context, chooseReturnDockRoute)
-                .then((onValue) => _dockName = onValue);
+          onPressed: () async {
+            var choosedValue = await Navigator.pushNamed(
+                context, chooseReturnDockRoute,
+                arguments: index);
+            if (choosedValue != null) {
+              index = (choosedValue as Map)['index'];
+              _dockName = (choosedValue as Map)['name'];
+            }
           },
           shape: new RoundedRectangleBorder(),
           child: Text(
-            _dockName,
+            _dockName == null ? "Choose dock" : _dockName,
             style: TextStyle(
               color: Colors.grey,
             ),

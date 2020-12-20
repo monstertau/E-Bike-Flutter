@@ -7,22 +7,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class InvoiceScreen extends StatefulWidget {
   final Payment invoice;
+
   // final Bike bike;
 
   // InvoiceScreen(Payment payment, {Key key, @required this.invoice, this.bike}) : super(key: key);
   InvoiceScreen(this.invoice);
 
   @override
-  State<StatefulWidget> createState() => _InvoiceSreen();
+  State<StatefulWidget> createState() => _InvoiceScreen();
 }
 
 // TextEditingValue card =
-class _InvoiceSreen extends State<InvoiceScreen> {
+class _InvoiceScreen extends State<InvoiceScreen> {
   final logger = new Logger();
 
   @override
   Widget build(BuildContext context) {
-    logger.i(widget.invoice);
+    logger.i(widget.invoice.rentalCode);
+    var subtotal = (widget.invoice.rentAmount != null
+        ? widget.invoice.depositAmount - widget.invoice.rentAmount
+        : -widget.invoice.depositAmount);
     return Scaffold(
       appBar: AppBar(
         title: Text("Invoice"),
@@ -43,7 +47,9 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                           borderRadius: BorderRadius.circular(4.0)),
                       child: Column(
                         children: <Widget>[
-                          _cusRow1(widget.invoice.rentalCode, widget.invoice.startRentTime,
+                          _cusRow1(
+                              widget.invoice.rentalCode,
+                              widget.invoice.startRentTime,
                               widget.invoice.card.owner),
                           _cusRow2(widget.invoice)
                         ],
@@ -60,18 +66,32 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            _colorRow("Deposit Money", "+ ", "200,000 VND",
-                                Colors.green),
                             _colorRow(
-                                "Deduct Money",
-                                widget.invoice.deductAmount != null ? "- " : "",
-                                widget.invoice.deductAmount!= null
-                                    ? widget.invoice.deductAmount.toString() + " VND"
-                                    : "",
+                                "Deposit Money",
+                                "-",
+                                widget.invoice.depositAmount.toString() +
+                                    " VND",
                                 Colors.red),
+                            _colorRow(
+                                "Return Money",
+                                widget.invoice.rentAmount != null
+                                    ? (subtotal > 0 ? "+" : " ")
+                                    : "--------",
+                                widget.invoice.rentAmount != null
+                                    ? subtotal.toString() + " VND"
+                                    : "",
+                                subtotal > 0 ? Colors.green : Colors.red),
                             Divider(),
                             _colorRow(
-                                "Subtotal", "- ", "46,0000 VND", Colors.red),
+                                "Rented Amount",
+                                widget.invoice.rentAmount != null
+                                    ? "-"
+                                    : "--------",
+                                widget.invoice.rentAmount != null
+                                    ? widget.invoice.rentAmount.toString() +
+                                        " VND"
+                                    : "",
+                                Colors.red),
                           ],
                         ),
                       )
@@ -90,14 +110,20 @@ class _InvoiceSreen extends State<InvoiceScreen> {
                             Container(
                               child: Column(
                                 children: <Widget>[
-                                  _colorRow("Barcode", "", widget.invoice.bike.barcode,
+                                  _colorRow(
+                                      "Barcode",
+                                      "",
+                                      widget.invoice.bike.barcode,
                                       Colors.black),
-                                  _colorRow("Bike Category", "",
-                                      widget.invoice.bike.category, Colors.black),
+                                  _colorRow(
+                                      "Bike Category",
+                                      "",
+                                      widget.invoice.bike.category,
+                                      Colors.black),
                                   // _colorRow(
                                   //     "Time Rented", "", "3h11m", Colors.black),
-                                  _colorRow("Bike Color", "", widget.invoice.bike.color,
-                                      Colors.black),
+                                  _colorRow("Bike Color", "",
+                                      widget.invoice.bike.color, Colors.black),
                                 ],
                               ),
                             )
@@ -173,7 +199,10 @@ Widget _colorRow(label, sign, money, color) {
 }
 
 Widget _cusRow1(iid, startTime, owner) {
-  var id = iid.split("-")[iid.split("-").length-1];
+  var id = iid.split("-")[iid.split("-").length - 1];
+  print(iid);
+  print(startTime);
+  print(owner);
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
