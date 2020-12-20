@@ -100,7 +100,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
                       TextItem('Payment Amount', '$rentingAmount VND'),
                       RaisedButton(
                         onPressed: () {
-                          payment.deductAmount = rentingAmount;
+                          payment.rentAmount = rentingAmount;
                           payment.endRentTime = _rentEndTime;
                           Navigator.pushNamed(context, confirmReturnRoute,
                               arguments: payment);

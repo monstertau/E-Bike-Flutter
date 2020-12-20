@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 
 class ChooseReturnDockScreen extends StatefulWidget {
   @override
+  final int _choosed;
+
+  ChooseReturnDockScreen(this._choosed);
+
   _ChooseReturnDockScreenState createState() => _ChooseReturnDockScreenState();
 }
 
 class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
   final DockController dockController = new DockController();
+  Map returnMap = {"name": null, "index": null};
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,10 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                               height: 3.0,
                               fontSize: 15.2,
                               fontWeight: FontWeight.bold),
-                        ))
+                        )),
+                        Expanded(
+                          child: Text(""),
+                        )
                       ],
                     ),
                     Divider(),
@@ -72,8 +80,9 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              // Navigator.pushNamed(context, detailedDockRoute,
-                              //     arguments: lstDock[index].id);
+                              returnMap['name'] = lstDock[index].dockName;
+                              returnMap['index'] = lstDock[index].dockID;
+                              Navigator.pop(context, returnMap);
                             },
                             child: Card(
                               child: ListTile(
@@ -88,7 +97,16 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                                         child: Text(lstDock[index].dockArea)),
                                     Expanded(
                                         child: Text(
-                                            "${lstDock[index].available}/${lstDock[index].dockSize}"))
+                                            "${lstDock[index].available}/${lstDock[index].dockSize}")),
+                                    Expanded(
+                                      child: CheckboxListTile(
+                                        value: lstDock[index].dockID != widget._choosed
+                                            ? false
+                                            : true,
+                                        controlAffinity: ListTileControlAffinity
+                                            .leading, //  <-- leading Checkbox
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),

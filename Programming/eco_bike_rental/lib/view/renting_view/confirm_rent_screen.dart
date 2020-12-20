@@ -49,12 +49,12 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
             ItemList("Battery Status", "${battery}%", Colors.grey[200]),
             ItemList("Start Rent From",
                 "${startRent.toString().substring(0, 19)}", Colors.grey[200]),
-            ItemList("Deposit Money", "${depositMoney}", Colors.grey[200]),
+            ItemList("Deposit Money", "$depositMoney", Colors.grey[200]),
             ItemList("Basic Rent Amount", "${widget.bike.baseRentAmount}",
                 Colors.grey[200]),
             ItemList("Additional Rent Amount", "${widget.bike.addRentAmount}",
                 Colors.grey[200]),
-            ItemList("Subtotal", "${depositMoney}", Colors.red[100]),
+            ItemList("Subtotal", "-${depositMoney}", Colors.red[100]),
             RaisedButton(
               onPressed: () {
                 Payment payment = paymentController.createPayment(

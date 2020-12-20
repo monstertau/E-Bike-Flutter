@@ -61,44 +61,50 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           dateExpiredController.text,
           ownerController.text);
       if (!await card.checkInUse()) {
-        var result = await paymentController.deductMoney(card, widget._payment.depositAmount);
+        var result = await paymentController.deductMoney(
+            card, widget._payment.depositAmount);
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
           //TODO: create new payment
           logger.i(widget._payment.bike.barcode);
-          Map invoice = {
-            "payment": {
-              "rentalCode": widget._payment.rentalCode,
-              "depositAmount": widget._payment.depositAmount,
-              "startRentTime":
-                  widget._payment.startRentTime.toString().split('.')[0],
-              "endRentTime":
-                  widget._payment.startRentTime.toString().split('.')[0],
-              "bikeId": widget._payment.bike.id,
-              "status": 1,
-              "card": {
-                "cardCode": card.cardCode,
-                "cardName": card.owner,
-                "dateExpired": card.dateExpired,
-                "cvvCode": card.cvvCode
-              }
-            }
-          };
+          // Map invoice = {
+          //   "payment": {
+          //     "rentalCode": widget._payment.rentalCode,
+          //     "depositAmount": widget._payment.depositAmount,
+          //     "startRentTime":
+          //         widget._payment.startRentTime.toString().split('.')[0],
+          //     "endRentTime":
+          //         widget._payment.startRentTime.toString().split('.')[0],
+          //     "bikeId": widget._payment.bike.id,
+          //     "status": 1,
+          //     "card": {
+          //       "cardCode": card.cardCode,
+          //       "cardName": card.owner,
+          //       "dateExpired": card.dateExpired,
+          //       "cvvCode": card.cvvCode
+          //     }
+          //   }
+          // };
           //save to DB
-          paymentController.save(invoice);
-
+          // paymentController.save(invoice);
+          widget._payment.card = card;
+          widget._payment.save();
           //save to share preference
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.setString("rentalCode", widget._payment.rentalCode);
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              // builder: (context) => InvoiceScreen(invoice: result['data']),
-              builder: (context) => InvoiceScreen(
-                  invoice: invoice['payment'], bike: widget._payment.bike),
-            ),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     // builder: (context) => InvoiceScreen(invoice: result['data']),
+          //     builder: (context) => InvoiceScreen(
+          //         invoice: invoice['payment'], bike: widget._payment.bike),
+          //   ),
+          // );
+          // Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, invoiceRoute, (Route<dynamic> route) => false,
+              arguments: widget._payment);
         } else {
           logger.i(result['message']);
         }
