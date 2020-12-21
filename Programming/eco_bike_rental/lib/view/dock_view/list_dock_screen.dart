@@ -41,18 +41,17 @@ class _ListDockScreenState extends State<ListDockScreen> {
   Widget _buildTableTitle() {
     return Container(
       color: Colors.grey[200],
-      padding: EdgeInsets.only(left: 20.0,right: 20.0,bottom: 5.0),
+      padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 5.0),
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(child: _itemTitle("Name")),
-           _verticalDivider(),
+          _verticalDivider(),
           Expanded(child: _itemTitle("Address")),
-         _verticalDivider(),
+          _verticalDivider(),
           Expanded(child: _itemTitle("Area")),
           _verticalDivider(),
           Expanded(child: _itemTitle("Available")),
-
         ],
       ),
     );
@@ -62,10 +61,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "List Dock Screen",
-        oneScreen: true,
-      ),
+      appBar: CustomAppBar(title: "List Dock Screen", oneScreen: true),
       body: Container(
           alignment: Alignment.center,
           child: FutureBuilder(
@@ -76,7 +72,11 @@ class _ListDockScreenState extends State<ListDockScreen> {
                 List<DockStation> lstDock = snapshot.data;
                 return Column(
                   children: [
-                    Image.asset('lib/assets/images/dock.jpg',fit: BoxFit.fitWidth,height: 200,),
+                    Image.asset(
+                      'lib/assets/images/dock.jpg',
+                      fit: BoxFit.fitWidth,
+                      height: 200,
+                    ),
                     _buildTableTitle(),
                     Expanded(
                       child: ListView.builder(
@@ -89,18 +89,13 @@ class _ListDockScreenState extends State<ListDockScreen> {
                               Navigator.pushNamed(context, detailedDockRoute,
                                   arguments: lstDock[i].id);
                             },
-
                             child: ListTile(
                               selectedTileColor: Colors.black,
                               title: Row(
                                 children: [
-                                  Expanded(
-                                      child: Text(lstDock[i].dockName)),
-                                  Expanded(
-                                      child:
-                                          Text(lstDock[i].dockAddress)),
-                                  Expanded(
-                                      child: Text(lstDock[i].dockArea)),
+                                  Expanded(child: Text(lstDock[i].dockName)),
+                                  Expanded(child: Text(lstDock[i].dockAddress)),
+                                  Expanded(child: Text(lstDock[i].dockArea)),
                                   Expanded(
                                       child: Text(
                                           "${lstDock[i].available}/${lstDock[i].dockSize}"))

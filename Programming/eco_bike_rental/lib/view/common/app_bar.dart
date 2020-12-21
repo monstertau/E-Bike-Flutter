@@ -32,9 +32,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
       leading: widget.oneScreen
           ? null
           : IconButton(
-              icon:
-                  new Icon(Icons.arrow_back_outlined, color: Colors.black),
+              icon: new Icon(Icons.arrow_back_outlined, color: Colors.black),
               onPressed: () => Navigator.of(context).pop()),
+      bottom: PreferredSize(
+          child: Container(
+            color: Colors.grey[300],
+            height: 1.0,
+          ),
+          preferredSize: Size.fromHeight(1.0)),
     );
   }
 }
