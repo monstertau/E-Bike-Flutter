@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 
 class ChooseReturnDockScreen extends StatefulWidget {
   @override
+  final int _choosed;
+
+  ChooseReturnDockScreen(this._choosed);
+
   _ChooseReturnDockScreenState createState() => _ChooseReturnDockScreenState();
 }
 
 class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
   final DockController dockController = new DockController();
+  Map returnMap = {"name": null, "index": null};
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,6 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
         title: Text("Choose A Dock For Returning"),
       ),
       body: Container(
-          alignment: Alignment.center,
           child: FutureBuilder(
             future: dockController.getAllDocks(),
             builder: (context, snapshot) {
@@ -26,71 +30,66 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                 List<DockStation> lstDock = snapshot.data;
                 return Column(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Name",
-                            style: TextStyle(
-                                height: 3.0,
-                                fontSize: 15.2,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "Address",
-                            style: TextStyle(
-                                height: 3.0,
-                                fontSize: 15.2,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "Area",
-                            style: TextStyle(
-                                height: 3.0,
-                                fontSize: 15.2,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                            child: Text(
-                          "Available",
-                          style: TextStyle(
-                              height: 3.0,
-                              fontSize: 15.2,
-                              fontWeight: FontWeight.bold),
-                        ))
-                      ],
-                    ),
+                    Text("Search Bar"),
                     Divider(),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: lstDock.length,
+                        itemCount: lstDock.length * 2,
                         itemBuilder: (context, index) {
+                          if (index.isOdd) return Divider();
+                          final i = index ~/ 2;
                           return InkWell(
                             onTap: () {
-                              // Navigator.pushNamed(context, detailedDockRoute,
-                              //     arguments: lstDock[index].id);
+                              returnMap['name'] = lstDock[i].dockName;
+                              returnMap['index'] = lstDock[i].dockID;
+                              Navigator.pop(context, returnMap);
                             },
-                            child: Card(
-                              child: ListTile(
-                                title: Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text(lstDock[index].dockName)),
-                                    Expanded(
-                                        child:
-                                            Text(lstDock[index].dockAddress)),
-                                    Expanded(
-                                        child: Text(lstDock[index].dockArea)),
-                                    Expanded(
-                                        child: Text(
-                                            "${lstDock[index].available}/${lstDock[index].dockSize}"))
-                                  ],
-                                ),
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(right: 15),
+                                            child: Icon(Icons.insert_emoticon)),
+                                        Expanded(
+                                          // alignment: Alignment.centerLeft,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    lstDock[i].dockName,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                        FontWeight.bold),
+                                                  )),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  "Available Dock:${lstDock[i].available}/${lstDock[i].dockSize}",
+                                                  style: TextStyle(fontSize: 14),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Radio(
+                                          groupValue: true,
+                                          value: lstDock[i].dockID != widget._choosed
+                                              ? false
+                                              : true),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           );

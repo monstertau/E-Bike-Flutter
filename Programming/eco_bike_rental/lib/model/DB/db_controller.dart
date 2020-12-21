@@ -33,6 +33,11 @@ class DatabaseSubsystemController {
     return jsonDecode(response.body);
   }
 
+  Future<Map> updatePayment(Map payment) async {
+    var response = await _databaseBoundary.post(updatePaymentPath, payment);
+    return jsonDecode(response.body);
+  }
+
   Future<Map> searchPayment(String rentalCode) async {
     Map body = {"rentalCode": "${rentalCode}"};
     var response = await _databaseBoundary.post(searchPaymentPath, body);

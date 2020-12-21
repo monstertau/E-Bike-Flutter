@@ -5,8 +5,10 @@ import 'package:eco_bike_rental/model/Bike/EBike.dart';
 import 'package:eco_bike_rental/model/Bike/TwinEBike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 
 class ConfirmRentBikeScreen extends StatefulWidget {
   final Bike bike;
@@ -36,10 +38,9 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
       battery = "${b.battery}";
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Confirm Rent Bike ${widget.bike.id}"),
-      ),
+      appBar: CustomAppBar(title: "Rent Bike", centerTitle: true),
       body: Container(
+        margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 10.0),
         alignment: Alignment.center,
         child: Column(
           children: [
@@ -48,26 +49,37 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
             ItemList("Color", "${widget.bike.color}", Colors.grey[200]),
             ItemList("Battery Status", "${battery}%", Colors.grey[200]),
             ItemList("Start Rent From",
-                "${startRent.toString().substring(0, 19)}", Colors.grey[200]),
-            ItemList("Deposit Money", "${depositMoney}", Colors.grey[200]),
-            ItemList("Basic Rent Amount", "${widget.bike.baseRentAmount}",
+                "${startRent.toLocal().toString().substring(0, 16)}", Colors.grey[200]),
+            ItemList("Deposit Money", "${depositMoney} VND", Colors.grey[200]),
+            ItemList("Basic Rent Amount", "${widget.bike.baseRentAmount} VND",
                 Colors.grey[200]),
-            ItemList("Additional Rent Amount", "${widget.bike.addRentAmount}",
-                Colors.grey[200]),
-            ItemList("Subtotal", "${depositMoney}", Colors.red[100]),
-            RaisedButton(
-              onPressed: () {
-                Payment payment = paymentController.createPayment(
-                    widget.bike,
-                    depositMoney,
-                    startRent,
-                    rentingController.generateRentalCode());
-                Navigator.pushNamed(context, choosePaymentRoute,
-                    arguments: payment);
-                rentingController.lockBike(widget.bike);
-              },
-              child: Text("Proceed Payment"),
-            ),
+            ItemList("Additional Rent Amount",
+                "${widget.bike.addRentAmount} VND", Colors.grey[200]),
+            Container(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: ItemList("Subtotal", "- ${depositMoney} VND",
+                    Colors.deepOrange[100])),
+            FlatButton(
+                onPressed: () {
+                  Payment payment = paymentController.createPayment(
+                      widget.bike,
+                      depositMoney,
+                      startRent,
+                      rentingController.generateRentalCode());
+                  Navigator.pushNamed(context, choosePaymentRoute,
+                      arguments: payment);
+                  rentingController.lockBike(widget.bike);
+                },
+                child: Container(
+                    padding: EdgeInsets.only(top: 15,bottom: 15,left: 5,right: 5),
+                    child: Text(
+                      "Proceed Payment",
+                      style: TextStyle(fontSize: 16),
+                    )),
+                textColor: Colors.white,
+                color: Colors.green[600],
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0))),
           ],
         ),
       ),
@@ -76,9 +88,9 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
 }
 
 class ItemList extends StatelessWidget {
-  String _key;
-  String _value;
-  Color _color;
+  final String _key;
+  final String _value;
+  final Color _color;
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +103,9 @@ class ItemList extends StatelessWidget {
         children: [
           Text(
             this._key,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),
           ),
-          Text(this._value)
+          Text(this._value,style: TextStyle(fontSize: 14),)
         ],
       ),
     );
