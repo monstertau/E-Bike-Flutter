@@ -9,16 +9,16 @@ class BikeFactory {
     switch (res["category"]) {
       case "Ebike":
         return EBike.init(res["id"], res["barcode"], res["color"],
-            res["category"], res["lock"], res["battery"]);
+            "Electric", res["lockbike"], res["battery"]);
       case "Standardbike":
         return StandardBike.init(res["id"], res["barcode"], res["color"],
-            res["category"], res["lock"]);
+            "Standard", res["lockbike"]);
       case "Twinbike":
         return TwinBike.init(res["id"], res["barcode"], res["color"],
-            res["category"], res["lock"]);
+            "Twin", res["lockbike"]);
       case "TwinEbike":
         return TwinEBike.init(res["id"], res["barcode"], res["color"],
-            res["category"], res["lock"], res["battery"]);
+            "Twin Electric", res["lockbike"], res["battery"]);
       default:
         throw Exception("Cant find bike type");
     }

@@ -5,6 +5,7 @@ import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/API.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
+import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -120,9 +121,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Choose Payment Screen"),
-      ),
+      appBar: CustomAppBar(title: "Choose Payment Method", centerTitle: true),
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,

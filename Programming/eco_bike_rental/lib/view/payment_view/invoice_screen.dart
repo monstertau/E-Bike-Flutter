@@ -1,6 +1,7 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
+import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,18 +29,17 @@ class _InvoiceScreen extends State<InvoiceScreen> {
         ? widget.invoice.depositAmount - widget.invoice.rentAmount
         : -widget.invoice.depositAmount);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Invoice"),
-      ),
+      appBar:
+      CustomAppBar(title: "Invoice", centerTitle: true, oneScreen: true),
       body: Container(
         child: new ListView(
             shrinkWrap: true,
             padding: const EdgeInsets.all(20.0),
             children: [
               Center(
-                  // child: FractionallySizedBox(
-                  //     heightFactor: 0.3,
-                  //     widthFactor: 0.7,
+                // child: FractionallySizedBox(
+                //     heightFactor: 0.3,
+                //     widthFactor: 0.7,
                   child: Container(
                       margin: EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
@@ -54,55 +54,55 @@ class _InvoiceScreen extends State<InvoiceScreen> {
                           _cusRow2(widget.invoice)
                         ],
                       ))
-                  // )
-                  ),
+                // )
+              ),
               Center(
                   child: Container(
-                margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                child: Column(
-                  children: <Widget>[
-                    Column(children: [
-                      _label("PAYMENT"),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            _colorRow(
-                                "Deposit Money",
-                                "-",
-                                widget.invoice.depositAmount.toString() +
-                                    " VND",
-                                Colors.red),
-                            _colorRow(
-                                "Return Money",
-                                widget.invoice.rentAmount != null
-                                    ? (subtotal > 0 ? "+" : " ")
-                                    : "--------",
-                                widget.invoice.rentAmount != null
-                                    ? subtotal.toString() + " VND"
-                                    : "",
-                                subtotal > 0 ? Colors.green : Colors.red),
-                            Divider(),
-                            _colorRow(
-                                "Rented Amount",
-                                widget.invoice.rentAmount != null
-                                    ? "-"
-                                    : "--------",
-                                widget.invoice.rentAmount != null
-                                    ? widget.invoice.rentAmount.toString() +
+                    margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        Column(children: [
+                          _label("PAYMENT"),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                _colorRow(
+                                    "Deposit Money",
+                                    "-",
+                                    widget.invoice.depositAmount.toString() +
+                                        " VND",
+                                    Colors.red),
+                                _colorRow(
+                                    "Return Money",
+                                    widget.invoice.rentAmount != null
+                                        ? (subtotal > 0 ? "+" : " ")
+                                        : "--------",
+                                    widget.invoice.rentAmount != null
+                                        ? subtotal.toString() + " VND"
+                                        : "",
+                                    subtotal > 0 ? Colors.green : Colors.red),
+                                Divider(),
+                                _colorRow(
+                                    "Rented Amount",
+                                    widget.invoice.rentAmount != null
+                                        ? "-"
+                                        : "--------",
+                                    widget.invoice.rentAmount != null
+                                        ? widget.invoice.rentAmount.toString() +
                                         " VND"
-                                    : "",
-                                Colors.red),
-                          ],
-                        ),
-                      )
-                    ]),
-                  ],
-                ),
-              )),
+                                        : "",
+                                    Colors.red),
+                              ],
+                            ),
+                          )
+                        ]),
+                      ],
+                    ),
+                  )),
               Center(
                   child: Container(
                       margin:
-                          EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
+                      EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
                       child: Column(
                         children: <Widget>[
                           Column(children: [
@@ -139,7 +139,7 @@ class _InvoiceScreen extends State<InvoiceScreen> {
                   child: FlatButton.icon(
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(context, homeRoute,
-                            (Route<dynamic> route) => false);
+                                (Route<dynamic> route) => false);
                       },
                       icon: Icon(
                         Icons.home,
@@ -179,9 +179,9 @@ Widget _colorRow(label, sign, money, color) {
       flex: 5,
       child: Container(
           child: Text(
-        label,
-        style: TextStyle(fontSize: 20),
-      )),
+            label,
+            style: TextStyle(fontSize: 20),
+          )),
     ),
     Expanded(
       flex: 5,
@@ -199,7 +199,9 @@ Widget _colorRow(label, sign, money, color) {
 }
 
 Widget _cusRow1(iid, startTime, owner) {
-  var id = iid.split("-")[iid.split("-").length - 1];
+  var id = iid.split("-")[iid
+      .split("-")
+      .length - 1];
   print(iid);
   print(startTime);
   print(owner);
@@ -217,7 +219,7 @@ Widget _cusRow1(iid, startTime, owner) {
                     child: Text(
                       "Invoice - ***** $id",
                       style: TextStyle(
-                          // fontWeight: FontWeight.w500,
+                        // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
                           fontSize: 20,
                           color: Colors.white),
@@ -227,7 +229,7 @@ Widget _cusRow1(iid, startTime, owner) {
                     child: Text(
                       startTime.toString().split(" ")[0],
                       style: TextStyle(
-                          // fontWeight: FontWeight.w500,
+                        // fontWeight: FontWeight.w500,
                           letterSpacing: 1.5,
                           fontSize: 22,
                           color: Colors.white),
@@ -242,7 +244,7 @@ Widget _cusRow1(iid, startTime, owner) {
           child: Text(
             owner,
             style: TextStyle(
-                // fontWeight: FontWeight.w500,
+              // fontWeight: FontWeight.w500,
                 letterSpacing: 1.5,
                 fontSize: 16,
                 color: Colors.white),
@@ -262,7 +264,10 @@ Widget _cusRow2(info) {
             return Icon(
               Icons.credit_card,
               color: Colors.white,
-              size: MediaQuery.of(context).size.height * 0.2,
+              size: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.2,
             );
           })),
       Expanded(
@@ -272,7 +277,7 @@ Widget _cusRow2(info) {
             child: Text(
               "46,000\nVND",
               style: TextStyle(
-                  // fontWeight: FontWeight.w500,
+                // fontWeight: FontWeight.w500,
                   letterSpacing: 1.5,
                   fontSize: 40,
                   color: Colors.white),

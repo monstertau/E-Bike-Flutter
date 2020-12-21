@@ -46,7 +46,7 @@ class DockStation {
     this._lstBike.add(bike);
   }
 
-  Future<DockStation> getDockById(int id) async {
+  Future<DockStation> getBikeInDock(int id) async {
     List lstBike = new List<Bike>();
     List dbBikes = await database.getDetailDock(id);
     for (Map dbBike in dbBikes) {

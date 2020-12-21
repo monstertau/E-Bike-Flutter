@@ -4,7 +4,6 @@ import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 
 class Bike {
   int _id;
-
   String _barcode;
   String _color;
   String _category;
