@@ -1,5 +1,6 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
+import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class ChooseReturnDockScreen extends StatefulWidget {
@@ -18,8 +19,9 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Choose A Dock For Returning"),
+      appBar: CustomAppBar(
+        title: "Choose Dock to Return",
+        centerTitle: true,
       ),
       body: Container(
           alignment: Alignment.center,

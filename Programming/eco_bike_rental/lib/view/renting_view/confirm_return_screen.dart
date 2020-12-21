@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
+import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/renting_view/choose_return_dock_screen.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -96,17 +97,20 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Return Bike ${widget._payment.bike.id}"),
-      ),
+      appBar: CustomAppBar(
+          title: "Return Bike ${widget._payment.bike.id}", centerTitle: true),
       body: Container(
+        margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 10.0),
         alignment: Alignment.center,
         child: Column(
           children: [
             ItemList("Type", widget._payment.bike.category, Colors.grey[200]),
             ItemList(
                 "Start Rent From",
-                widget._payment.startRentTime.toLocal().toString(),
+                widget._payment.startRentTime
+                    .toLocal()
+                    .toString()
+                    .substring(0, 16),
                 Colors.grey[200]),
             ItemList("Time Rented", _timeString, Colors.grey[200]),
             // ItemList("Return to Dock", "Thanh Xuan", Colors.grey[200]),
@@ -118,15 +122,25 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
                 Colors.grey[200]),
             ItemList("Renting Price", "${widget._payment.rentAmount}",
                 Colors.grey[200]),
-            ItemList(
-                "Return",
-                "${widget._payment.depositAmount - widget._payment.rentAmount}",
-                Colors.red[200]),
-            RaisedButton(
+            Container(
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: ItemList(
+                  "Total",
+                  "${widget._payment.depositAmount - widget._payment.rentAmount}",
+                  Colors.deepOrange[100]),
+            ),
+            FlatButton(
               onPressed: () {
                 _confirmReturn(context);
               },
-              child: Text("Return Bike"),
+              child: Container(
+                  padding:
+                      EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
+                  child: Text("Return Bike", style: TextStyle(fontSize: 16))),
+              textColor: Colors.white,
+              color: Colors.red[700],
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
             ),
           ],
         ),
@@ -147,7 +161,7 @@ Widget ItemChoose(context, title, color) {
           title,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        OutlineButton(
+        FlatButton(
           onPressed: () async {
             var choosedValue = await Navigator.pushNamed(
                 context, chooseReturnDockRoute,
@@ -157,13 +171,11 @@ Widget ItemChoose(context, title, color) {
               _dockName = (choosedValue as Map)['name'];
             }
           },
-          shape: new RoundedRectangleBorder(),
-          child: Text(
-            _dockName == null ? "Choose dock" : _dockName,
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
+          textColor: Colors.white,
+          color: Colors.redAccent[100],
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
+          child: Text(_dockName == null ? "Choose dock" : _dockName),
         )
       ],
     ),
