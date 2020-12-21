@@ -153,7 +153,8 @@ Widget ItemChoose(context, title, color) {
                 context, chooseReturnDockRoute,
                 arguments: index);
             if (choosedValue != null) {
-              index = (choosedValue as Map)['index'];
+              index =
+                  choosedValue != null ? (choosedValue as Map)['index'] : index;
               _dockName = (choosedValue as Map)['name'];
             }
           },
