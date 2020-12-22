@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:eco_bike_rental/common/exception/payment_exception.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Transaction.dart';
 import 'package:eco_bike_rental/utils/Utils.dart';
@@ -34,6 +35,8 @@ class InterbankController {
     response.putIfAbsent("message", () => parseError(result['errorCode']));
     if (result['errorCode'] == '00')
       response.putIfAbsent("data", () => result['transaction']);
+    else
+      throw InvalidTransaction.init(parseError(result['errorCode']));
     return response;
   }
 
@@ -52,9 +55,11 @@ class InterbankController {
     logger.i(result['transaction']);
     response.putIfAbsent(
         "success", () => (result['errorCode'] == '00' ? true : false));
-    response.putIfAbsent("message", () => parseError(result['errorCode']));
+    // response.putIfAbsent("message", () => parseError(result['errorCode']));
     if (result['errorCode'] == '00')
       response.putIfAbsent("data", () => result['transaction']);
+    else
+      throw InvalidTransaction.init(parseError(result['errorCode']));
     return response;
   }
 

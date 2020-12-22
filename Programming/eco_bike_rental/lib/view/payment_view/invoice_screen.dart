@@ -45,7 +45,7 @@ class _InvoiceScreen extends State<InvoiceScreen> {
                               widget.invoice.rentalCode,
                               widget.invoice.startRentTime,
                               widget.invoice.card.owner),
-                          _cusRow2(subtotal)
+                          _cusRow2(subtotal,widget.invoice.card.cardCode)
                         ],
                       ))
                   // )
@@ -239,7 +239,7 @@ Widget _cusRow1(iid, startTime, owner) {
   );
 }
 
-Widget _cusRow2(subtotal) {
+Widget _cusRow2(subtotal,cn) {
   return Container(
     margin: EdgeInsets.all(15),
     child: Row(
@@ -249,6 +249,7 @@ Widget _cusRow2(subtotal) {
             child: LayoutBuilder(builder: (context, constraint) {
               return CardItem(
                 color: Colors.white,
+                cardNumber: cn,
               );
             })),
         Expanded(
