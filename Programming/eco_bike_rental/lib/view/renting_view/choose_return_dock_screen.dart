@@ -53,7 +53,7 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                                       children: [
                                         Container(
                                             margin: EdgeInsets.only(right: 15),
-                                            child: Icon(Icons.insert_emoticon)),
+                                            child: Icon(Icons.local_parking_rounded )),
                                         Expanded(
                                           // alignment: Alignment.centerLeft,
                                           child: Column(

@@ -1,20 +1,21 @@
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/interbank/InterbankSubsystemController.dart';
 
-class InterbankSubsystem {
-  InterbankController _conttroler;
+class InterbankSubsystem implements InterbankInterface{
+  InterbankController _controller;
 
   InterbankSubsystem() {
-    this._conttroler = new InterbankController();
+    this._controller = new InterbankController();
   }
 
-  pay(CreditCard card, int amount) {
-    var result = _conttroler.payOrder(card, amount);
+  Future<Map> pay(CreditCard card, int amount) {
+    var result = _controller.payOrder(card, amount);
     return result;
   }
 
   Future<Map> refund(CreditCard card, int amount) async {
-    Map result = await _conttroler.returnOrder(card, amount);
+    Map result = await _controller.returnOrder(card, amount);
     return result;
   }
 }

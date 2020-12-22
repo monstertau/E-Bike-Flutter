@@ -1,24 +1,18 @@
-import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class InvoiceScreen extends StatefulWidget {
   final Payment invoice;
 
-  // final Bike bike;
-
-  // InvoiceScreen(Payment payment, {Key key, @required this.invoice, this.bike}) : super(key: key);
   InvoiceScreen(this.invoice);
 
   @override
   State<StatefulWidget> createState() => _InvoiceScreen();
 }
 
-// TextEditingValue card =
 class _InvoiceScreen extends State<InvoiceScreen> {
   final logger = new Logger();
 
@@ -37,9 +31,6 @@ class _InvoiceScreen extends State<InvoiceScreen> {
             padding: const EdgeInsets.all(20.0),
             children: [
               Center(
-                // child: FractionallySizedBox(
-                //     heightFactor: 0.3,
-                //     widthFactor: 0.7,
                   child: Container(
                       margin: EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
@@ -120,8 +111,6 @@ class _InvoiceScreen extends State<InvoiceScreen> {
                                       "",
                                       widget.invoice.bike.category,
                                       Colors.black),
-                                  // _colorRow(
-                                  //     "Time Rented", "", "3h11m", Colors.black),
                                   _colorRow("Bike Color", "",
                                       widget.invoice.bike.color, Colors.black),
                                 ],
@@ -165,7 +154,6 @@ Widget _label(title) {
     child: Text(
       title,
       style: TextStyle(
-        // fontWeight: FontWeight.w500,
         letterSpacing: 1.5,
         fontSize: 32,
       ),

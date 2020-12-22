@@ -1,5 +1,4 @@
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
-import 'package:eco_bike_rental/utils/Utils.dart';
 
 class Transaction {
   CreditCard _card;
