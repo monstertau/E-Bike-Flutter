@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
+import 'package:eco_bike_rental/view/common/section_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
+import 'package:flutter/painting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'image_banner.dart';
 
@@ -54,13 +56,76 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
     String hour = duration.inHours.toString();
     String minutes = duration.inMinutes.remainder(60).toString();
     String seconds = duration.inSeconds.remainder(60).toString();
-    return "$hour h:$minutes m:$seconds s";
+    return "$hour :$minutes :$seconds ";
   }
 
   Future<String> _getRentalCode() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String rentalCode = pref.getString("rentalCode");
     return rentalCode;
+  }
+
+  Widget _rentalDetailRow(String key, String value) {
+    return Container(
+      margin: EdgeInsets.only(left: 15, right: 15),
+      padding: EdgeInsets.only(top: 15, bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("${key}:"),
+          Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+
+  Widget _rentalDetail(String depositAmount, String bikeType, String barcode) {
+    return Column(
+      children: [
+        _rentalDetailRow("Deposited", depositAmount),
+        _rentalDetailRow("Bike Type", bikeType),
+        _rentalDetailRow("Bike Barcode", barcode)
+      ],
+    );
+  }
+
+  Widget _sessionItem(String key, String value) {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: 5),
+          child: Text(value,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+        ),
+        Text(
+          key,
+          style: TextStyle(
+              fontWeight: FontWeight.w300, color: Colors.grey, fontSize: 15),
+        ),
+      ],
+    );
+  }
+
+  Widget _verticalDivider() {
+    return Container(
+      height: 60.0,
+      width: 0.5,
+      color: Colors.grey,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+    );
+  }
+
+  Widget _sessionDetail(String battery, String timeRented, int rentingAmount) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(child: _sessionItem("Battery", battery)),
+        _verticalDivider(),
+        Expanded(child: _sessionItem("Time Rented", timeRented)),
+        _verticalDivider(),
+        Expanded(child: _sessionItem("Rent Amount", "${rentingAmount} VND")),
+      ],
+    );
   }
 
   @override
@@ -73,46 +138,63 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
       ),
       body: _state == 0
           ? Center(child: Text("No rented bike yet."))
-          : SingleChildScrollView(
-              child: FutureBuilder(
-                  future: _payment,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData != null) {
-                      Payment payment = snapshot.data;
-                      Duration rentTime =
-                          rentingController.calculateRentingTime(
-                              payment.startRentTime, _rentEndTime);
-                      int rentingAmount =
-                          rentingController.calculateRentingAmount(
-                              rentTime,
-                              payment.bike.baseRentAmount,
-                              payment.bike.addRentAmount);
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          ImageBanner("lib/assets/images/bike.jpg",
-                              'Bike ${payment.bike.barcode}', true),
-                          TextItem('Color', '${payment.bike.color}'),
-                          TextItem('Battery Status', '50%'),
-                          TextItem('Time Rented', _formatDateTime(rentTime)),
-                          TextItem('Payment Amount', '$rentingAmount VND'),
-                          RaisedButton(
-                            onPressed: () {
-                              payment.rentAmount = rentingAmount;
-                              payment.endRentTime = _rentEndTime;
-                              Navigator.pushNamed(context, confirmReturnRoute,
-                                  arguments: payment);
-                            },
-                            child: Text("Confirm return bike"),
-                          )
-                        ],
-                      );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  }),
+          : Container(
+              child: SingleChildScrollView(
+                child: FutureBuilder(
+                    future: _payment,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData != null) {
+                        Payment payment = snapshot.data;
+                        Duration rentTime =
+                            rentingController.calculateRentingTime(
+                                payment.startRentTime, _rentEndTime);
+                        int rentingAmount =
+                            rentingController.calculateRentingAmount(
+                                rentTime,
+                                payment.bike.baseRentAmount,
+                                payment.bike.addRentAmount);
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              'lib/assets/images/dock_new.png',
+                              fit: BoxFit.fitWidth,
+                              height: 200,
+                            ),
+                            SectionBanner(title: "RENTAL DETAIL"),
+                            _rentalDetail(
+                                "${payment.depositAmount} VND",
+                                payment.bike.category,
+                                "#${payment.bike.barcode}"),
+                            SectionBanner(title: "SESSION SUMMARY"),
+                            _sessionDetail(payment.bike.getBattery(),
+                                _formatDateTime(rentTime), rentingAmount),
+                            Container(margin: EdgeInsets.only(bottom: 15,top: 15)),
+                            FlatButton(
+                                onPressed: () {
+                                  payment.rentAmount = rentingAmount;
+                                  payment.endRentTime = _rentEndTime;
+                                  Navigator.pushNamed(
+                                      context, confirmReturnRoute,
+                                      arguments: payment);
+                                },
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: 15, bottom: 15, left: 5, right: 5),
+                                    child: Text("RETURN BIKE")),
+                                textColor: Colors.white,
+                                color: Colors.grey[700],
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)))
+                          ],
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    }),
+              ),
             ),
     );
   }

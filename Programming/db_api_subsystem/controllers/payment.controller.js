@@ -13,9 +13,9 @@ exports.createPayment = async (req, res) => {
   const querySearchCard = `SELECT * FROM "ecoBikeSystem"."Card" WHERE "cardCode" = $1`;
   const queryCreateCard = `INSERT INTO "ecoBikeSystem"."Card" ("cardCode", "cardName", "dateExpired", "cvvCode") VALUES ( $1, $2, $3, $4) RETURNING *`;
   const queryCreatePayment = `INSERT INTO "ecoBikeSystem"."Payment" ("rentalCode", "rentamount", "depositAmount", "startRentTime", "endRentTime", status, "bikeId", "cardId") VALUES ( $1, 0, $2, $3, $4, $5, $6, $7) RETURNING *;`;
+  const queryLockBike = `UPDATE "ecoBikeSystem"."Bike" SET lockbike = false WHERE id = $1 RETURNING *;`;
   try {
     let cardId = undefined;
-    let paymentId = undefined;
     let cardInst = await queryDb(querySearchCard, [cardCode]);
     if (cardInst.rows.length == 0) {
       cardInst = await queryDb(queryCreateCard, [
@@ -26,6 +26,7 @@ exports.createPayment = async (req, res) => {
       ]);
     }
     cardId = cardInst.rows[0].id;
+    const bikeInst = await queryDb(queryLockBike, [bikeId]);
     const paymentInst = await queryDb(queryCreatePayment, [
       rentalCode,
       depositAmount,
@@ -35,10 +36,11 @@ exports.createPayment = async (req, res) => {
       bikeId,
       cardId,
     ]);
+
     return res.status(201).json({
       success: true,
       payment: {
-        paymentId: paymentId,
+        paymentId: paymentInst.rows[0].id,
         bikeId: bikeId,
         cardCode: cardCode,
         rentalCode: rentalCode,
@@ -55,6 +57,7 @@ exports.createPayment = async (req, res) => {
     });
   }
 };
+
 exports.searchPayment = async (req, res) => {
   const { rentalCode } = req.body;
   const querySearchPayment = `SELECT *
@@ -130,8 +133,7 @@ exports.updatePayment = async (req, res) => {
     card,
     status,
   } = req.body.payment;
-  const { cardCode } = card;
-  const { barcode, dockId } = bike;
+  const { dockId } = bike;
   const queryUpdatePayment = `UPDATE "ecoBikeSystem"."Payment"
   SET status        = $1,
       "endRentTime" = $2,
@@ -139,11 +141,11 @@ exports.updatePayment = async (req, res) => {
   WHERE "rentalCode" = $4 RETURNING *;`;
   const queryUpdateCard = `UPDATE "ecoBikeSystem"."Card"
   SET lock = false
-  WHERE "cardCode" = $1 RETURNING *;`;
+  WHERE id = $1 RETURNING *;`;
   const queryUpdateBike = `UPDATE "ecoBikeSystem"."Bike"
   SET "dockId" = $1,
       lockbike = true
-  WHERE barcode = $2 RETURNING *;`;
+  WHERE id = $2 RETURNING *;`;
   try {
     const paymentRows = await queryDb(queryUpdatePayment, [
       status,
@@ -158,22 +160,22 @@ exports.updatePayment = async (req, res) => {
         error: `wrong_rental_code`,
       });
     }
-
-    const cardRows = await queryDb(queryUpdateCard, [cardCode]);
+    const cardId = paymentRows.rows[0].cardId;
+    const cardRows = await queryDb(queryUpdateCard, [cardId]);
 
     if (cardRows.rows.length == 0) {
       return res.status(400).json({
         success: false,
-        error: `wrong_card_code`,
+        error: `wrong_card_id`,
       });
     }
 
-    const bikeRows = await queryDb(queryUpdateBike, [dockId, barcode]);
-
+    const bikeId = paymentRows.rows[0].bikeId;
+    const bikeRows = await queryDb(queryUpdateBike, [dockId, bikeId]);
     if (bikeRows.rows.length == 0) {
       return res.status(400).json({
         success: false,
-        error: `wrong_barcode_code`,
+        error: `wrong_bike_id`,
       });
     }
 

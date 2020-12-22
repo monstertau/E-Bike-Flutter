@@ -1,6 +1,6 @@
-import 'package:http/http.dart';
 
-class MissingHeaderException extends ClientException{
-  MissingHeaderException() : super("Missing Authorization Header");
+class MissingHeaderException implements Exception {
+  String _message;
 
+  MissingHeaderException([this._message]);
 }

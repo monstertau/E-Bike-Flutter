@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main(){
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   runApp(new MyApp());
 }
 
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       bottomNavigationBar: FABBottomAppBar(
         centerItemText: 'Rent Bike',
         color: Colors.grey,
-        selectedColor: Colors.red,
+        selectedColor: Colors.blue,
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: _selectedTab,
         items: [

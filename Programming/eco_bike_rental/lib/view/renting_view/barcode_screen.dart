@@ -4,32 +4,35 @@ import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class BarcodeScreen extends StatefulWidget {
+  final String initBarcode;
+
+  const BarcodeScreen({Key key, this.initBarcode}) : super(key: key);
   @override
   _BarcodeScreenState createState() => _BarcodeScreenState();
 }
 
 class _BarcodeScreenState extends State<BarcodeScreen> {
-  String _barCode;
   int _state = 0;
   final RentingController rentingController = new RentingController();
+  TextEditingController _textCon;
+  bool _validate = false;
 
-  Widget _buildBarCode() {
-    return TextFormField(
-      textAlign: TextAlign.center,
-      decoration:
-          InputDecoration(labelText: 'Barcode', border: OutlineInputBorder()),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Barcode is required';
-        }
-      },
-      onSaved: (String value) {
-        _barCode = value;
-      },
-    );
+  @override
+  void initState() {
+    super.initState();
+    _textCon = new TextEditingController(text: widget.initBarcode);
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Widget _buildBarCode() {
+    return TextField(
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+          labelText: 'Barcode',
+          border: OutlineInputBorder(),
+          errorText: _validate ? "Barcode is required" : null),
+      controller: _textCon,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,40 +45,36 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
       ),
       body: Container(
         margin: EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _buildBarCode(),
-              SizedBox(height: 80),
-              FlatButton(
-                child: setupButtonChild(),
-                color: Colors.blue,
-                textColor: Colors.white,
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
-                onPressed: () {
-                  if (!_formKey.currentState.validate()) {
-                    return;
-                  }
-                  _formKey.currentState.save();
-                  setState(() {
-                    if (_state == 0) {
-                      _state = 1;
-                      rentingController.requestRentBike(_barCode).then((value) {
-                        Navigator.pushNamed(context, confirmRentingRoute,
-                            arguments: value);
-                        setState(() {
-                          _state = 0;
-                        });
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buildBarCode(),
+            SizedBox(height: 80),
+            FlatButton(
+              child: setupButtonChild(),
+              color: Colors.blue,
+              textColor: Colors.white,
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+              onPressed: () {
+                setState(() {
+                  _textCon.text.isEmpty ? _validate = true : _validate = false;
+                  if (_state == 0 && !_validate) {
+                    _state = 1;
+                    rentingController
+                        .requestRentBike(_textCon.text)
+                        .then((value) {
+                      Navigator.pushNamed(context, confirmRentingRoute,
+                          arguments: value);
+                      setState(() {
+                        _state = 0;
                       });
-                    }
-                  });
-                },
-              )
-            ],
-          ),
+                    });
+                  }
+                });
+              },
+            )
+          ],
         ),
       ),
     );
@@ -85,7 +84,7 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
     return Container(
       padding: EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
       child: _state == 0
-          ? Text('Confirm renting', style: TextStyle(fontSize: 16))
+          ? Text('RENT BIKE', style: TextStyle(fontSize: 16))
           : CircularProgressIndicator(
               backgroundColor: Colors.white,
             ),

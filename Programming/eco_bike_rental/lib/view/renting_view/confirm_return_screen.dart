@@ -98,7 +98,7 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: "Return Bike ${widget._payment.bike.id}", centerTitle: true),
+          title: "Return Bike #${widget._payment.bike.barcode}", centerTitle: true),
       body: Container(
         margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 10.0),
         alignment: Alignment.center,
@@ -136,7 +136,7 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
               child: Container(
                   padding:
                       EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
-                  child: Text("Return Bike", style: TextStyle(fontSize: 16))),
+                  child: Text("PROCEED RETURN", style: TextStyle(fontSize: 16))),
               textColor: Colors.white,
               color: Colors.red[700],
               shape: new RoundedRectangleBorder(

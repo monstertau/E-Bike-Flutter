@@ -64,7 +64,7 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: CustomAppBar(title: "List Bikes in Dock ${widget.id}"),
+      appBar: CustomAppBar(title: "Bikes in Dock ${widget.id}"),
       body: Container(
           alignment: Alignment.center,
           child: FutureBuilder(
@@ -76,7 +76,7 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
                 return Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 70,bottom: 10),
+                      margin: EdgeInsets.only(left: 70,bottom: 10,top: 10),
                       child: Row(
                         children: [
                           Icon(Icons.favorite, size: 15),
@@ -86,7 +86,7 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
                           Icon(Icons.favorite_border, size: 15),
                           Container(
                               margin: EdgeInsets.only(left: 10),
-                              child: Text("Available bikes ${lstBike.length}"))
+                              child: Text("Total bikes ${lstBike.length}"))
                         ],
                       ),
                     ),
@@ -105,7 +105,7 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
                           return InkWell(
                             onTap: () {
                               Navigator.pushNamed(context, detailedBikeRoute,
-                                  arguments: lstBike[i].id);
+                                  arguments: lstBike[i]);
                             },
                             child: ListTile(
                               selectedTileColor: Colors.black,
