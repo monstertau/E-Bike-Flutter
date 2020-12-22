@@ -1,17 +1,12 @@
-import 'dart:convert';
-
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
-import 'package:eco_bike_rental/utils/API.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'invoice_screen.dart';
-import 'dart:developer';
 
 class ChoosePaymentScreen extends StatefulWidget {
   Payment _payment;
@@ -68,41 +63,11 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           Navigator.pushNamed(context, invoiceRoute);
           //TODO: create new payment
           logger.i(widget._payment.bike.barcode);
-          // Map invoice = {
-          //   "payment": {
-          //     "rentalCode": widget._payment.rentalCode,
-          //     "depositAmount": widget._payment.depositAmount,
-          //     "startRentTime":
-          //         widget._payment.startRentTime.toString().split('.')[0],
-          //     "endRentTime":
-          //         widget._payment.startRentTime.toString().split('.')[0],
-          //     "bikeId": widget._payment.bike.id,
-          //     "status": 1,
-          //     "card": {
-          //       "cardCode": card.cardCode,
-          //       "cardName": card.owner,
-          //       "dateExpired": card.dateExpired,
-          //       "cvvCode": card.cvvCode
-          //     }
-          //   }
-          // };
-          //save to DB
-          // paymentController.save(invoice);
           widget._payment.card = card;
           widget._payment.save();
           //save to share preference
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.setString("rentalCode", widget._payment.rentalCode);
-
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     // builder: (context) => InvoiceScreen(invoice: result['data']),
-          //     builder: (context) => InvoiceScreen(
-          //         invoice: invoice['payment'], bike: widget._payment.bike),
-          //   ),
-          // );
-          // Navigator.pop(context);
           Navigator.pushNamedAndRemoveUntil(
               context, invoiceRoute, (Route<dynamic> route) => false,
               arguments: widget._payment);
@@ -110,11 +75,22 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           logger.i(result['message']);
         }
       }
-
-      // InterbankSubsystem interbanl = new Inbank
-      // API().Patch("test");
-      // print()
     }
+  }
+
+  Widget _inputField(TextEditingController con, String labelText,
+      String errorText, bool validation) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 15, top: 10),
+      child: TextField(
+        controller: con,
+        // obscureText: false,
+        decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: labelText,
+            errorText: validation ? null : errorText),
+      ),
+    );
   }
 
   @override
@@ -123,127 +99,83 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: "Choose Payment Method", centerTitle: true),
       body: SingleChildScrollView(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TestIcon(iconName: Icons.credit_card),
-            SingleChildScrollView(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                DropdownCustom(),
-                TextField(
-                  controller: cardnumberController,
-                  // obscureText: false,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Enter Card Number',
-                      errorText: _validatecn ? null : 'Invalid Card Number'),
-                ),
-                TextField(
-                  controller: dateExpiredController,
-                  // obscureText: false,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Date Expired',
-                      errorText: _validatede ? null : 'Invalid Date Expired'),
-                ),
-                TextField(
-                  controller: cvvCodeController,
-                  // obscureText: false,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'CVV Code',
-                      errorText: _validatecvv ? null : 'Invalid Cvv Code'),
-                ),
-                TextField(
-                  controller: ownerController,
-                  // obscureText: false,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Enter Name on the Card',
-                      errorText: _validatename ? null : 'Invalid Card Owner'),
-                ),
-              ],
-            )),
-            Row(
-              // width: 133,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FlatButton(
-                  color: Colors.white,
-                  textColor: Colors.blueAccent,
-                  padding: EdgeInsets.only(
-                      bottom: 12.0, top: 12.0, right: 18.0, left: 18.0),
-                  splashColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      side: BorderSide(color: Colors.blueAccent)),
-                  onPressed: _processCard,
-                  child: Text(
-                    "Proceed",
-                    style: TextStyle(fontSize: 20.0),
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              CardItem(),
+              Container(margin: EdgeInsets.only(top: 50)),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _inputField(cardnumberController, "Card Number",
+                      "Invalid Card Number", _validatecn),
+                  _inputField(dateExpiredController, "Date Expired",
+                      "Invalid Date Expired", _validatede),
+                  _inputField(cvvCodeController, "CVV Code", "Invalid Cvv Code",
+                      _validatecvv),
+                  _inputField(ownerController, "Card Name",
+                      "Invalid Card Owner", _validatename),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FlatButton(
+                    color: Colors.teal[600],
+                    textColor: Colors.white,
+                    padding: EdgeInsets.only(
+                        bottom: 12.0, top: 12.0, right: 18.0, left: 18.0),
+                    splashColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
+                    onPressed: _processCard,
+                    child: Text(
+                      "PROCEED",
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class DropdownCustom extends StatefulWidget {
-  @override
-  _DropdownCustomState createState() => _DropdownCustomState();
-}
-
-class _DropdownCustomState extends State<DropdownCustom> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      child: DropdownButton<String>(
-        value: dropdownValue,
-        icon: Icon(Icons.arrow_downward),
-        iconSize: 24,
-        elevation: 16,
-        isExpanded: true,
-        style: TextStyle(color: Colors.deepPurple),
-        underline: Container(
-          height: 1.3,
-          color: Colors.deepPurpleAccent,
-        ),
-        onChanged: (String newValue) {
-          setState(() {
-            dropdownValue = newValue;
-          });
-        },
-        items: <String>['One', 'Two', 'Free', 'Four']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
-class TestIcon extends StatelessWidget {
+class CardItem extends StatelessWidget {
   final IconData iconName;
 
-  const TestIcon({Key key, this.iconName}) : super(key: key);
+  const CardItem({Key key, this.iconName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Container(
-      child: new LayoutBuilder(builder: (context, constraint) {
-        return new Icon(iconName, size: 300.0);
-      }),
+      padding: EdgeInsets.only(top: 30, bottom: 30),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Colors.black54,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 1.0,
+            width: 130.0,
+            color: Colors.black54,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Text("ATM CARD"),
+          ),
+        ],
+      ),
     );
   }
 }
