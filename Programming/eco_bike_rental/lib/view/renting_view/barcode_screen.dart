@@ -1,3 +1,4 @@
+import 'package:eco_bike_rental/common/exception/bike_exception.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
@@ -7,12 +8,14 @@ class BarcodeScreen extends StatefulWidget {
   final String initBarcode;
 
   const BarcodeScreen({Key key, this.initBarcode}) : super(key: key);
+
   @override
   _BarcodeScreenState createState() => _BarcodeScreenState();
 }
 
 class _BarcodeScreenState extends State<BarcodeScreen> {
   int _state = 0;
+  String errorText = "Barcode is required";
   final RentingController rentingController = new RentingController();
   TextEditingController _textCon;
   bool _validate = false;
@@ -29,10 +32,12 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
       decoration: InputDecoration(
           labelText: 'Barcode',
           border: OutlineInputBorder(),
-          errorText: _validate ? "Barcode is required" : null),
+          errorText: _validate ? errorText : null),
       controller: _textCon,
     );
   }
+
+  _handlingError(String errorText) {}
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +74,20 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
                       setState(() {
                         _state = 0;
                       });
-                    });
+                    }).catchError((err) {
+                      setState(() {
+                        _state = 0;
+                        errorText = "Invalid Barcode";
+                        _validate = true;
+                      });
+                    }, test: (e) => e is InvalidBarcodeException).catchError(
+                            (err) {
+                      setState(() {
+                        _state = 0;
+                        errorText = "Bike Already In Used";
+                        _validate = true;
+                      });
+                    }, test: (e) => e is BikeInUsedException);
                   }
                 });
               },
