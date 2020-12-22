@@ -12,9 +12,6 @@ class InvalidTransaction extends PaymentException {
   InvalidTransaction.init(String message) : super.init(message);
 }
 
-class CardInUsedException extends PaymentException{
+class CardInUsedException extends PaymentException {
   CardInUsedException.init(String message) : super.init(message);
-
 }
-
-
