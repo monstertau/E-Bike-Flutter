@@ -22,19 +22,19 @@ PaymentController paymentController = new PaymentController();
 
 class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   int _state = 0;
-  TextEditingController ownerController = new TextEditingController();
-  TextEditingController dateExpiredController = new TextEditingController();
-  TextEditingController cardNumberController = new TextEditingController();
-  TextEditingController cvvCodeController = new TextEditingController();
+  // TextEditingController ownerController = new TextEditingController();
+  // TextEditingController dateExpiredController = new TextEditingController();
+  // TextEditingController cardNumberController = new TextEditingController();
+  // TextEditingController cvvCodeController = new TextEditingController();
 
-  // TextEditingController ownerController =
-  //     new TextEditingController(text: 'Group 10');
-  // TextEditingController dateExpiredController =
-  //     new TextEditingController(text: '1125');
-  // TextEditingController cardNumberController =
-  //     new TextEditingController(text: '121319_group10_2020');
-  // TextEditingController cvvCodeController =
-  //     new TextEditingController(text: "323");
+  TextEditingController ownerController =
+      new TextEditingController(text: 'Group 10');
+  TextEditingController dateExpiredController =
+      new TextEditingController(text: '1125');
+  TextEditingController cardNumberController =
+      new TextEditingController(text: '121319_group10_2020');
+  TextEditingController cvvCodeController =
+      new TextEditingController(text: "323");
 
   bool _validatename = true;
   bool _validatecn = true;
@@ -139,7 +139,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FlatButton(
-                    color: Color(0xFF01A39D),
+                    color: Color(0xFF126872),
                     textColor: Colors.white,
                     padding: EdgeInsets.only(
                         bottom: 12.0, top: 12.0, right: 18.0, left: 18.0),
@@ -200,7 +200,7 @@ class CardItem extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8),
                   child: Text(
                     cardNumber,
-                    style: TextStyle(color: color),
+                    style: TextStyle(color: color,fontSize: 12),
                   ))
               : Text(""),
           Container(

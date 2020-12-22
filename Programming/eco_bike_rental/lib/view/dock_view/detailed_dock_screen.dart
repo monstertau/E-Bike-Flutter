@@ -132,7 +132,7 @@ Widget buildBike(Bike bike, int index) {
           alignment: Alignment.centerRight,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Color(0xFF18C29C),
               borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
             child: Padding(
@@ -151,7 +151,7 @@ Widget buildBike(Bike bike, int index) {
           child: Center(
             child: Hero(
                 tag: "${bike.id}",
-                child: Image.asset("lib/assets/images/dock.jpg",
+                child: Image.asset(bike.imagePath,
                     fit: BoxFit.fitWidth)),
           ),
         ),
@@ -166,7 +166,7 @@ Widget buildBike(Bike bike, int index) {
         ),
         Text(
           "Battery: ${bike.getBattery()}",
-          style: TextStyle(fontSize: 14, color: Colors.green),
+          style: TextStyle(fontSize: 14, color: Color(0xFF18C29C)),
         ),
       ],
     ),

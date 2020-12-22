@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Eco Bike Rental',
       theme: new ThemeData(
-          primaryColor: Colors.blue, textTheme: GoogleFonts.robotoTextTheme()),
+          primaryColor: Color(0xFF0B877D), textTheme: GoogleFonts.robotoTextTheme()),
       home: new MyHomePage(title: 'EcoBikeRental App'),
       // routing app
       onGenerateRoute: AppRouter.generateRoute,
@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       bottomNavigationBar: FABBottomAppBar(
         centerItemText: 'Rent Bike',
         color: Colors.grey,
-        selectedColor: Colors.green,
+        selectedColor: Color(0xFF0B877D),
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: _selectedTab,
         items: [
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         },
         child: Icon(Icons.qr_code_scanner),
         elevation: 2.0,
-        backgroundColor: Colors.green,
+        backgroundColor: Color(0xFF0B877D),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

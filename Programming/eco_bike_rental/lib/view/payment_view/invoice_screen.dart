@@ -37,7 +37,7 @@ class _InvoiceScreen extends State<InvoiceScreen> {
                   child: Container(
                       margin: EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
-                          color: Colors.deepPurpleAccent,
+                          color: Color(0xFF126872),
                           borderRadius: BorderRadius.circular(4.0)),
                       child: Column(
                         children: <Widget>[
@@ -130,7 +130,7 @@ class _InvoiceScreen extends State<InvoiceScreen> {
               Center(
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Color(0xFF126872),
                       borderRadius: BorderRadius.circular(6.0)),
                   margin: EdgeInsets.only(top: 25.0),
                   child: FlatButton.icon(

@@ -71,7 +71,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
                 return Column(
                   children: [
                     Image.asset(
-                      'lib/assets/images/dock.jpg',
+                      "lib/assets/images/dock_new.jpg",
                       fit: BoxFit.fitWidth,
                       height: 200,
                     ),

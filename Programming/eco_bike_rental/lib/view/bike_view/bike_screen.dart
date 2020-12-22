@@ -39,7 +39,7 @@ class _BikeScreenState extends State<BikeScreen> {
     );
   }
 
-  final Color _color = Colors.green;
+  final Color _color = Color(0xFF18C29C);
 
   Widget _featureSection(int saddle, int pedal, int rear, bool isStandard) {
     return Container(
@@ -96,15 +96,14 @@ class _BikeScreenState extends State<BikeScreen> {
         title: "Bike Detail",
         centerTitle: true,
       ),
-      body:
-      Container(
+      body: Container(
         alignment: Alignment.center,
         child: Column(
           children: [
             Hero(
-              tag:"${widget.bike.id}",
+              tag: "${widget.bike.id}",
               child: Image.asset(
-                'lib/assets/images/dock.jpg',
+                widget.bike.imagePath,
                 fit: BoxFit.fitWidth,
                 height: 200,
                 width: 400,
@@ -142,7 +141,7 @@ class _BikeScreenState extends State<BikeScreen> {
                       ),
                     ),
                     textColor: Colors.white,
-                    color: Colors.green,
+                    color: Color(0xFF18C29C),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)))
                 : Container()
@@ -152,5 +151,3 @@ class _BikeScreenState extends State<BikeScreen> {
     );
   }
 }
-
-

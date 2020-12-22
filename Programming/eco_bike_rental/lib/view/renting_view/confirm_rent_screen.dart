@@ -67,7 +67,7 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
                         style: TextStyle(fontSize: 16),
                       )),
                   textColor: Colors.white,
-                  color: Colors.green[600],
+                  color: Color(0xFF0B877D),
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0))),
             ],
