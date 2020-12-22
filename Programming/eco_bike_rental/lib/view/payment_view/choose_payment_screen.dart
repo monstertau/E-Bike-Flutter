@@ -9,9 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ChoosePaymentScreen extends StatefulWidget {
-  Payment _payment;
+  final Payment payment;
 
-  ChoosePaymentScreen(this._payment);
+  ChoosePaymentScreen(this.payment);
 
   @override
   _ChoosePaymentScreenState createState() => _ChoosePaymentScreenState();
@@ -58,19 +58,19 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           ownerController.text);
       if (!await card.checkInUse()) {
         var result = await paymentController.deductMoney(
-            card, widget._payment.depositAmount);
+            card, widget.payment.depositAmount);
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
           //TODO: create new payment
-          logger.i(widget._payment.bike.barcode);
-          widget._payment.card = card;
-          widget._payment.save();
+          logger.i(widget.payment.bike.barcode);
+          widget.payment.card = card;
+          widget.payment.save();
           //save to share preference
           SharedPreferences pref = await SharedPreferences.getInstance();
-          pref.setString("rentalCode", widget._payment.rentalCode);
+          pref.setString("rentalCode", widget.payment.rentalCode);
           Navigator.pushNamedAndRemoveUntil(
               context, invoiceRoute, (Route<dynamic> route) => false,
-              arguments: widget._payment);
+              arguments: widget.payment);
         } else {
           logger.i(result['message']);
         }
