@@ -8,7 +8,7 @@ class BikeController extends ControllerMVC {
 
   Bike bikeModel;
 
-  List getBikeInfo(int id) {
+  List getBikeInfo() {
     // TODO: implement this
     // return bikeModel.lstInfo;
     return List();

@@ -1,22 +1,26 @@
+
 import 'package:eco_bike_rental/utils/constants.dart';
-import 'package:eco_bike_rental/view/payment_view/invoice_screen.dart';
-import 'package:eco_bike_rental/view/renting_view/barcode_screen.dart';
 import 'package:eco_bike_rental/view/common/bottom_bar.dart';
 import 'package:eco_bike_rental/view/dock_view/list_dock_screen.dart';
 import 'package:eco_bike_rental/view/bike_view/rented_bike_screen.dart';
 import 'package:eco_bike_rental/view/common/routing.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main(){
+  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+  runApp(new MyApp());
+}
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Eco Bike Rental',
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
       ),
       home: new MyHomePage(title: 'EcoBikeRental App'),
       // routing app
@@ -55,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       bottomNavigationBar: FABBottomAppBar(
         centerItemText: 'Rent Bike',
         color: Colors.grey,
-        selectedColor: Colors.red,
+        selectedColor: Colors.blue,
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: _selectedTab,
         items: [

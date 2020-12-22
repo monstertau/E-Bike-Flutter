@@ -1,21 +1,16 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
+import 'package:eco_bike_rental/model/DB/db_interface.dart';
+import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
-import 'package:eco_bike_rental/subsystem/interbank/InterbankBoundary.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class PaymentController extends ControllerMVC {
-  CreditCard _card;
+  InterbankInterface _interbank;
 
-// ignore: todo
-  InterbankSubsystem _interbank;
-
-  CreditCard get card => _card;
-
-  set card(CreditCard value) {
-    _card = value;
-  }
+  final DatabaseSubsystemInterface db = new DatabaseSubsystem();
 
   // Description: Deduct money from card
   // @param: - creditCard card - card information
@@ -28,32 +23,36 @@ class PaymentController extends ControllerMVC {
     try {
       result = await _interbank.pay(card, amount);
     } catch (e) {
-      print(e);
       result = {"success": false, "message": e.toString()};
     }
     return result;
   }
 
-  // Description: Deposite money to card
+  // Description: Deposit money to card
   // @param: - creditCard card - card information
   //         - Int amount - amount of money
   // @return - Map message information
-  Future<Map> returnDepositeMoney(card, amount) async {
+  Future<Map> returnDepositMoney(card, deposit, rentAmount) async {
     //TODO
     Map result;
+    int amount;
     this._interbank = new InterbankSubsystem();
     try {
-      result = await _interbank.refund(card, amount);
+      amount = deposit - rentAmount;
+      if (amount < 0) {
+        result = await _interbank.pay(card, -amount);
+      } else
+        result = await _interbank.refund(card, amount);
     } catch (e) {
-      print(e);
+      // print(e);
       result = {"success": false, "message": e.toString()};
     }
     return result;
   }
 
-  // Description: validate cardCode of CreditCard
-  // @param: - String cardCode - card code of CreditCard
-  // @return - true if valid
+// Description: validate cardCode of CreditCard
+// @param: - String cardCode - card code of CreditCard
+// @return - true if valid
   bool validateCardCode(cardCode) {
     //TODO
     RegExp regexCardCode =
@@ -66,10 +65,10 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-  // Description: validate cvvCode of CreditCard
-  // @param: - String cvvCode - cvv code of CreditCard
-  // @return - true if valid
-  bool valideCvvCode(cvvCode) {
+// Description: validate cvvCode of CreditCard
+// @param: - String cvvCode - cvv code of CreditCard
+// @return - true if valid
+  bool validateCvvCode(cvvCode) {
     //TODO
     try {
       if (cvvCode == null) return false;
@@ -81,9 +80,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-  // Description: validate dateExpired of CreditCard
-  // @param: - String dateExpired - expired date of CreditCard
-  // @return - true if valid
+// Description: validate dateExpired of CreditCard
+// @param: - String dateExpired - expired date of CreditCard
+// @return - true if valid
   bool validateDateExpired(dateExpired) {
     //TODO
     if (dateExpired == null) return false;
@@ -107,9 +106,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-  // Description: validate owner of CreditCard
-  // @param: - String owner - owner of CreditCard
-  // @return - true if valid
+// Description: validate owner of CreditCard
+// @param: - String owner - owner of CreditCard
+// @return - true if valid
   bool validateOwner(owner) {
     //TODO
     RegExp ownerRegex = new RegExp(r"^[a-zA-Z ]*$");
@@ -121,20 +120,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-  // Description: validate the Account Info
-  // @param: - CreditCard card - credit card need to check
-  // @return - true if valid
-  bool checkAccountInfo(card) {
-    //TODO
-    print(card);
-    return true;
-  }
-
-  // Description: create new payment
-  // @param: - int amount - amount of money
-  //         - String contents - contents of payment
-  //         - CreditCard card - credit card
-  Payment createPayment(Bike bike,double depositMoney,DateTime start,String rentalCode ) {
-    return new Payment(bike, CreditCard.init(), 0, start, "0", rentalCode);
+  Payment createPayment(
+      Bike bike, int depositMoney, DateTime start, String rentalCode) {
+    return new Payment(
+        bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
   }
 }

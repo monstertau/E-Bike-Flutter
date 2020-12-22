@@ -2,15 +2,15 @@ import 'package:eco_bike_rental/model/Bike/Bike.dart';
 
 class EBike extends Bike {
   int _battery;
-
-  int get battery => _battery;
-
-  set battery(int value) {
-    _battery = value;
+  @override
+  String getBattery() {
+    return "$_battery%";
   }
 
-  EBike.init(int id, String barcode, String color, String category,
-      double bikeValue, double baseRentAmount, double addRentAmount, bool lock)
-      : super.init(id, barcode, color, category, bikeValue, baseRentAmount,
-            addRentAmount, lock);
+  EBike.init(int id, String barcode, String color, String category, bool lock,
+      int battery, int pedal, int saddle, int rear)
+      : super.init(id, barcode, color, category, lock,pedal,saddle,rear) {
+    this._battery = battery;
+    super.setAmount(700000, (10000 * 1.5).round(), (3000 * 1.5).round());
+  }
 }

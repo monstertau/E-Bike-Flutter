@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
-import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/model/Payment/Transaction.dart';
-import 'package:eco_bike_rental/utils/API.dart';
 import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
@@ -14,12 +12,10 @@ String generateMd5(String input) {
 }
 
 class InterbankController {
-  final APP_CODE = "B96b7GPvoZs=";
-  final PAY_COMMAND = "pay";
-  final REFUND_COMMAND = "refund";
-  final VERSION = "1.0.1";
-
-  static InterbankBoundary _interbankBoundary = new InterbankBoundary();
+  final appCode = "B96b7GPvoZs=";
+  final payCommand = "pay";
+  final refundCommand = "refund";
+  final version = "1.0.1";
 
   Future<Map> payOrder(CreditCard creditCard, int amount) async {
     Map request = {};
@@ -27,13 +23,12 @@ class InterbankController {
     var createdAt = Utils.getNow();
     Transaction transaction =
         new Transaction(creditCard, "pay", "ok", amount, createdAt);
-    request.putIfAbsent("version", () => VERSION);
+    request.putIfAbsent("version", () => version);
     request.putIfAbsent("transaction", () => transaction.getData());
-    request.putIfAbsent("appCode", () => APP_CODE);
+    request.putIfAbsent("appCode", () => appCode);
     request.putIfAbsent(
         "hashCode", () => Utils.makeHash(transaction.getData()));
-    // TODO
-    var result = await API.Patch(request);
+    var result = await InterbankBoundary.patch(request);
     response.putIfAbsent(
         "success", () => (result['errorCode'] == '00' ? true : false));
     response.putIfAbsent("message", () => parseError(result['errorCode']));
@@ -48,12 +43,12 @@ class InterbankController {
     var createdAt = Utils.getNow();
     Transaction transaction =
         new Transaction(card, "refund", "ok", amount, createdAt);
-    request.putIfAbsent("version", () => VERSION);
+    request.putIfAbsent("version", () => version);
     request.putIfAbsent("transaction", () => transaction.getData());
-    request.putIfAbsent("appCode", () => APP_CODE);
+    request.putIfAbsent("appCode", () => appCode);
     request.putIfAbsent(
         "hashCode", () => Utils.makeHash(transaction.getData()));
-    var result = await API.Patch(request);
+    var result = await InterbankBoundary.patch(request);
     logger.i(result['transaction']);
     response.putIfAbsent(
         "success", () => (result['errorCode'] == '00' ? true : false));
@@ -62,10 +57,6 @@ class InterbankController {
       response.putIfAbsent("data", () => result['transaction']);
     return response;
   }
-
-// Payment createPayment(CreditCard card,){
-//   return
-// }
 
   String parseError(String errorCode) {
     switch (errorCode) {

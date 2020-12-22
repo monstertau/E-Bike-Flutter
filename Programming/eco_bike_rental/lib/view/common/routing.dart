@@ -2,15 +2,16 @@ import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/bike_view/bike_screen.dart';
-import 'package:eco_bike_rental/view/bike_view/rented_bike_screen.dart';
 import 'package:eco_bike_rental/view/payment_view/choose_payment_screen.dart';
 import 'package:eco_bike_rental/view/payment_view/invoice_screen.dart';
+import 'package:eco_bike_rental/view/renting_view/choose_return_dock_screen.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
+import 'package:eco_bike_rental/view/bike_view/rented_bike_screen.dart';
+import 'package:eco_bike_rental/view/renting_view/confirm_return_screen.dart';
 import 'package:flutter/material.dart';
-
+import '../renting_view/barcode_screen.dart';
 import '../dock_view/detailed_dock_screen.dart';
 import '../dock_view/list_dock_screen.dart';
-import '../renting_view/barcode_screen.dart';
 
 class AppRouter {
   // implement for navigating between screen
@@ -29,23 +30,38 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => BikeScreen(bike: bike));
         break;
       case barcodeRoute:
-        return MaterialPageRoute(builder: (context) => BarcodeScreen());
+        String barcode = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => BarcodeScreen(initBarcode: barcode));
         break;
       case confirmRentingRoute:
         Bike bike = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => ConfirmRentBikeScreen(
-                  bike: bike,
-                ));
+            builder: (context) => ConfirmRentBikeScreen(bike: bike));
         break;
       case choosePaymentRoute:
         Payment payment = settings.arguments;
-        return MaterialPageRoute(builder: (context) => ChoosePaymentScreen());
+        return MaterialPageRoute(
+            builder: (context) => ChoosePaymentScreen(payment));
+        break;
       case rentedBikeRoute:
-        // String id = settings.arguments;
         return MaterialPageRoute(builder: (context) => RentedBikeScreen());
+        break;
       case invoiceRoute:
-        return MaterialPageRoute(builder: (context) => InvoiceScreen());
+        Payment payment = settings.arguments;
+        return MaterialPageRoute(builder: (context) => InvoiceScreen(payment));
+        break;
+
+      case confirmReturnRoute:
+        Payment payment = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => ConfirmReturnScreen(payment));
+        break;
+      case chooseReturnDockRoute:
+        int index = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => ChooseReturnDockScreen(index));
+        break;
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(

@@ -2,7 +2,6 @@ import 'package:eco_bike_rental/model/DB/db_boundary.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  DatabaseBoundary bound = new DatabaseBoundary();
   group('Test Generate Header', () {
     var testCase = [
       {
@@ -14,7 +13,7 @@ void main() {
     ];
     testCase.forEach((element) {
       test("Test $element", () {
-        String res = bound.generateSignature(
+        String res = DatabaseBoundary.generateSignature(
             element.elementAt(0), element.elementAt(1), element.elementAt(2));
         var expected = element.elementAt(3);
         expect(res, expected);

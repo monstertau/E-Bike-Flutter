@@ -23,7 +23,7 @@ class ImageBanner extends StatelessWidget {
         Column(
           children: [
             Text(_itemName),
-            //_itemStatus ? Text('AVAILABLE') : Text('RENTED'),
+            _itemStatus ? Text('AVAILABLE') : Text('RENTED'),
           ],
         )
       ],
