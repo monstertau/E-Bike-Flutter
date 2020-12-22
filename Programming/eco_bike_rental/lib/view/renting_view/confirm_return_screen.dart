@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Alert.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfirmReturnScreen extends StatefulWidget {
@@ -55,7 +58,6 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
 
   void _getTime() {
     if (_initTime > 300) {
-      // dispose();
       Navigator.pop(context, "test");
     }
     final DateTime now = DateTime.now();
@@ -72,10 +74,19 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
 
   void _confirmReturn(context) async {
     if (_dockName != null) {
-      //TODO: return money
-      // paymentController.returnDepositMoney(widget._payment.card, widget.)
-      Map res = await paymentController.returnDepositMoney(widget._payment.card,
-          widget._payment.depositAmount, widget._payment.rentAmount);
+      Map res;
+      try {
+        res = await paymentController.returnDepositMoney(widget._payment.card,
+            widget._payment.depositAmount, widget._payment.rentAmount);
+      } catch (e) {
+        // AlertCustom.show(context, e, AlertType.error).show();
+        Fluttertoast.showToast(
+            msg: "Error: ${e.message}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Colors.red);
+      }
       if (res['success']) {
         widget._payment.update(index);
         SharedPreferences pref = await SharedPreferences.getInstance();
@@ -84,12 +95,17 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
         Navigator.pushNamedAndRemoveUntil(
             context, invoiceRoute, (Route<dynamic> route) => false,
             arguments: widget._payment);
-      } else {
-        //TODO: Handle Error
-        print(res['message']);
       }
     } else {
-      print("Please choose dock");
+      // AlertCustom.show(context, "Choose a dock for returning bike", AlertType.warning)
+      //     .show();
+      Fluttertoast.showToast(
+          msg: "Warning: Choose dock before return",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2,
+          textColor: Colors.black,
+          backgroundColor: Colors.yellow);
     }
   }
 
@@ -97,7 +113,8 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: "Return Bike #${widget._payment.bike.barcode}", centerTitle: true),
+          title: "Return Bike #${widget._payment.bike.barcode}",
+          centerTitle: true),
       body: Container(
         margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 10.0),
         alignment: Alignment.center,
@@ -135,7 +152,8 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
               child: Container(
                   padding:
                       EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
-                  child: Text("PROCEED RETURN", style: TextStyle(fontSize: 16))),
+                  child:
+                      Text("PROCEED RETURN", style: TextStyle(fontSize: 16))),
               textColor: Colors.white,
               color: Colors.red[700],
               shape: new RoundedRectangleBorder(

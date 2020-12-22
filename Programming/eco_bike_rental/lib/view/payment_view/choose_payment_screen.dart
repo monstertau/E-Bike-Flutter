@@ -2,10 +2,13 @@ import 'package:eco_bike_rental/common/exception/payment_exception.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Alert.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChoosePaymentScreen extends StatefulWidget {
@@ -20,6 +23,15 @@ class ChoosePaymentScreen extends StatefulWidget {
 PaymentController paymentController = new PaymentController();
 
 class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
+  FToast fToast;
+
+  @override
+  void initState() {
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
+
   TextEditingController ownerController = new TextEditingController();
   TextEditingController dateExpiredController = new TextEditingController();
   TextEditingController cardNumberController = new TextEditingController();
@@ -61,7 +73,13 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           result = await paymentController.deductMoney(
               card, widget.payment.depositAmount);
         } catch (e) {
-          throw (e);
+          // AlertCustom.show(context, e, AlertType.error);
+          Fluttertoast.showToast(
+              msg: "Error: ${e.message}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 4,
+              backgroundColor: Colors.red);
         }
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
