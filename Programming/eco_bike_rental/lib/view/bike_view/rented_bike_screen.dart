@@ -53,8 +53,8 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
 
   String _formatDateTime(Duration duration) {
     String hour = duration.inHours.toString();
-    String minutes = duration.inMinutes.remainder(60).toString();
-    String seconds = duration.inSeconds.remainder(60).toString();
+    String minutes = "${duration.inMinutes.remainder(60)}";
+    String seconds = "${duration.inSeconds.remainder(60)}";
     return "$hour :$minutes :$seconds ";
   }
 

@@ -123,7 +123,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FlatButton(
-                    color: Colors.teal[600],
+                    color: Color(0xFF01A39D),
                     textColor: Colors.white,
                     padding: EdgeInsets.only(
                         bottom: 12.0, top: 12.0, right: 18.0, left: 18.0),
