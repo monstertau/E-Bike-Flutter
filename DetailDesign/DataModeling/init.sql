@@ -23,7 +23,7 @@ create table "ecoBikeSystem"."Bike"
     "bikeValue"            float                 not null,
     "baseRentAmount"       float                 not null,
     "additionalRentAmount" float                 not null,
-    lock                   BOOLEAN default FALSE not null,
+    lockbike                   BOOLEAN default FALSE not null,
     "dockId"               int                   not null
         constraint bikeindock_dockstation_id_fk
             references "ecoBikeSystem"."DockStation"
