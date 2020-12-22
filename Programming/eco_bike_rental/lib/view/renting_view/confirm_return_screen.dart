@@ -27,6 +27,7 @@ int index = -1;
 class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   String _timeString;
   int _initTime;
+  int _state = 0;
   PaymentController paymentController = new PaymentController();
 
   void initState() {
@@ -71,6 +72,9 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   }
 
   void _confirmReturn(context) async {
+    setState(() {
+      _state = 1;
+    });
     if (_dockName != null) {
       Map res;
       try {
@@ -85,6 +89,9 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
             timeInSecForIosWeb: 2,
             backgroundColor: Colors.red);
       }
+      setState(() {
+        _state = 0;
+      });
       if (res['success']) {
         widget._payment.update(index);
         SharedPreferences pref = await SharedPreferences.getInstance();
@@ -150,12 +157,17 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
               child: Container(
                   padding:
                       EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
-                  child:
-                      Text("PROCEED RETURN", style: TextStyle(fontSize: 16))),
+                  child: _state == 0
+                      ? Text("PROCEED RETURN", style: TextStyle(fontSize: 16))
+                      : CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.red[400])
+              )),
               textColor: Colors.white,
               color: Colors.red[700],
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
+
             ),
           ],
         ),

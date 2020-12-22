@@ -21,15 +21,7 @@ class ChoosePaymentScreen extends StatefulWidget {
 PaymentController paymentController = new PaymentController();
 
 class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
-  FToast fToast;
-
-  @override
-  void initState() {
-    super.initState();
-    fToast = FToast();
-    fToast.init(context);
-  }
-
+  int _state = 0;
   TextEditingController ownerController = new TextEditingController();
   TextEditingController dateExpiredController = new TextEditingController();
   TextEditingController cardNumberController = new TextEditingController();
@@ -58,6 +50,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
       _validatecn =
           paymentController.validateCardCode(cardNumberController.text);
       _validatecvv = paymentController.validateCvvCode(cvvCodeController.text);
+      _state = 1;
     });
     if (_validatecvv && _validatede && _validatename && _validatecn) {
       CreditCard card = new CreditCard(
@@ -79,6 +72,9 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
               timeInSecForIosWeb: 4,
               backgroundColor: Colors.red);
         }
+        setState(() {
+          _state = 0;
+        });
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
           widget.payment.card = card;
@@ -91,6 +87,10 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
               arguments: widget.payment);
         }
       }
+    } else {
+      setState(() {
+        _state = 0;
+      });
     }
   }
 
@@ -147,10 +147,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     onPressed: _processCard,
-                    child: Text(
-                      "PROCEED",
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    child: setupButtonChild(),
                   ),
                 ],
               )
@@ -158,6 +155,16 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget setupButtonChild() {
+    return Container(
+      child: _state == 0
+          ? Text('PROCEED', style: TextStyle(fontSize: 16))
+          : CircularProgressIndicator(
+              backgroundColor: Colors.white,
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.teal[400])),
     );
   }
 }
