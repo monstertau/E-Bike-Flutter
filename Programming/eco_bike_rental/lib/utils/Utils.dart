@@ -8,9 +8,9 @@ class Utils {
   }
 
   static String makeHash(Map data) {
-    final SECRET_KEY = "BUgboJpO5w4=";
+    final secretKey = "BUgboJpO5w4=";
     var hashData = data;
-    hashData.putIfAbsent("secretKey", () => SECRET_KEY);
+    hashData.putIfAbsent("secretKey", () => secretKey);
     return md5.convert(utf8.encode(hashData.toString())).toString();
   }
 }

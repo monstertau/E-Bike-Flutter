@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class ItemList extends StatelessWidget {
-  String _key;
-  String _value;
-  Color _color;
+  final String _key;
+  final String _value;
+  final Color _color;
 
   @override
   Widget build(BuildContext context) {

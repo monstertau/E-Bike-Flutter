@@ -1,7 +1,6 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class RentingController {

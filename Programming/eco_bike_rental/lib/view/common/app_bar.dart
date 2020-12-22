@@ -1,4 +1,3 @@
-import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {

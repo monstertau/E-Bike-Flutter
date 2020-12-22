@@ -5,7 +5,6 @@ import 'package:eco_bike_rental/view/dock_view/list_dock_screen.dart';
 import 'package:eco_bike_rental/view/bike_view/rented_bike_screen.dart';
 import 'package:eco_bike_rental/view/common/routing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main(){
   // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);

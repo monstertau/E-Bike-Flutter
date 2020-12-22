@@ -1,25 +1,16 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DB/db_interface.dart';
 import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
-import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
-import 'package:eco_bike_rental/subsystem/interbank/InterbankBoundary.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class PaymentController extends ControllerMVC {
-  CreditCard _card;
   InterbankInterface _interbank;
 
-  CreditCard get card => _card;
   final DatabaseSubsystemInterface db = new DatabaseSubsystem();
-
-  // ignore: unnecessary_getters_setters
-  set card(CreditCard value) {
-    _card = value;
-  }
 
   // Description: Deduct money from card
   // @param: - creditCard card - card information
@@ -45,7 +36,7 @@ class PaymentController extends ControllerMVC {
     //TODO
     Map result;
     int amount;
-    this._interbank = new InterbankSubsystem() as InterbankInterface;
+    this._interbank = new InterbankSubsystem();
     try {
       amount = deposit - rentAmount;
       if (amount < 0) {

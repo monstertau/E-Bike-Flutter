@@ -1,20 +1,16 @@
-import 'dart:convert';
 
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
-import 'package:eco_bike_rental/utils/API.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'invoice_screen.dart';
-import 'dart:developer';
 
 class ChoosePaymentScreen extends StatefulWidget {
-  Payment _payment;
+  final Payment _payment;
 
   ChoosePaymentScreen(this._payment);
 

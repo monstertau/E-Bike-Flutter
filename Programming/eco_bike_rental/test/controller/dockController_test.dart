@@ -1,9 +1,7 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
-import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DB/db_interface.dart';
 import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
-import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

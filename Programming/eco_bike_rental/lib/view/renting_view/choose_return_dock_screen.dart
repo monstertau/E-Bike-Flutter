@@ -4,7 +4,6 @@ import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class ChooseReturnDockScreen extends StatefulWidget {
-  @override
   final int _choosed;
 
   ChooseReturnDockScreen(this._choosed);
@@ -75,7 +74,8 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                                                 child: Text(
                                                     "Available Seat:${lstDock[i].available}/${lstDock[i].dockSize}",
                                                     style: TextStyle(
-                                                        fontSize: 12,color: Colors.grey)))
+                                                        fontSize: 12,
+                                                        color: Colors.grey)))
                                           ],
                                         ),
                                       ),
@@ -86,11 +86,13 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                                   child: Container(
                                     alignment: Alignment.centerRight,
                                     child: Radio(
-                                        groupValue: true,
-                                        value:
-                                            lstDock[i].dockID != widget._choosed
-                                                ? false
-                                                : true),
+                                      groupValue: true,
+                                      value:
+                                          lstDock[i].dockID != widget._choosed
+                                              ? false
+                                              : true,
+                                      onChanged: (bool value) {},
+                                    ),
                                   ),
                                 ),
                               ],

@@ -1,5 +1,4 @@
 import 'package:eco_bike_rental/controller/RentingController.dart';
-import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:test/test.dart';
 
