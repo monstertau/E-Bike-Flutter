@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class ChoosePaymentScreen extends StatefulWidget {
   final Payment payment;
 
@@ -148,31 +147,38 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
 
 class CardItem extends StatelessWidget {
   final IconData iconName;
+  final color;
+  final cardNumber;
 
-  const CardItem({Key key, this.iconName}) : super(key: key);
+  const CardItem({Key key, this.iconName, this.color = Colors.black54, this.cardNumber = ""})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Container(
-      padding: EdgeInsets.only(top: 30, bottom: 30),
+      padding: EdgeInsets.only(top: 20, bottom: 30),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         border: Border.all(
-          color: Colors.black54,
+          color: color,
           width: 2,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         children: [
+          Text(cardNumber),
           Container(
             height: 1.0,
             width: 130.0,
-            color: Colors.black54,
+            color: color,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
-            child: Text("ATM CARD"),
+            child: Text(
+              "ATM CARD",
+              style: TextStyle(color: color),
+            ),
           ),
         ],
       ),
