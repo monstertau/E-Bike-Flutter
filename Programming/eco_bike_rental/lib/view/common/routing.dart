@@ -26,18 +26,18 @@ class AppRouter {
             builder: (context) => DetailedDockScreen(id: id));
         break;
       case detailedBikeRoute:
-        int id = settings.arguments;
-        return MaterialPageRoute(builder: (context) => BikeScreen(id: id));
+        Bike bike = settings.arguments;
+        return MaterialPageRoute(builder: (context) => BikeScreen(bike: bike));
         break;
       case barcodeRoute:
-        return MaterialPageRoute(builder: (context) => BarcodeScreen());
+        String barcode = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => BarcodeScreen(initBarcode: barcode));
         break;
       case confirmRentingRoute:
         Bike bike = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => ConfirmRentBikeScreen(
-                  bike: bike,
-                ));
+            builder: (context) => ConfirmRentBikeScreen(bike: bike));
         break;
       case choosePaymentRoute:
         Payment payment = settings.arguments;
@@ -45,10 +45,8 @@ class AppRouter {
             builder: (context) => ChoosePaymentScreen(payment));
         break;
       case rentedBikeRoute:
-        String id = settings.arguments;
         return MaterialPageRoute(builder: (context) => RentedBikeScreen());
         break;
-
       case invoiceRoute:
         Payment payment = settings.arguments;
         return MaterialPageRoute(builder: (context) => InvoiceScreen(payment));

@@ -23,7 +23,6 @@ class DatabaseSubsystem implements DatabaseSubsystemInterface {
 
   @override
   Future<Map> getBikeByBarcode(String barcode) async {
-    // TODO: implement getBike
     Map response = await _con.getBikeByBarcode(barcode);
     return response["bike"];
   }

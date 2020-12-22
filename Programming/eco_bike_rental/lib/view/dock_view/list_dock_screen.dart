@@ -61,7 +61,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: CustomAppBar(title: "List Dock Screen", oneScreen: true),
+      appBar: CustomAppBar(title: "List Dock Stations", oneScreen: true),
       body: Container(
           alignment: Alignment.center,
           child: FutureBuilder(
