@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:flutter/painting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'image_banner.dart';
 
 class RentedBikeScreen extends StatefulWidget {
   @override
@@ -72,7 +71,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("${key}:"),
+          Text("$key:"),
           Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
@@ -123,7 +122,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
         _verticalDivider(),
         Expanded(child: _sessionItem("Time Rented", timeRented)),
         _verticalDivider(),
-        Expanded(child: _sessionItem("Rent Amount", "${rentingAmount} VND")),
+        Expanded(child: _sessionItem("Rent Amount", "$rentingAmount VND")),
       ],
     );
   }
@@ -199,6 +198,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget TextItem(String key, String value) {
     return Container(
       color: Colors.grey[400],

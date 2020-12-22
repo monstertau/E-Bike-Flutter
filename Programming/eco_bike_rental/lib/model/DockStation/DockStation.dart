@@ -2,7 +2,6 @@ import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Bike/BikeFactory.dart';
 import 'package:eco_bike_rental/model/DB/db_interface.dart';
 import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
-import 'package:eco_bike_rental/utils/constants.dart';
 
 class DockStation {
   int id;
@@ -17,10 +16,12 @@ class DockStation {
   final DatabaseSubsystemInterface database = new DatabaseSubsystem();
 
   DockStation.origin();
+
   DockStation.full(this.id, this._dockName, this._dockArea, this._dockAddress,
       this._dockSize, this._available, this._lstBike);
+
   DockStation(this.id, this._dockName, this._dockArea, this._dockAddress,
-      this._dockSize, this._available){
+      this._dockSize, this._available) {
     this._lstBike = new List<Bike>();
   }
 
@@ -38,10 +39,6 @@ class DockStation {
 
   List<Bike> get lstBike => _lstBike;
 
-  set lstBike(List<Bike> value) {
-    _lstBike = value;
-  }
-
   void addBike(Bike bike) {
     this._lstBike.add(bike);
   }
@@ -50,11 +47,11 @@ class DockStation {
     List lstBike = new List<Bike>();
     List dbBikes = await database.getDetailDock(id);
     for (Map dbBike in dbBikes) {
-
       Bike bike = BikeFactory.getBike(dbBike);
       lstBike.add(bike);
     }
-    return DockStation.full(id, _dockName, _dockArea, _dockAddress, _dockSize, _available, lstBike);
+    return DockStation.full(
+        id, _dockName, _dockArea, _dockAddress, _dockSize, _available, lstBike);
   }
 
   Future<List> getAllDock() async {

@@ -4,7 +4,7 @@ class EBike extends Bike {
   int _battery;
   @override
   String getBattery() {
-    return "${_battery}%";
+    return "$_battery%";
   }
 
   EBike.init(int id, String barcode, String color, String category, bool lock,

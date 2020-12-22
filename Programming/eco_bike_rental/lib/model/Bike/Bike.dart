@@ -43,10 +43,6 @@ class Bike {
 
   bool get lock => _lock;
 
-  set lock(bool value) {
-    _lock = value;
-  }
-
   int get addRentAmount => _addRentAmount;
 
   int get baseRentAmount => _baseRentAmount;

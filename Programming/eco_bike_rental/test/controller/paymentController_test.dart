@@ -1,6 +1,4 @@
 import 'package:eco_bike_rental/controller/PaymentController.dart';
-import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   PaymentController paymentController = new PaymentController();

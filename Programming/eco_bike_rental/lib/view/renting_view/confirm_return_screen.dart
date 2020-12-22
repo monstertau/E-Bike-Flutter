@@ -4,7 +4,6 @@ import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
-import 'package:eco_bike_rental/view/renting_view/choose_return_dock_screen.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfirmReturnScreen extends StatefulWidget {
-  Payment _payment;
+  final Payment _payment;
   final logger = Logger();
 
   ConfirmReturnScreen(this._payment);
@@ -149,6 +148,7 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   }
 }
 
+// ignore: non_constant_identifier_names
 Widget ItemChoose(context, title, color) {
   return Container(
     padding: EdgeInsets.all(15),

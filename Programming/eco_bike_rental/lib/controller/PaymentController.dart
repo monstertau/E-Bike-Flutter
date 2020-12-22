@@ -1,25 +1,16 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DB/db_interface.dart';
 import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
-import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
-import 'package:eco_bike_rental/subsystem/interbank/InterbankBoundary.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class PaymentController extends ControllerMVC {
-  CreditCard _card;
+  InterbankInterface _interbank;
 
-// ignore: todo
-  InterbankSubsystem _interbank;
-
-  CreditCard get card => _card;
   final DatabaseSubsystemInterface db = new DatabaseSubsystem();
-
-  set card(CreditCard value) {
-    _card = value;
-  }
 
   // Description: Deduct money from card
   // @param: - creditCard card - card information
@@ -32,7 +23,6 @@ class PaymentController extends ControllerMVC {
     try {
       result = await _interbank.pay(card, amount);
     } catch (e) {
-      // print(e);
       result = {"success": false, "message": e.toString()};
     }
     return result;
@@ -130,32 +120,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-// Description: check card on use
-// @param: - Strign cardCode - credit card need to check
-// @return - true if valid
-// bool checkLockedCard(String cardCode) {
-//   //TODO
-
-// Description: create new payment
-// @param: - int amount - amount of money
-//         - String contents - contents of payment
-//         - CreditCard card - credit card
   Payment createPayment(
       Bike bike, int depositMoney, DateTime start, String rentalCode) {
     return new Payment(
         bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
   }
-
-// Future<Map>
-// void save(Map payment) async {
-//   var result = await db.savePayment(payment);
-//   print(result);
-//   // return result['success'];
-// }
-//
-// void update(Map payment) async {
-//   var result = await db.updatePayment(payment);
-//   print(result);
-// }}
-
 }

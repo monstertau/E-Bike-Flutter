@@ -6,7 +6,7 @@ class TwinEBike extends Bike {
 
   @override
   String getBattery() {
-    return "${_battery}%";
+    return "$_battery%";
   }
   TwinEBike.init(int id, String barcode, String color, String category,
       bool lock, int battery, int pedal, int saddle, int rear)

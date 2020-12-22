@@ -18,13 +18,13 @@ class DatabaseSubsystemController {
 
   Future<Map> getBikeByBarcode(String barcode) async {
     var response = await _databaseBoundary.get(getBarcodeBikePath,
-        optionalQuery: "?barcode=${barcode}");
+        optionalQuery: "?barcode=$barcode");
     return jsonDecode(response.body);
   }
 
   Future<Map> checkLockedCard(String cardCode) async {
     var response = await _databaseBoundary.get(checkLockedCardPath,
-        optionalQuery: "?cardCode=${cardCode}");
+        optionalQuery: "?cardCode=$cardCode");
     return jsonDecode(response.body);
   }
 
@@ -39,7 +39,7 @@ class DatabaseSubsystemController {
   }
 
   Future<Map> searchPayment(String rentalCode) async {
-    Map body = {"rentalCode": "${rentalCode}"};
+    Map body = {"rentalCode": "$rentalCode"};
     var response = await _databaseBoundary.post(searchPaymentPath, body);
     return jsonDecode(response.body);
   }

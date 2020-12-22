@@ -1,7 +1,5 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-import 'package:eco_bike_rental/model/Bike/EBike.dart';
-import 'package:eco_bike_rental/model/Bike/TwinEBike.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/cupertino.dart';

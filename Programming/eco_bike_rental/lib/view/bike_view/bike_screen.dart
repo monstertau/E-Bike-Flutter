@@ -48,11 +48,11 @@ class _BikeScreenState extends State<BikeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildButtonColumn(
-              _color, Icons.people_alt_outlined, '${saddle} Saddle(s)'),
+              _color, Icons.people_alt_outlined, '$saddle Saddle(s)'),
           _buildButtonColumn(
-              _color, Icons.accessible_forward, '${pedal} Pedal(s)'),
+              _color, Icons.accessible_forward, '$pedal Pedal(s)'),
           _buildButtonColumn(_color, Icons.airline_seat_recline_normal_sharp,
-              '${rear} Rear Seat'),
+              '$rear Rear Seat'),
           isStandard
               ? Container()
               : _buildButtonColumn(

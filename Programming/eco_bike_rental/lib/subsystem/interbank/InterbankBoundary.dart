@@ -1,15 +1,13 @@
-import 'package:eco_bike_rental/utils/API.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class InterbankBoundary {
-  String query(String url, String data) {
-    String response = null;
-    try {
-      // var patch = API.Patch(data);
-      // response = patch as String;
-    } catch (e) {
-      // TODO Auto-generated catch block
-      throw (e);
-    }
-    return response;
+  static Future<Map> patch(Map data) async {
+    const url =
+        'https://ecopark-system-api.herokuapp.com/api/card/processTransaction';
+    final response = await http.patch(url,
+        headers: {"Content-Type": "application/json"},
+        body: JsonEncoder().convert(data));
+    return jsonDecode(response.body);
   }
 }
