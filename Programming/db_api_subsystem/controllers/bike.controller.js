@@ -11,13 +11,13 @@ exports.search = async (req, res) => {
     if(rows.length == 0){
         return res.status(404).json({
             success:false,
-            message:"wrong_barcode"
+            error:"wrong_barcode"
         })
     }
     if (!rows[0].lockbike){
         return res.status(400).json({
             success:false,
-            message:"bike_already_rented"
+            error:"bike_already_rented"
         })
     }
     if(rows[0].category == "Ebike"){

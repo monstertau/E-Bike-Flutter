@@ -4,6 +4,11 @@ import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 
 class Bike {
   int _id;
+  int _saddle;
+  int _pedal;
+  int _rear;
+  String _imagePath;
+
   String _barcode;
   String _color;
   String _category;
@@ -16,9 +21,8 @@ class Bike {
 
   Bike.newBike();
 
-  Bike.init(this._id, this._barcode, this._color, this._category, this._lock);
-
-  Bike.newBarcode(this._barcode);
+  Bike.init(this._id, this._barcode, this._color, this._category, this._lock,
+      this._pedal, this._saddle, this._rear, this._imagePath);
 
   void setAmount(int bikeValue, int baseRentAmount, int addRentAmount) {
     this._bikeValue = bikeValue;
@@ -28,15 +32,17 @@ class Bike {
 
   int get id => _id;
 
+  int get pedal => _pedal;
+
+  int get rear => _rear;
+
+  int get saddle => _saddle;
+
   String get barcode => _barcode;
 
   String get color => _color;
 
   bool get lock => _lock;
-
-  set lock(bool value) {
-    _lock = value;
-  }
 
   int get addRentAmount => _addRentAmount;
 
@@ -45,6 +51,12 @@ class Bike {
   int get bikeValue => _bikeValue;
 
   String get category => _category;
+
+  String get imagePath => _imagePath;
+
+  String getBattery() {
+    return "None";
+  }
 
   Future<Bike> getBikeByBarcode(String barcode) async {
     Map res = await _database.getBikeByBarcode(barcode);

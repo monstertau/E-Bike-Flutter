@@ -1,4 +1,3 @@
-import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -24,7 +23,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       title: Text(
         widget.title,
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
       ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
@@ -32,14 +31,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
       leading: widget.oneScreen
           ? null
           : IconButton(
-              icon: new Icon(Icons.arrow_back_outlined, color: Colors.black),
+              icon: new Icon(Icons.arrow_back_outlined, color: Colors.grey[600],),
               onPressed: () => Navigator.of(context).pop()),
-      bottom: PreferredSize(
-          child: Container(
-            color: Colors.grey[300],
-            height: 1.0,
-          ),
-          preferredSize: Size.fromHeight(1.0)),
+      // bottom: PreferredSize(
+      //     child: Container(
+      //       color: Colors.grey[300],
+      //       height: 1.0,
+      //     ),
+      //     preferredSize: Size.fromHeight(1.0)),
     );
   }
 }

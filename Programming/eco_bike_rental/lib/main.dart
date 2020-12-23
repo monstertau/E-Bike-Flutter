@@ -1,17 +1,15 @@
-
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/bottom_bar.dart';
 import 'package:eco_bike_rental/view/dock_view/list_dock_screen.dart';
 import 'package:eco_bike_rental/view/bike_view/rented_bike_screen.dart';
 import 'package:eco_bike_rental/view/common/routing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-void main(){
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+void main() {
+  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   runApp(new MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -21,8 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Eco Bike Rental',
       theme: new ThemeData(
-        primaryColor: Colors.blue,
-      ),
+          primaryColor: Color(0xFF0B877D), textTheme: GoogleFonts.robotoTextTheme()),
       home: new MyHomePage(title: 'EcoBikeRental App'),
       // routing app
       onGenerateRoute: AppRouter.generateRoute,
@@ -60,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       bottomNavigationBar: FABBottomAppBar(
         centerItemText: 'Rent Bike',
         color: Colors.grey,
-        selectedColor: Colors.red,
+        selectedColor: Color(0xFF0B877D),
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: _selectedTab,
         items: [
@@ -78,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         },
         child: Icon(Icons.qr_code_scanner),
         elevation: 2.0,
+        backgroundColor: Color(0xFF0B877D),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

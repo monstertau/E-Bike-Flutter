@@ -1,7 +1,6 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
-import 'package:eco_bike_rental/view/bike_view/image_banner.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -16,7 +15,6 @@ class ListDockScreen extends StatefulWidget {
 class _ListDockScreenState extends State<ListDockScreen> {
   final DockController dockController = new DockController();
   final logger = Logger();
-  int _id;
 
   Widget _itemTitle(String title) {
     return Container(
@@ -61,7 +59,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: CustomAppBar(title: "List Dock Screen", oneScreen: true),
+      appBar: CustomAppBar(title: "List Dock Stations", oneScreen: true),
       body: Container(
           alignment: Alignment.center,
           child: FutureBuilder(
@@ -73,7 +71,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
                 return Column(
                   children: [
                     Image.asset(
-                      'lib/assets/images/dock.jpg',
+                      "lib/assets/images/dock_new.jpg",
                       fit: BoxFit.fitWidth,
                       height: 200,
                     ),
