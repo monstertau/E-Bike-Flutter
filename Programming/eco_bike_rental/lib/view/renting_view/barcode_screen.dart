@@ -57,7 +57,7 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
             SizedBox(height: 80),
             FlatButton(
               child: setupButtonChild(),
-              color: Colors.blue,
+              color: Color(0xFF18C29C),
               textColor: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),

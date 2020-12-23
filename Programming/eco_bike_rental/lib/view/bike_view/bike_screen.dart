@@ -39,7 +39,7 @@ class _BikeScreenState extends State<BikeScreen> {
     );
   }
 
-  final Color _color = Colors.blue;
+  final Color _color = Color(0xFF18C29C);
 
   Widget _featureSection(int saddle, int pedal, int rear, bool isStandard) {
     return Container(
@@ -100,10 +100,14 @@ class _BikeScreenState extends State<BikeScreen> {
         alignment: Alignment.center,
         child: Column(
           children: [
-            Image.asset(
-              'lib/assets/images/dock.jpg',
-              fit: BoxFit.fitWidth,
-              height: 200,
+            Hero(
+              tag: "${widget.bike.id}",
+              child: Image.asset(
+                widget.bike.imagePath,
+                fit: BoxFit.fitWidth,
+                height: 200,
+                width: 400,
+              ),
             ),
             SectionBanner(title: "BIKE FEATURES"),
             _featureSection(widget.bike.saddle, widget.bike.pedal,
@@ -122,23 +126,25 @@ class _BikeScreenState extends State<BikeScreen> {
             _priceSection(
                 "Next 15 minutes Charges", "${widget.bike.addRentAmount} VND"),
             Container(margin: EdgeInsets.only(bottom: 15)),
-            FlatButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, barcodeRoute,
-                      arguments: widget.bike.barcode);
-                },
-                child: Container(
-                  padding:
-                      EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
-                  child: Text(
-                    "RENT THIS BIKE",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-                textColor: Colors.white,
-                color: Colors.blue,
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)))
+            widget.bike.lock
+                ? FlatButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, barcodeRoute,
+                          arguments: widget.bike.barcode);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          top: 15, bottom: 15, left: 5, right: 5),
+                      child: Text(
+                        "RENT THIS BIKE",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    textColor: Colors.white,
+                    color: Color(0xFF18C29C),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)))
+                : Container()
           ],
         ),
       ),

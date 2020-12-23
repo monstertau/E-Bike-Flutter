@@ -5,6 +5,7 @@ import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,19 +21,20 @@ class ChoosePaymentScreen extends StatefulWidget {
 PaymentController paymentController = new PaymentController();
 
 class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
-  TextEditingController ownerController = new TextEditingController();
-  TextEditingController dateExpiredController = new TextEditingController();
-  TextEditingController cardNumberController = new TextEditingController();
-  TextEditingController cvvCodeController = new TextEditingController();
+  int _state = 0;
+  // TextEditingController ownerController = new TextEditingController();
+  // TextEditingController dateExpiredController = new TextEditingController();
+  // TextEditingController cardNumberController = new TextEditingController();
+  // TextEditingController cvvCodeController = new TextEditingController();
 
-  // TextEditingController ownerController =
-  //     new TextEditingController(text: 'Group 10');
-  // TextEditingController dateExpiredController =
-  //     new TextEditingController(text: '1125');
-  // TextEditingController cardNumberController =
-  //     new TextEditingController(text: '121319_group10_2020');
-  // TextEditingController cvvCodeController =
-  //     new TextEditingController(text: "323");
+  TextEditingController ownerController =
+      new TextEditingController(text: 'Group 10');
+  TextEditingController dateExpiredController =
+      new TextEditingController(text: '1125');
+  TextEditingController cardNumberController =
+      new TextEditingController(text: '121319_group10_2020');
+  TextEditingController cvvCodeController =
+      new TextEditingController(text: "323");
 
   bool _validatename = true;
   bool _validatecn = true;
@@ -48,6 +50,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
       _validatecn =
           paymentController.validateCardCode(cardNumberController.text);
       _validatecvv = paymentController.validateCvvCode(cvvCodeController.text);
+      _state = 1;
     });
     if (_validatecvv && _validatede && _validatename && _validatecn) {
       CreditCard card = new CreditCard(
@@ -61,8 +64,17 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           result = await paymentController.deductMoney(
               card, widget.payment.depositAmount);
         } catch (e) {
-          throw (e);
+          // AlertCustom.show(context, e, AlertType.error);
+          Fluttertoast.showToast(
+              msg: "Error: ${e.message}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 4,
+              backgroundColor: Colors.red);
         }
+        setState(() {
+          _state = 0;
+        });
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
           widget.payment.card = card;
@@ -75,6 +87,10 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
               arguments: widget.payment);
         }
       }
+    } else {
+      setState(() {
+        _state = 0;
+      });
     }
   }
 
@@ -123,7 +139,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FlatButton(
-                    color: Colors.teal[600],
+                    color: Color(0xFF126872),
                     textColor: Colors.white,
                     padding: EdgeInsets.only(
                         bottom: 12.0, top: 12.0, right: 18.0, left: 18.0),
@@ -131,10 +147,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     onPressed: _processCard,
-                    child: Text(
-                      "PROCEED",
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    child: setupButtonChild(),
                   ),
                 ],
               )
@@ -142,6 +155,16 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget setupButtonChild() {
+    return Container(
+      child: _state == 0
+          ? Text('PROCEED', style: TextStyle(fontSize: 16))
+          : CircularProgressIndicator(
+              backgroundColor: Colors.white,
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.teal[400])),
     );
   }
 }
@@ -177,7 +200,7 @@ class CardItem extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8),
                   child: Text(
                     cardNumber,
-                    style: TextStyle(color: color),
+                    style: TextStyle(color: color,fontSize: 12),
                   ))
               : Text(""),
           Container(
