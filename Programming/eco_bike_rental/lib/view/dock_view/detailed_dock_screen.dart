@@ -2,6 +2,7 @@ import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
+import 'package:eco_bike_rental/view/common/section_banner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -62,7 +63,10 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: CustomAppBar(title: "Bikes in Dock ${widget.id}"),
+      appBar: CustomAppBar(
+        title: "",
+        centerTitle: true,
+      ),
       body: Container(
           alignment: Alignment.center,
           child: FutureBuilder(
@@ -71,60 +75,34 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData != null) {
                 List<Bike> lstBike = snapshot.data;
-                return Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 70,bottom: 10,top: 10),
-                      child: Row(
-                        children: [
-                          Icon(Icons.favorite, size: 15),
-                          Icon(Icons.favorite, size: 15),
-                          Icon(Icons.favorite, size: 15),
-                          Icon(Icons.favorite_border, size: 15),
-                          Icon(Icons.favorite_border, size: 15),
-                          Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text("Total bikes ${lstBike.length}"))
-                        ],
+                return Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    children: [
+                      SectionBanner(title: "TOTAL BIKES: 8"),
+                      SizedBox(
+                        height: 16,
                       ),
-                    ),
-                    Image.asset(
-                      'lib/assets/images/dock_new.png',
-                      fit: BoxFit.fitWidth,
-                      height: 200,
-                    ),
-                    _buildTableTitle(),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: lstBike.length * 2,
-                        itemBuilder: (context, index) {
-                          if (index.isOdd) return Divider();
-                          final i = index ~/ 2;
-                          return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, detailedBikeRoute,
-                                  arguments: lstBike[i]);
-                            },
-                            child: ListTile(
-                              selectedTileColor: Colors.black,
-                              title: Row(
-                                children: [
-                                  Expanded(child: Text(lstBike[i].barcode)),
-                                  Expanded(child: Text(lstBike[i].category)),
-                                  Expanded(child: Text(lstBike[i].color)),
-                                  Expanded(
-                                      child: lstBike[i].lock
-                                          ? Text("Available")
-                                          : Text("In used"))
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        padding: EdgeInsets.only(bottom: 13.0),
+                      Expanded(
+                        child: GridView.count(
+                          physics: BouncingScrollPhysics(),
+                          childAspectRatio: 1 / 1.55,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                          children: lstBike.map((e) {
+                            return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, detailedBikeRoute,
+                                      arguments: e);
+                                },
+                                child: buildBike(e, null));
+                          }).toList(),
+                        ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 );
               } else {
                 return CircularProgressIndicator();
@@ -133,4 +111,64 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
           )),
     );
   }
+}
+
+Widget buildBike(Bike bike, int index) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.all(
+        Radius.circular(15),
+      ),
+    ),
+    padding: EdgeInsets.all(12),
+    margin: EdgeInsets.only(
+        right: index != null ? 16 : 0, left: index == 0 ? 16 : 0),
+    width: 220,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFF18C29C),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Text("${bike.barcode}",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ),
+        SizedBox(height: 8),
+        Container(
+          height: 120,
+          child: Center(
+            child: Hero(
+                tag: "${bike.id}",
+                child: Image.asset(bike.imagePath,
+                    fit: BoxFit.fitWidth)),
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(bike.lock ? "Status: Available" : "Status: In Used",
+            style: TextStyle(fontSize: 14)),
+        SizedBox(height: 8),
+        Text(
+          "${bike.category}",
+          style:
+              TextStyle(fontSize: 18, fontWeight: FontWeight.bold, height: 1),
+        ),
+        Text(
+          "Battery: ${bike.getBattery()}",
+          style: TextStyle(fontSize: 14, color: Color(0xFF18C29C)),
+        ),
+      ],
+    ),
+  );
 }

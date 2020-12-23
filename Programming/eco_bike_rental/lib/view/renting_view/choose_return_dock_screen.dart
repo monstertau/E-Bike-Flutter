@@ -4,9 +4,9 @@ import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class ChooseReturnDockScreen extends StatefulWidget {
-  final int _choosed;
+  final int choosed;
 
-  ChooseReturnDockScreen(this._choosed);
+  ChooseReturnDockScreen(this.choosed);
 
   _ChooseReturnDockScreenState createState() => _ChooseReturnDockScreenState();
 }
@@ -17,6 +17,11 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void handleOnTap(lstDock){
+      returnMap['name'] = lstDock.dockName;
+      returnMap['index'] = lstDock.dockID;
+      Navigator.pop(context, returnMap);
+    }
     return Scaffold(
       appBar: CustomAppBar(
         title: "Choose Dock To Return",
@@ -43,9 +48,7 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                         final i = index ~/ 2;
                         return InkWell(
                           onTap: () {
-                            returnMap['name'] = lstDock[i].dockName;
-                            returnMap['index'] = lstDock[i].dockID;
-                            Navigator.pop(context, returnMap);
+                            handleOnTap(lstDock[i]);
                           },
                           child: ListTile(
                             title: Row(
@@ -88,10 +91,12 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
                                     child: Radio(
                                       groupValue: true,
                                       value:
-                                          lstDock[i].dockID != widget._choosed
+                                          lstDock[i].dockID != widget.choosed
                                               ? false
                                               : true,
-                                      onChanged: (bool value) {},
+                                      onChanged: (bool value) {
+                                        handleOnTap(lstDock[i]);
+                                      },
                                     ),
                                   ),
                                 ),

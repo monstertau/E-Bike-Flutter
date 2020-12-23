@@ -53,8 +53,8 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
 
   String _formatDateTime(Duration duration) {
     String hour = duration.inHours.toString();
-    String minutes = duration.inMinutes.remainder(60).toString();
-    String seconds = duration.inSeconds.remainder(60).toString();
+    String minutes = "${duration.inMinutes.remainder(60)}";
+    String seconds = "${duration.inSeconds.remainder(60)}";
     return "$hour :$minutes :$seconds ";
   }
 
@@ -157,7 +157,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Image.asset(
-                              'lib/assets/images/dock_new.png',
+                              payment.bike.imagePath,
                               fit: BoxFit.fitWidth,
                               height: 200,
                             ),
@@ -183,7 +183,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
                                         top: 15, bottom: 15, left: 5, right: 5),
                                     child: Text("RETURN BIKE")),
                                 textColor: Colors.white,
-                                color: Colors.grey[700],
+                                color: Color(0xFF126872),
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(30.0)))

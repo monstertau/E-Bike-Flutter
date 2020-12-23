@@ -23,7 +23,7 @@ class PaymentController extends ControllerMVC {
     try {
       result = await _interbank.pay(card, amount);
     } catch (e) {
-      result = {"success": false, "message": e.toString()};
+      throw(e);
     }
     return result;
   }
@@ -45,7 +45,7 @@ class PaymentController extends ControllerMVC {
         result = await _interbank.refund(card, amount);
     } catch (e) {
       // print(e);
-      result = {"success": false, "message": e.toString()};
+      throw(e);
     }
     return result;
   }

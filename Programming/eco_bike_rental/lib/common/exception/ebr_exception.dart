@@ -1,7 +1,7 @@
-
 class EBRException implements Exception {
+  String _message;
 
+  EBRException.init(this._message);
 
-  EBRException.init(String message);
-
+  String get message => _message;
 }

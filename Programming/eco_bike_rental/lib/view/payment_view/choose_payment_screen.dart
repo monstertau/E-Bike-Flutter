@@ -1,12 +1,13 @@
+import 'package:eco_bike_rental/common/exception/payment_exception.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class ChoosePaymentScreen extends StatefulWidget {
   final Payment payment;
@@ -17,24 +18,24 @@ class ChoosePaymentScreen extends StatefulWidget {
   _ChoosePaymentScreenState createState() => _ChoosePaymentScreenState();
 }
 
-// TextEditingController ownerController = new TextEditingController();
-// TextEditingController dateExpiredController = new TextEditingController();
-// TextEditingController cardnumberController = new TextEditingController();
-// TextEditingController cvvCodeController = new TextEditingController();
-
-TextEditingController ownerController =
-    new TextEditingController(text: 'Group 10');
-TextEditingController dateExpiredController =
-    new TextEditingController(text: '1125');
-TextEditingController cardnumberController =
-    new TextEditingController(text: '121319_group10_2020');
-TextEditingController cvvCodeController =
-    new TextEditingController(text: "323");
-
-String dropdownValue = 'One';
 PaymentController paymentController = new PaymentController();
 
 class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
+  int _state = 0;
+  TextEditingController ownerController = new TextEditingController();
+  TextEditingController dateExpiredController = new TextEditingController();
+  TextEditingController cardNumberController = new TextEditingController();
+  TextEditingController cvvCodeController = new TextEditingController();
+
+  // TextEditingController ownerController =
+  //     new TextEditingController(text: 'Group 10');
+  // TextEditingController dateExpiredController =
+  //     new TextEditingController(text: '1125');
+  // TextEditingController cardNumberController =
+  //     new TextEditingController(text: '121319_group10_2020');
+  // TextEditingController cvvCodeController =
+  //     new TextEditingController(text: "323");
+
   bool _validatename = true;
   bool _validatecn = true;
   bool _validatecvv = true;
@@ -47,22 +48,35 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
       _validatede =
           paymentController.validateDateExpired(dateExpiredController.text);
       _validatecn =
-          paymentController.validateCardCode(cardnumberController.text);
+          paymentController.validateCardCode(cardNumberController.text);
       _validatecvv = paymentController.validateCvvCode(cvvCodeController.text);
+      _state = 1;
     });
     if (_validatecvv && _validatede && _validatename && _validatecn) {
       CreditCard card = new CreditCard(
-          cardnumberController.text,
+          cardNumberController.text,
           int.parse(cvvCodeController.text),
           dateExpiredController.text,
           ownerController.text);
       if (!await card.checkInUse()) {
-        var result = await paymentController.deductMoney(
-            card, widget.payment.depositAmount);
+        var result;
+        try {
+          result = await paymentController.deductMoney(
+              card, widget.payment.depositAmount);
+        } catch (e) {
+          // AlertCustom.show(context, e, AlertType.error);
+          Fluttertoast.showToast(
+              msg: "Error: ${e.message}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 4,
+              backgroundColor: Colors.red);
+        }
+        setState(() {
+          _state = 0;
+        });
         if (result['success']) {
           Navigator.pushNamed(context, invoiceRoute);
-          //TODO: create new payment
-          logger.i(widget.payment.bike.barcode);
           widget.payment.card = card;
           widget.payment.save();
           //save to share preference
@@ -71,10 +85,12 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           Navigator.pushNamedAndRemoveUntil(
               context, invoiceRoute, (Route<dynamic> route) => false,
               arguments: widget.payment);
-        } else {
-          logger.i(result['message']);
         }
       }
+    } else {
+      setState(() {
+        _state = 0;
+      });
     }
   }
 
@@ -109,7 +125,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  _inputField(cardnumberController, "Card Number",
+                  _inputField(cardNumberController, "Card Number",
                       "Invalid Card Number", _validatecn),
                   _inputField(dateExpiredController, "Date Expired",
                       "Invalid Date Expired", _validatede),
@@ -123,7 +139,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FlatButton(
-                    color: Colors.teal[600],
+                    color: Color(0xFF126872),
                     textColor: Colors.white,
                     padding: EdgeInsets.only(
                         bottom: 12.0, top: 12.0, right: 18.0, left: 18.0),
@@ -131,10 +147,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     onPressed: _processCard,
-                    child: Text(
-                      "PROCEED",
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    child: setupButtonChild(),
                   ),
                 ],
               )
@@ -144,35 +157,63 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
       ),
     );
   }
+
+  Widget setupButtonChild() {
+    return Container(
+      child: _state == 0
+          ? Text('PROCEED', style: TextStyle(fontSize: 16))
+          : CircularProgressIndicator(
+              backgroundColor: Colors.white,
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.teal[400])),
+    );
+  }
 }
 
 class CardItem extends StatelessWidget {
   final IconData iconName;
+  final color;
+  final cardNumber;
 
-  const CardItem({Key key, this.iconName}) : super(key: key);
+  const CardItem(
+      {Key key,
+      this.iconName,
+      this.color = Colors.black54,
+      this.cardNumber = ""})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Container(
-      padding: EdgeInsets.only(top: 30, bottom: 30),
+      padding: EdgeInsets.only(top: 15, bottom: 30),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         border: Border.all(
-          color: Colors.black54,
+          color: color,
           width: 2,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         children: [
+          cardNumber != ""
+              ? Container(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    cardNumber,
+                    style: TextStyle(color: color,fontSize: 12),
+                  ))
+              : Text(""),
           Container(
             height: 1.0,
             width: 130.0,
-            color: Colors.black54,
+            color: color,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
-            child: Text("ATM CARD"),
+            child: Text(
+              "ATM CARD",
+              style: TextStyle(color: color),
+            ),
           ),
         ],
       ),

@@ -22,12 +22,24 @@ class AppRouter {
         break;
       case detailedDockRoute:
         int id = settings.arguments;
-        return MaterialPageRoute(
-            builder: (context) => DetailedDockScreen(id: id));
+        return PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 200),
+            transitionsBuilder: (context, animation, animationTime, child) =>
+                SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+            pageBuilder: (context, animation, animationTime) =>
+                DetailedDockScreen(id: id));
         break;
       case detailedBikeRoute:
         Bike bike = settings.arguments;
-        return MaterialPageRoute(builder: (context) => BikeScreen(bike: bike));
+        return MaterialPageRoute(
+            builder: (context) =>
+                BikeScreen(bike: bike));
         break;
       case barcodeRoute:
         String barcode = settings.arguments;
@@ -41,8 +53,18 @@ class AppRouter {
         break;
       case choosePaymentRoute:
         Payment payment = settings.arguments;
-        return MaterialPageRoute(
-            builder: (context) => ChoosePaymentScreen(payment));
+        return PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 200),
+            transitionsBuilder: (context, animation, animationTime, child) =>
+                SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+            pageBuilder: (context, animation, animationTime) =>
+                ChoosePaymentScreen(payment));
         break;
       case rentedBikeRoute:
         return MaterialPageRoute(builder: (context) => RentedBikeScreen());
@@ -54,8 +76,17 @@ class AppRouter {
 
       case confirmReturnRoute:
         Payment payment = settings.arguments;
-        return MaterialPageRoute(
-            builder: (context) => ConfirmReturnScreen(payment));
+        return PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 100),
+            transitionsBuilder: (context, animation, animationTime, child) =>
+                SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+            pageBuilder: (context, animation, animationTime) => ConfirmReturnScreen(payment));
         break;
       case chooseReturnDockRoute:
         int index = settings.arguments;
