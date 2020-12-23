@@ -1,5 +1,5 @@
 import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
-
+///transaction model
 class Transaction {
   CreditCard _card;
 
@@ -7,10 +7,10 @@ class Transaction {
   String _transactionContent;
   int _amount;
   String _createdAt;
-
+///constructor
   Transaction(this._card, this._command, this._transactionContent, this._amount,
       this._createdAt);
-
+///get transaction properties in one object
   Map getData() {
     return {
       "cardCode": this._card.cardCode,

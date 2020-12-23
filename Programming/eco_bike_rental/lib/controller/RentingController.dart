@@ -2,7 +2,7 @@ import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:uuid/uuid.dart';
-
+///renting controller
 class RentingController {
   RentingController() {
     bikeModel = Bike.newBike();
@@ -12,6 +12,7 @@ class RentingController {
   Bike bikeModel;
   Payment paymentModel;
 
+  ///request rent bike
   Future<Bike> requestRentBike(String barcode) async {
     Bike bike = await bikeModel.getBikeByBarcode(barcode);
     return bike;

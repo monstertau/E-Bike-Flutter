@@ -4,7 +4,7 @@ import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
 
 import '../Bike/Bike.dart';
 import 'CreditCard.dart';
-
+///payment model
 class Payment {
   Bike _bike;
   CreditCard _card;
@@ -17,10 +17,10 @@ class Payment {
   String _rentalCode;
 
   final DatabaseSubsystemInterface _database = DatabaseSubsystem();
-
+///constructor
   Payment(this._bike, this._card, this._startRentTime, this._depositAmount,
       this._paymentStatus, this._rentalCode);
-
+///constructor
   Payment.init();
 
   Bike get bike => _bike;
@@ -62,7 +62,7 @@ class Payment {
   }
 
   int get depositAmount => _depositAmount;
-
+///get payment information
   Future<Payment> getPaymentInfo(String rentalCode) async {
     Map res = await _database.searchPayment(rentalCode);
     Bike rentedBike = BikeFactory.getBike(res["bike"]);
@@ -78,7 +78,7 @@ class Payment {
         res["rentalCode"]);
     return payment;
   }
-
+///save payment
   void save() async {
     Map invoice = {
       "payment": {
@@ -100,7 +100,7 @@ class Payment {
     print(result);
     // return result['success'];
   }
-
+///update dock Id
   void update(dockId) async {
     Map invoice = {
       "payment": {

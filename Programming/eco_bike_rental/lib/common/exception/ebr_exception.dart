@@ -1,3 +1,4 @@
+///exception for eco bike rental system
 class EBRException implements Exception {
   String _message;
 

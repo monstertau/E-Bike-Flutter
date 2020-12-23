@@ -12,10 +12,10 @@ class PaymentController extends ControllerMVC {
 
   final DatabaseSubsystemInterface db = new DatabaseSubsystem();
 
-  // Description: Deduct money from card
-  // @param: - creditCard card - card information
-  //         - Int amount - amount of money
-  // @return - Map message information
+  /// Description: Deduct money from card
+  /// @param: - creditCard card - card information
+  ///         - Int amount - amount of money
+  /// @return - Map message information
   Future<Map> deductMoney(card, amount) async {
     //TODO
     Map result;
@@ -28,10 +28,10 @@ class PaymentController extends ControllerMVC {
     return result;
   }
 
-  // Description: Deposit money to card
-  // @param: - creditCard card - card information
-  //         - Int amount - amount of money
-  // @return - Map message information
+  /// Description: Deposit money to card
+  /// @param: - creditCard card - card information
+  ///         - Int amount - amount of money
+  /// @return - Map message information
   Future<Map> returnDepositMoney(card, deposit, rentAmount) async {
     //TODO
     Map result;
@@ -50,9 +50,9 @@ class PaymentController extends ControllerMVC {
     return result;
   }
 
-// Description: validate cardCode of CreditCard
-// @param: - String cardCode - card code of CreditCard
-// @return - true if valid
+/// Description: validate cardCode of CreditCard
+/// @param: - String cardCode - card code of CreditCard
+/// @return - true if valid
   bool validateCardCode(cardCode) {
     //TODO
     RegExp regexCardCode =
@@ -65,9 +65,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-// Description: validate cvvCode of CreditCard
-// @param: - String cvvCode - cvv code of CreditCard
-// @return - true if valid
+/// Description: validate cvvCode of CreditCard
+/// @param: - String cvvCode - cvv code of CreditCard
+/// @return - true if valid
   bool validateCvvCode(cvvCode) {
     //TODO
     try {
@@ -80,9 +80,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-// Description: validate dateExpired of CreditCard
-// @param: - String dateExpired - expired date of CreditCard
-// @return - true if valid
+/// Description: validate dateExpired of CreditCard
+/// @param: - String dateExpired - expired date of CreditCard
+/// @return - true if valid
   bool validateDateExpired(dateExpired) {
     //TODO
     if (dateExpired == null) return false;
@@ -106,9 +106,9 @@ class PaymentController extends ControllerMVC {
     }
   }
 
-// Description: validate owner of CreditCard
-// @param: - String owner - owner of CreditCard
-// @return - true if valid
+/// Description: validate owner of CreditCard
+/// @param: - String owner - owner of CreditCard
+/// @return - true if valid
   bool validateOwner(owner) {
     //TODO
     RegExp ownerRegex = new RegExp(r"^[a-zA-Z ]*$");

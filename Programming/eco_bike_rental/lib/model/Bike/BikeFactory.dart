@@ -4,6 +4,7 @@ import 'package:eco_bike_rental/model/Bike/StandardBike.dart';
 import 'package:eco_bike_rental/model/Bike/TwinBike.dart';
 import 'package:eco_bike_rental/model/Bike/TwinEBike.dart';
 
+///bike factory used for getting an instance of bike
 class BikeFactory {
   static Bike getBike(Map res) {
     switch (res["category"]) {

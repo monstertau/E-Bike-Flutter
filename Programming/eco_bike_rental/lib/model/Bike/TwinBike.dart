@@ -1,5 +1,5 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-
+///Twin bike model
 class TwinBike extends Bike {
   TwinBike.init(int id, String barcode, String color, String category,
       bool lock, int pedal, int saddle, int rear, String imagePath)
