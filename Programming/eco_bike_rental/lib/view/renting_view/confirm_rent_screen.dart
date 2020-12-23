@@ -2,6 +2,7 @@ import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -40,14 +41,14 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
               ItemList("Battery Status", "${widget.bike.getBattery()}", Colors.grey[200]),
               ItemList("Start Rent From",
                   "${startRent.toLocal().toString().substring(0, 16)}", Colors.grey[200]),
-              ItemList("Deposit Money", "$depositMoney VND", Colors.grey[200]),
-              ItemList("Basic Rent Amount", "${widget.bike.baseRentAmount} VND",
+              ItemList("Deposit Money", "${Utils.numberFormat(depositMoney)} VND", Colors.grey[200]),
+              ItemList("Basic Rent Amount", "${Utils.numberFormat(widget.bike.baseRentAmount)} VND",
                   Colors.grey[200]),
               ItemList("Additional Rent Amount",
-                  "${widget.bike.addRentAmount} VND", Colors.grey[200]),
+                  "${Utils.numberFormat(widget.bike.addRentAmount)} VND", Colors.grey[200]),
               Container(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: ItemList("Subtotal", "- $depositMoney VND",
+                  child: ItemList("Subtotal", "- ${Utils.numberFormat(depositMoney)} VND",
                       Colors.deepOrange[100])),
               FlatButton(
                   onPressed: () {

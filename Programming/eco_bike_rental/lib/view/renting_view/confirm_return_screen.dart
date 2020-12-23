@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
@@ -104,6 +105,9 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
     } else {
       // AlertCustom.show(context, "Choose a dock for returning bike", AlertType.warning)
       //     .show();
+      setState(() {
+        _state = 0;
+      });
       Fluttertoast.showToast(
           msg: "Warning: Choose dock before return",
           toastLength: Toast.LENGTH_SHORT,
@@ -139,15 +143,15 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
             ItemList("Card Name", widget._payment.card.owner, Colors.grey[200]),
             ItemList(
                 "Card Number", widget._payment.card.cardCode, Colors.grey[200]),
-            ItemList("Deposit Amount", widget._payment.depositAmount.toString(),
+            ItemList("Deposit Amount", Utils.numberFormat(widget._payment.depositAmount).toString()+ " VND",
                 Colors.grey[200]),
-            ItemList("Renting Price", "${widget._payment.rentAmount}",
+            ItemList("Renting Price", "${Utils.numberFormat(widget._payment.rentAmount)} VND",
                 Colors.grey[200]),
             Container(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: ItemList(
                   "Total",
-                  "${widget._payment.depositAmount - widget._payment.rentAmount}",
+                  "${Utils.numberFormat(widget._payment.depositAmount - widget._payment.rentAmount)} VND",
                   Colors.deepOrange[100]),
             ),
             FlatButton(
@@ -161,13 +165,12 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
                       ? Text("PROCEED RETURN", style: TextStyle(fontSize: 16))
                       : CircularProgressIndicator(
                           backgroundColor: Colors.white,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.red[400])
-              )),
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Colors.red[400]))),
               textColor: Colors.white,
               color: Colors.red[700],
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
-
             ),
           ],
         ),

@@ -22,19 +22,19 @@ PaymentController paymentController = new PaymentController();
 
 class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   int _state = 0;
-  TextEditingController ownerController = new TextEditingController();
-  TextEditingController dateExpiredController = new TextEditingController();
-  TextEditingController cardNumberController = new TextEditingController();
-  TextEditingController cvvCodeController = new TextEditingController();
+  // TextEditingController ownerController = new TextEditingController();
+  // TextEditingController dateExpiredController = new TextEditingController();
+  // TextEditingController cardNumberController = new TextEditingController();
+  // TextEditingController cvvCodeController = new TextEditingController();
 
-  // TextEditingController ownerController =
-  //     new TextEditingController(text: 'Group 10');
-  // TextEditingController dateExpiredController =
-  //     new TextEditingController(text: '1125');
-  // TextEditingController cardNumberController =
-  //     new TextEditingController(text: '121319_group10_2020');
-  // TextEditingController cvvCodeController =
-  //     new TextEditingController(text: "323");
+  TextEditingController ownerController =
+      new TextEditingController(text: 'Group 10');
+  TextEditingController dateExpiredController =
+      new TextEditingController(text: '1125');
+  TextEditingController cardNumberController =
+      new TextEditingController(text: '121319_group10_2020');
+  TextEditingController cvvCodeController =
+      new TextEditingController(text: "323");
 
   bool _validatename = true;
   bool _validatecn = true;
