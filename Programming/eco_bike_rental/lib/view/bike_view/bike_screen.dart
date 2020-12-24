@@ -90,7 +90,7 @@ class _BikeScreenState extends State<BikeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool _isStandard = widget.bike.getBattery() == "None";
+    bool _isStandard = widget.bike.showBattery() == "None";
     return Scaffold(
       appBar: CustomAppBar(
         title: "Bike Detail",
@@ -110,27 +110,27 @@ class _BikeScreenState extends State<BikeScreen> {
               ),
             ),
             SectionBanner(title: "BIKE FEATURES"),
-            _featureSection(widget.bike.saddle, widget.bike.pedal,
-                widget.bike.rear, _isStandard),
+            _featureSection(widget.bike.bikeInfo.saddle, widget.bike.bikeInfo.pedal,
+                widget.bike.bikeInfo.rear, _isStandard),
             SectionBanner(title: "BIKE DETAILS"),
-            _detailSection("Barcode", "#${widget.bike.barcode}"),
-            _detailSection("Color", "${widget.bike.color}"),
+            _detailSection("Barcode", "#${widget.bike.bikeInfo.barcode}"),
+            _detailSection("Color", "${widget.bike.bikeInfo.color}"),
             _detailSection("Category", "${widget.bike.category}"),
-            _detailSection("Battery", "${widget.bike.getBattery()}"),
-            _detailSection("Bike Value", "${widget.bike.bikeValue} VND"),
+            _detailSection("Battery", "${widget.bike.showBattery()}"),
+            _detailSection("Bike Value", "${widget.bike.bikeInfo.bikeValue} VND"),
             SectionBanner(title: "PRICE"),
             _priceSection("Deposit Charges",
-                "${_rentingCon.calculateDepositMoney(widget.bike.bikeValue)} VND"),
+                "${_rentingCon.calculateDepositMoney(widget.bike.bikeInfo.bikeValue)} VND"),
             _priceSection("First 30 minutes Charges",
-                "${widget.bike.baseRentAmount} VND"),
+                "${widget.bike.bikeInfo.baseRentAmount} VND"),
             _priceSection(
-                "Next 15 minutes Charges", "${widget.bike.addRentAmount} VND"),
+                "Next 15 minutes Charges", "${widget.bike.bikeInfo.addRentAmount} VND"),
             Container(margin: EdgeInsets.only(bottom: 15)),
-            widget.bike.lock
+            widget.bike.bikeInfo.lock
                 ? FlatButton(
                     onPressed: () {
                       Navigator.pushNamed(context, barcodeRoute,
-                          arguments: widget.bike.barcode);
+                          arguments: widget.bike.bikeInfo.barcode);
                     },
                     child: Container(
                       padding: EdgeInsets.only(

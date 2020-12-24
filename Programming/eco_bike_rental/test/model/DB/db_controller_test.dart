@@ -4,7 +4,7 @@ import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  DatabaseSubsystemController con = new DatabaseSubsystemController();
+  DatabaseConnectionController con = new DatabaseConnectionController();
 
   test("Test Get All Dock", () async {
     var res = await con.getAllDock();

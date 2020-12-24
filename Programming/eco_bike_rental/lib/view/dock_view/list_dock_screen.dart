@@ -85,7 +85,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
                           return InkWell(
                             onTap: () {
                               Navigator.pushNamed(context, detailedDockRoute,
-                                  arguments: lstDock[i].id);
+                                  arguments: lstDock[i]);
                             },
                             child: ListTile(
                               selectedTileColor: Colors.black,

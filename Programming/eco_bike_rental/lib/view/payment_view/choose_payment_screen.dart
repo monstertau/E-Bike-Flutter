@@ -1,13 +1,14 @@
 import 'package:eco_bike_rental/common/exception/payment_exception.dart';
+import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
-import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/controller/RentingController.dart';
+import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChoosePaymentScreen extends StatefulWidget {
   final Payment payment;
@@ -18,10 +19,11 @@ class ChoosePaymentScreen extends StatefulWidget {
   _ChoosePaymentScreenState createState() => _ChoosePaymentScreenState();
 }
 
-PaymentController paymentController = new PaymentController();
-
 class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   int _state = 0;
+  PaymentController _paymentController = new PaymentController();
+  CreditCardController _creditCardController = new CreditCardController();
+
   // TextEditingController ownerController = new TextEditingController();
   // TextEditingController dateExpiredController = new TextEditingController();
   // TextEditingController cardNumberController = new TextEditingController();
@@ -44,12 +46,12 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   void _processCard() async {
     final logger = new Logger();
     setState(() {
-      _validatename = !paymentController.validateOwner(ownerController.text);
+      _validatename = !_paymentController.validateOwner(ownerController.text);
       _validatede =
-          paymentController.validateDateExpired(dateExpiredController.text);
+          _paymentController.validateDateExpired(dateExpiredController.text);
       _validatecn =
-          paymentController.validateCardCode(cardNumberController.text);
-      _validatecvv = paymentController.validateCvvCode(cvvCodeController.text);
+          _paymentController.validateCardCode(cardNumberController.text);
+      _validatecvv = _paymentController.validateCvvCode(cvvCodeController.text);
       _state = 1;
     });
     if (_validatecvv && _validatede && _validatename && _validatecn) {
@@ -58,10 +60,10 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           int.parse(cvvCodeController.text),
           dateExpiredController.text,
           ownerController.text);
-      if (!await card.checkInUse()) {
+      if (!await _creditCardController.checkInUse(card)) {
         var result;
         try {
-          result = await paymentController.deductMoney(
+          result = await _paymentController.deductMoney(
               card, widget.payment.depositAmount);
         } catch (e) {
           // AlertCustom.show(context, e, AlertType.error);
@@ -76,15 +78,22 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           _state = 0;
         });
         if (result['success']) {
-          Navigator.pushNamed(context, invoiceRoute);
-          widget.payment.card = card;
-          widget.payment.save();
           //save to share preference
-          SharedPreferences pref = await SharedPreferences.getInstance();
-          pref.setString("rentalCode", widget.payment.rentalCode);
-          Navigator.pushNamedAndRemoveUntil(
-              context, invoiceRoute, (Route<dynamic> route) => false,
-              arguments: widget.payment);
+          if (await _paymentController.getRentalCodeFromLocal() != null) {
+            Fluttertoast.showToast(
+                msg: "Please Return Your Bike Before Renting New Bike",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 4,
+                backgroundColor: Colors.red);
+          } else {
+            widget.payment.card = card;
+            _paymentController.savePayment(widget.payment);
+            _paymentController.saveRentalCodeToLocal(widget.payment.rentalCode);
+            Navigator.pushNamedAndRemoveUntil(
+                context, invoiceRoute, (Route<dynamic> route) => false,
+                arguments: widget.payment);
+          }
         }
       }
     } else {
@@ -111,7 +120,6 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: complete design screen
     return Scaffold(
       appBar: CustomAppBar(title: "Choose Payment Method", centerTitle: true),
       body: SingleChildScrollView(
@@ -200,7 +208,7 @@ class CardItem extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8),
                   child: Text(
                     cardNumber,
-                    style: TextStyle(color: color,fontSize: 12),
+                    style: TextStyle(color: color, fontSize: 12),
                   ))
               : Text(""),
           Container(

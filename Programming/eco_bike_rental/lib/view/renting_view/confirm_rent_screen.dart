@@ -24,7 +24,7 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
   @override
   Widget build(BuildContext context) {
     var depositMoney =
-        rentingController.calculateDepositMoney(widget.bike.bikeValue);
+        rentingController.calculateDepositMoney(widget.bike.bikeInfo.bikeValue);
     DateTime startRent = DateTime.now().toUtc();
     return Scaffold(
       appBar: CustomAppBar(title: "Rent Bike", centerTitle: true),
@@ -35,16 +35,16 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
           child: Column(
             children: [
               ItemList("Type", "${widget.bike.category}", Colors.grey[200]),
-              ItemList("Barcode", "#${widget.bike.barcode}", Colors.grey[200]),
-              ItemList("Color", "${widget.bike.color}", Colors.grey[200]),
-              ItemList("Battery Status", "${widget.bike.getBattery()}", Colors.grey[200]),
+              ItemList("Barcode", "#${widget.bike.bikeInfo.barcode}", Colors.grey[200]),
+              ItemList("Color", "${widget.bike.bikeInfo.color}", Colors.grey[200]),
+              ItemList("Battery Status", "${widget.bike.showBattery()}", Colors.grey[200]),
               ItemList("Start Rent From",
                   "${startRent.toLocal().toString().substring(0, 16)}", Colors.grey[200]),
               ItemList("Deposit Money", "$depositMoney VND", Colors.grey[200]),
-              ItemList("Basic Rent Amount", "${widget.bike.baseRentAmount} VND",
+              ItemList("Basic Rent Amount", "${widget.bike.bikeInfo.baseRentAmount} VND",
                   Colors.grey[200]),
               ItemList("Additional Rent Amount",
-                  "${widget.bike.addRentAmount} VND", Colors.grey[200]),
+                  "${widget.bike.bikeInfo.addRentAmount} VND", Colors.grey[200]),
               Container(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: ItemList("Subtotal", "- $depositMoney VND",
@@ -58,7 +58,6 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
                         rentingController.generateRentalCode());
                     Navigator.pushNamed(context, choosePaymentRoute,
                         arguments: payment);
-                    rentingController.lockBike(widget.bike);
                   },
                   child: Container(
                       padding: EdgeInsets.only(top: 15,bottom: 15,left: 5,right: 5),
