@@ -5,16 +5,17 @@ import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
+import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-
+///This [PaymentController] maintain all the logical business related to [Payment] & [Card] entity
+///* connecting with the database and retrieving information
+///* return necessary information to display in the view
 class PaymentController extends ControllerMVC {
   InterbankInterface _interbank;
 
   final DatabaseSubsystemInterface db = new DatabaseSubsystem();
 
   /// Description: Deduct money from card
-  /// @param: - creditCard card - card information
-  ///         - Int amount - amount of money
   /// @return - Map message information
   Future<Map> deductMoney(card, amount) async {
     //TODO
@@ -29,8 +30,6 @@ class PaymentController extends ControllerMVC {
   }
 
   /// Description: Deposit money to card
-  /// @param: - creditCard card - card information
-  ///         - Int amount - amount of money
   /// @return - Map message information
   Future<Map> returnDepositMoney(card, deposit, rentAmount) async {
     //TODO
@@ -51,7 +50,6 @@ class PaymentController extends ControllerMVC {
   }
 
 /// Description: validate cardCode of CreditCard
-/// @param: - String cardCode - card code of CreditCard
 /// @return - true if valid
   bool validateCardCode(cardCode) {
     //TODO
@@ -66,7 +64,6 @@ class PaymentController extends ControllerMVC {
   }
 
 /// Description: validate cvvCode of CreditCard
-/// @param: - String cvvCode - cvv code of CreditCard
 /// @return - true if valid
   bool validateCvvCode(cvvCode) {
     //TODO
@@ -81,7 +78,6 @@ class PaymentController extends ControllerMVC {
   }
 
 /// Description: validate dateExpired of CreditCard
-/// @param: - String dateExpired - expired date of CreditCard
 /// @return - true if valid
   bool validateDateExpired(dateExpired) {
     //TODO
@@ -107,7 +103,6 @@ class PaymentController extends ControllerMVC {
   }
 
 /// Description: validate owner of CreditCard
-/// @param: - String owner - owner of CreditCard
 /// @return - true if valid
   bool validateOwner(owner) {
     //TODO
@@ -119,9 +114,8 @@ class PaymentController extends ControllerMVC {
       return false;
     }
   }
-
-  Payment createPayment(
-      Bike bike, int depositMoney, DateTime start, String rentalCode) {
+/// Create a [Payment] with full of attributes
+  Payment createPayment(Bike bike, int depositMoney, DateTime start, String rentalCode) {
     return new Payment(
         bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
   }

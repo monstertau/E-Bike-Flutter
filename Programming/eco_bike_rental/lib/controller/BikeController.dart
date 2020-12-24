@@ -1,25 +1,27 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-///Bike controller
+///This [BikeController] maintain all the logical business related to [Bike]
+///* connecting with the database and retrieving information
+///* return necessary information to display in the view
 class BikeController extends ControllerMVC {
   BikeController([StateMVC state]) : super(state) {
     bikeModel = Bike.newBike();
   }
 
   Bike bikeModel;
-///get bike info
+///Get bike info
   List getBikeInfo() {
     // TODO: implement this
     // return bikeModel.lstInfo;
     return List();
   }
-///get rented bike info
+///Get rented bike info
   List getRentedBikeInfo() {
     // TODO: implement this
     // return bikeModel.lstInfo;
     return List();
   }
-///get bike lock status
+///Get bike lock status
   bool getBikeLockStatus() {
     // TODO: implement this
     // return bikeModel.lock;

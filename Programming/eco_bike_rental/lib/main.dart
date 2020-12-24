@@ -6,11 +6,18 @@ import 'package:eco_bike_rental/view/common/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+///This is the main class to build all the content of the application following [MaterialApp] design.
+///Flutter provide [runApp(widget app)] method to build the application.
+///Every screens of this application [MyApp] contain three main parts
+///* [title]
+///* [body]
+///* [FABBottomAppBar]
 void main() {
   // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   runApp(new MyApp());
 }
-
+///The class [MyApp] extends the [StatelessWidget] because the frame of the application remains
+///unchange
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -26,7 +33,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+///Class [MyHomePage] extends [StatefulWidget]. Each of the [StatefulWidget] contains a state so that
+///we can retrieve the information of variable for manipulating in the future.
+///
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -36,19 +45,22 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
+///This class provide the state for [MyHomePage]
+///[MyHomePage] contains [ListDockScreen] and [RentedBikeScreen]
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _lastSelected = 0;
   List<Widget> _listScreen = [
     ListDockScreen(),
     RentedBikeScreen(),
   ];
-
+///Set state function
   void _selectedTab(int index) {
     setState(() {
       _lastSelected = index;
     });
   }
 
+  ///This method [build] establish the content of the screen. In this situation [MyHomePage]
   @override
   Widget build(BuildContext context) {
     return Scaffold(

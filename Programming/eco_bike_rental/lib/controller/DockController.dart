@@ -2,7 +2,9 @@ import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-///Dock controller
+///This [DockController] maintain all the logical business related to [DockStation]
+///* connecting with the database and retrieving information
+///* return necessary information to display in the view
 class DockController extends ControllerMVC {
   DockStation dockModel;
 
@@ -49,7 +51,7 @@ class DockController extends ControllerMVC {
     return true;
   }
 
-  ///method for validate attributes in listDock
+  ///Method for validate attributes in listDock
   bool validateListDock(List<DockStation> listDock) {
     listDock.forEach((element) {
       if (element.id == null)
@@ -79,13 +81,13 @@ class DockController extends ControllerMVC {
     return true;
   }
 
-  ///method for getting all bikes in dock by dockID
+  ///Method for getting all bikes in dock by dockID
   Future<List<Bike>> getAllBikes(int dockID) async {
     // TODO: implement this
     DockStation dock = await dockModel.getBikeInDock(dockID);
     return dock.lstBike;
   }
-  ///method for getting all docks
+  ///Method for getting all docks
   Future<List<DockStation>> getAllDocks() async {
     // TODO: implement this
     // return dock.getAllDock();
