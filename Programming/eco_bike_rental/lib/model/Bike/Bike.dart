@@ -8,8 +8,6 @@ class Bike {
   BikeInfo bikeInfo;
 
 
-  Bike.newBike();
-
   Bike.init(this._id, this._category, this.bikeInfo,this._imagePath);
 
   int get id => _id;

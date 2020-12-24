@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:eco_bike_rental/controller/BikeController.dart';
+import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/Utils.dart';
@@ -31,6 +33,10 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   int _initTime;
   int _state = 0;
   PaymentController _paymentController = new PaymentController();
+
+  BikeController _bikeController = new BikeController();
+
+  CreditCardController _creditCardController = new CreditCardController();
 
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
@@ -95,7 +101,10 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
         _state = 0;
       });
       if (res['success']) {
-        _paymentController.updatePayment(index, widget._payment);
+        Map res = await _paymentController.updatePayment(widget._payment);
+        _bikeController.returnBikeToDock(index, res["bikeId"]);
+        _bikeController.lockBike(widget._payment.bike.bikeInfo.barcode);
+        _creditCardController.unlockCard(res["cardId"]);
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.remove("rentalCode");
 

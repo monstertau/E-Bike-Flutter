@@ -24,7 +24,7 @@ exports.checkLock = async (req, res) => {
   }
 };
 exports.searchAndCreateCard = async (req, res) => {
-  const { cardCode, cardName, dateExpired, cvvCode } = req.query.card;
+  const { cardCode, cardName, dateExpired, cvvCode } = req.body;
   const querySearchCard = `SELECT * FROM "ecoBikeSystem"."Card" WHERE "cardCode" = $1`;
   const queryCreateCard = `INSERT INTO "ecoBikeSystem"."Card" ("cardCode", "cardName", "dateExpired", "cvvCode") VALUES ( $1, $2, $3, $4) RETURNING *`;
   try {

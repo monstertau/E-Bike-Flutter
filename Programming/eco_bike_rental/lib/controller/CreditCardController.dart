@@ -16,4 +16,15 @@ class CreditCardController {
     bool isInUse = await _creditCardService.checkInUse(card);
     return isInUse;
   }
+
+  Future<bool> unlockCard(int cardId) async =>
+      await _creditCardService.unlockCard(cardId);
+
+  Future<bool> lockCard(int cardId) async =>
+      await _creditCardService.lockCard(cardId);
+
+  Future<int> searchOrCreateCard(CreditCard card) async {
+    int cardId = await _creditCardService.searchOrCreateCard(card);
+    return cardId;
+  }
 }

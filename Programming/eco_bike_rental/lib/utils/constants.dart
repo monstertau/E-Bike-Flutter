@@ -24,3 +24,11 @@ const String checkLockedCardPath = "/card/check-locked";
 const String savePaymentPath = '/payment/create';
 const String updatePaymentPath = '/payment/update';
 const String searchPaymentPath = '/payment/search';
+
+const String searchOrCreateCardPath ="/card/search-or-create";
+const String lockCardPath ="/card/lock-card";
+const String unlockCardPath ="/card/unlock-card";
+
+const String lockBikePath ="/bike/lock-bike";
+const String unlockBikePath ="/bike/unlock-bike";
+const String returnToDockPath ="/bike/return-to-dock";

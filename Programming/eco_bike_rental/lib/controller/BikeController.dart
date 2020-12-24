@@ -1,28 +1,23 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:eco_bike_rental/services/Bike/bike_service.dart';
 
 class BikeController {
-  BikeController() {
-    bikeModel = Bike.newBike();
+  static BikeController _this;
+  BikeService _bikeService = new BikeService();
+
+  BikeController._();
+
+  factory BikeController() {
+    if (_this == null) _this = BikeController._();
+    return _this;
   }
 
-  Bike bikeModel;
+  Future<bool> unlockBike(String barcode) async =>
+      await _bikeService.unlockBike(barcode);
 
-  List getBikeInfo() {
-    // TODO: implement this
-    // return bikeModel.lstInfo;
-    return List();
-  }
+  Future<bool> lockBike(String barcode) async =>
+      await _bikeService.lockBike(barcode);
 
-  List getRentedBikeInfo() {
-    // TODO: implement this
-    // return bikeModel.lstInfo;
-    return List();
-  }
-
-  bool getBikeLockStatus() {
-    // TODO: implement this
-    // return bikeModel.lock;
-    return bikeModel.bikeInfo.lock;
-  }
+  Future<bool> returnBikeToDock(int dockId, int bikeId) async =>
+      await _bikeService.returnBikeToDock(dockId, bikeId);
 }

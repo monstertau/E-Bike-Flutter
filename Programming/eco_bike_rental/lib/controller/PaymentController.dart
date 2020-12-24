@@ -125,11 +125,12 @@ class PaymentController {
         bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
   }
 
-  void savePayment(Payment payment) async =>
-      await _paymentService.save(payment);
+  void savePayment(Payment payment,cardId) async =>
+      await _paymentService.save(payment,cardId);
 
-  void updatePayment(dockId, Payment payment) async =>
-      await _paymentService.update(dockId, payment);
+  Future<Map> updatePayment(Payment payment) async {
+    return await _paymentService.update(payment);
+  }
 
   Future<void> saveRentalCodeToLocal(String rentalCode) async {
     SharedPreferences pref = await SharedPreferences.getInstance();

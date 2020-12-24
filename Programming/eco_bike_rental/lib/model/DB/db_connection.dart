@@ -27,9 +27,40 @@ class DatabaseConnection {
     return response["bike"];
   }
 
+  Future<bool> lockBike(String barcode) async {
+    Map response = await _con.lockBike(barcode);
+    return response["success"];
+  }
+
+  Future<bool> unlockBike(String barcode) async {
+    Map response = await _con.unlockBike(barcode);
+    return response["success"];
+  }
+
+  Future<bool> returnBikeToDock(Map request) async {
+    Map response = await _con.returnBikeToDock(request);
+    return response["success"];
+  }
+
+
   Future<Map> checkLockCard(String cardCode) async {
     Map response = await _con.checkLockedCard(cardCode);
     return response;
+  }
+
+  Future<bool> unlockCard(int cardId) async {
+    Map response = await _con.unlockCard(cardId);
+    return response["success"];
+  }
+
+  Future<bool> lockCard(int cardId) async {
+    Map response = await _con.lockCard(cardId);
+    return response["success"];
+  }
+
+  Future<int> searchOrCreateCard(Map card) async {
+    Map response = await _con.searchOrCreateCard(card);
+    return response["cardId"];
   }
 
   Future<Map> savePayment(Map payment) async {

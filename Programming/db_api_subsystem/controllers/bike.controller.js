@@ -90,7 +90,7 @@ exports.lockBike = async (req, res) => {
   }
 };
 exports.returnToDock = async (req, res) => {
-  const { dockId, bikeId } = req.query;
+  const { dockId, bikeId } = req.body;
   const queryCheckFullDock = `SELECT * FROM "ecoBikeSystem"."DockStation" as d
   WHERE (SELECT count(b.id) FROM "ecoBikeSystem"."Bike" b WHERE b."dockId" = d.id AND b.lockbike = true AND d.id = $1 GROUP BY d.id ) < d.size;`;
   const queryReturnBike = `UPDATE "ecoBikeSystem"."Bike"
@@ -114,7 +114,8 @@ exports.returnToDock = async (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      barcode: barcode,
+      bikeId: bikeId,
+      dockId: dockId,
     });
   } catch (err) {
     return res.status(400).json({
