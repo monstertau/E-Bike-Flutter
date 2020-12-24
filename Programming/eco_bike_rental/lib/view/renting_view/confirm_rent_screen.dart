@@ -25,7 +25,7 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
   @override
   Widget build(BuildContext context) {
     var depositMoney =
-        rentingController.calculateDepositMoney(widget.bike.bikeValue);
+        rentingController.calculateDepositMoney(widget.bike.bikeInfo.bikeValue);
     DateTime startRent = DateTime.now().toUtc();
     return Scaffold(
       appBar: CustomAppBar(title: "Rent Bike", centerTitle: true),
@@ -59,7 +59,6 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
                         rentingController.generateRentalCode());
                     Navigator.pushNamed(context, choosePaymentRoute,
                         arguments: payment);
-                    rentingController.lockBike(widget.bike);
                   },
                   child: Container(
                       padding: EdgeInsets.only(top: 15,bottom: 15,left: 5,right: 5),
