@@ -19,13 +19,6 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
   List<DockStation> lstDock;
   String searchValue;
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   searchValue = "";
-  // }
-
   onSearchTextChanged(String text) async {
     _searchResult.clear();
     if (text.isEmpty) {

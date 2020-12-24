@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -12,7 +13,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       this.title,
       this.oneScreen = false,
       this.centerTitle = false,
-      this.search = false, this.callback})
+      this.search = false,
+      this.callback})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -42,20 +44,20 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   color: Colors.grey[600],
                 ),
                 onPressed: () => Navigator.of(context).pop()),
-        actions: widget.search
-            ? [
-                Padding(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                  onTap: widget.callback,
-                  child: Icon(
-                    Icons.search,
-                    size: 24.0,
-                    color: Colors.black,
-                  ),
-                ))
-              ]
-            : [Container()]
+        actions: [
+          widget.search
+              ? Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: widget.callback,
+                    child: Icon(
+                      Icons.search,
+                      size: 24.0,
+                      color: Colors.black,
+                    ),
+                  ))
+              : Container(),
+        ]
         // bottom: PreferredSize(
         //     child: Container(
         //       color: Colors.grey[300],
