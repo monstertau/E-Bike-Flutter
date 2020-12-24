@@ -1,11 +1,18 @@
 import 'dart:convert';
 import 'package:eco_bike_rental/common/exception/bike_exception.dart';
-import 'package:eco_bike_rental/common/exception/server_exception.dart';
-import 'package:eco_bike_rental/common/exception/unknown_exception.dart';
 import 'package:eco_bike_rental/model/DB/db_boundary.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
-class DatabaseSubsystemController {
+class DatabaseConnectionController {
+  DatabaseConnectionController._();
+
+  factory DatabaseConnectionController() {
+    if (_this == null) _this = DatabaseConnectionController._();
+    return _this;
+  }
+
+  static DatabaseConnectionController _this;
+
   Future<Map> getAllDock() async {
     var response = await DatabaseBoundary.get(getAllDockPath);
     Map jsonRes = jsonDecode(response.body);

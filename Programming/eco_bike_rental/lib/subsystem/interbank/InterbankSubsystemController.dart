@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:eco_bike_rental/common/exception/payment_exception.dart';
-import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Transaction.dart';
 import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';

@@ -12,7 +12,7 @@ exports.createPayment = async (req, res) => {
   const { cardCode, cardName, dateExpired, cvvCode } = card;
   const querySearchCard = `SELECT * FROM "ecoBikeSystem"."Card" WHERE "cardCode" = $1`;
   const queryCreateCard = `INSERT INTO "ecoBikeSystem"."Card" ("cardCode", "cardName", "dateExpired", "cvvCode") VALUES ( $1, $2, $3, $4) RETURNING *`;
-  const queryCreatePayment = `INSERT INTO "ecoBikeSystem"."Payment" ("rentalCode", "rentamount", "depositAmount", "startRentTime", "endRentTime", status, "bikeId", "cardId") VALUES ( $1, 0, $2, $3, $4, $5, $6, $7) RETURNING *;`;
+  const queryCreatePayment = `INSERT INTO "ecoBikeSystem"."Payment" ("rentalCode", "rentAmount", "depositAmount", "startRentTime", "endRentTime", statusid, "bikeId", "cardId") VALUES ($1, 0, $2, $3 , $4, $5, $6,$7) RETURNING *;`;
   const queryLockBike = `UPDATE "ecoBikeSystem"."Bike" SET lockbike = false WHERE id = $1 RETURNING *;`;
   try {
     let cardId = undefined;
@@ -62,8 +62,9 @@ exports.searchPayment = async (req, res) => {
   const { rentalCode } = req.body;
   const querySearchPayment = `SELECT *
   FROM "ecoBikeSystem"."Payment" P
-           JOIN "ecoBikeSystem"."Bike" B on B.id = P."bikeId"
+           JOIN ("ecoBikeSystem"."Bike" B JOIN "ecoBikeSystem"."BikeInfo" BI on B.bikeinfoid = BI.id) on B.id = P."bikeId"
            JOIN "ecoBikeSystem"."Card" C on P."cardId" = C.id
+           JOIN "ecoBikeSystem"."PaymentStatus" PS on PS.id = P.statusid
   WHERE P."rentalCode" = $1;`;
   try {
     const { rows } = await queryDb(querySearchPayment, [rentalCode]);
@@ -75,6 +76,12 @@ exports.searchPayment = async (req, res) => {
         barcode: payment.barcode,
         category: payment.category,
         lock: payment.lockbike,
+        bikevalue: payment.bikevalue,
+        baserentamount: payment.baserentamount,
+        addrentamount: payment.addrentamount,
+        saddle: payment.saddle,
+        pedal: payment.pedal,
+        rear: payment.rear,
       };
       const card = {
         id: payment.cardId,
@@ -134,10 +141,12 @@ exports.updatePayment = async (req, res) => {
     status,
   } = req.body.payment;
   const { dockId } = bike;
+  const queryCheckFullDock = `SELECT * FROM "ecoBikeSystem"."DockStation" as d
+  WHERE (SELECT count(b.id) FROM "ecoBikeSystem"."Bike" b WHERE b."dockId" = d.id AND b.lockbike = true AND d.id = $1 GROUP BY d.id ) < d.size;`;
   const queryUpdatePayment = `UPDATE "ecoBikeSystem"."Payment"
-  SET status        = $1,
+  SET statusid        = $1,
       "endRentTime" = $2,
-      "rentamount"  = $3
+      "rentAmount"  = $3
   WHERE "rentalCode" = $4 RETURNING *;`;
   const queryUpdateCard = `UPDATE "ecoBikeSystem"."Card"
   SET lock = false
@@ -147,6 +156,13 @@ exports.updatePayment = async (req, res) => {
       lockbike = true
   WHERE id = $2 RETURNING *;`;
   try {
+    const checkDockRows = await queryDb(queryCheckFullDock, [dockId]);
+    if (checkDockRows.rows.length == 0) {
+      return res.status(400).json({
+        success: false,
+        error: `choosen_dock_is_full`,
+      });
+    }
     const paymentRows = await queryDb(queryUpdatePayment, [
       status,
       endRentTime,

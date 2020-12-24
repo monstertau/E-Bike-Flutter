@@ -13,20 +13,31 @@ create unique index dockstation_id_uindex
 alter table "ecoBikeSystem"."DockStation"
     add constraint dockstation_pk
         primary key (id);
+create table "ecoBikeSystem"."BikeInfo"
+(
+    id             serial PRIMARY KEY not null,
+    bikeValue      FLOAT              not null,
+    baseRentAmount FLOAT              not null,
+    addRentAmount  FLOAT              not null,
+    saddle         INT                not null,
+    pedal          INT                not null,
+    rear           INT                not null
+);
 
 create table "ecoBikeSystem"."Bike"
 (
-    id                     serial                not null,
-    barcode                VARCHAR               not null,
-    color                  VARCHAR               not null,
-    category               VARCHAR               not null,
-    "bikeValue"            float                 not null,
-    "baseRentAmount"       float                 not null,
-    "additionalRentAmount" float                 not null,
-    lockbike                   BOOLEAN default FALSE not null,
-    "dockId"               int                   not null
+    id         serial                not null,
+    barcode    VARCHAR               not null,
+    color      VARCHAR               not null,
+    category   VARCHAR               not null,
+    lockbike   BOOLEAN default FALSE not null,
+    "dockId"   int                   not null
         constraint bikeindock_dockstation_id_fk
             references "ecoBikeSystem"."DockStation"
+            on update cascade on delete cascade,
+    bikeInfoId int                   not null
+        constraint bikeInfo_id_fk
+            references "ecoBikeSystem"."BikeInfo"
             on update cascade on delete cascade
 );
 
@@ -39,13 +50,17 @@ create unique index bike_id_uindex
 alter table "ecoBikeSystem"."Bike"
     add constraint bike_pk
         primary key (id);
+
+
+
 create table "ecoBikeSystem"."Card"
 (
-    id            serial  not null,
-    "cardCode"    VARCHAR     not null,
-    "cardName"    VARCHAR not null,
-    "dateExpired" VARCHAR not null,
-    "cvvCode"     int     not null
+    id            serial                not null,
+    "cardCode"    VARCHAR               not null,
+    "cardName"    VARCHAR               not null,
+    "dateExpired" VARCHAR               not null,
+    "cvvCode"     int                   not null,
+    lock          boolean default false not null
 );
 
 create unique index card_cardcode_uindex
@@ -58,15 +73,26 @@ alter table "ecoBikeSystem"."Card"
     add constraint card_pk
         primary key (id);
 
+create table "ecoBikeSystem"."PaymentStatus"
+(
+    id     int     not null
+        constraint paymentStatus_pk
+            primary key,
+    status VARCHAR NOT NULL
+
+);
 create table "ecoBikeSystem"."Payment"
 (
     id              serial    not null,
     "rentalCode"    VARCHAR   not null,
-    "deductAmount"  float     not null,
+    "rentAmount"    float     not null,
     "depositAmount" float     not null,
     "startRentTime" TIMESTAMP not null,
     "endRentTime"   TIMESTAMP not null,
-    status          int       not null,
+    statusId        int       not null
+        constraint paymentStatus_payment_fk
+            references "ecoBikeSystem"."PaymentStatus"
+            on update cascade on delete cascade,
     "bikeId"        int       not null
         constraint paymentbike_bike_id_fk
             references "ecoBikeSystem"."Bike"
@@ -129,4 +155,3 @@ create table "ecoBikeSystem"."Twinbike"
             references "ecoBikeSystem"."Bike"
             on update cascade on delete cascade
 );
-

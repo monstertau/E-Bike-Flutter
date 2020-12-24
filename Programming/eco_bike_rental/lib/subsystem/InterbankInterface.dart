@@ -1,4 +1,4 @@
-import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 
 abstract class InterbankInterface {
   Future<Map> pay(CreditCard card, int amount);

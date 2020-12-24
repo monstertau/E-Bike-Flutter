@@ -1,4 +1,4 @@
-import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/interbank/InterbankSubsystemController.dart';
 

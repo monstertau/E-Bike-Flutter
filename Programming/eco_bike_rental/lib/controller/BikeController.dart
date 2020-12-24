@@ -1,8 +1,8 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-class BikeController extends ControllerMVC {
-  BikeController([StateMVC state]) : super(state) {
+class BikeController {
+  BikeController() {
     bikeModel = Bike.newBike();
   }
 
@@ -23,6 +23,6 @@ class BikeController extends ControllerMVC {
   bool getBikeLockStatus() {
     // TODO: implement this
     // return bikeModel.lock;
-    return bikeModel.lock;
+    return bikeModel.bikeInfo.lock;
   }
 }

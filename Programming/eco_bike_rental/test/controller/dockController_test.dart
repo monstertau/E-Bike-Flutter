@@ -1,6 +1,5 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
-import 'package:eco_bike_rental/model/DB/db_interface.dart';
-import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
+import 'package:eco_bike_rental/model/DB/db_connection.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +8,7 @@ void main() {
   group('Dock Controller Test', () {
     //Example invalid data
     //End example data
-    final DatabaseSubsystemInterface database = new DatabaseSubsystem();
+    final DatabaseSubsystemInterface database = new DatabaseConnection();
     test('get all bikes test', ()  {
       // Setup
       DockController dockController = new DockController();

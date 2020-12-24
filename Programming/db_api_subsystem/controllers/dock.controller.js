@@ -38,8 +38,21 @@ exports.getDetail = async (req, res) => {
       error: "missing_query_param",
     });
   }
-  const queryDetail = `SELECT b.id, barcode, color, category, "bikeValue", "baseRentAmount", "additionalRentAmount", "lockbike" FROM "ecoBikeSystem"."DockStation" as d
-  JOIN "ecoBikeSystem"."Bike" b on b."dockId" = d.id AND b."dockId" = $1 ORDER BY b.id;`;
+  const queryDetail = `SELECT b.id,
+  barcode,
+  color,
+  category,
+  lockbike,
+  bikevalue,
+  baserentamount,
+  addrentamount,
+  saddle,
+  pedal,
+  rear
+  FROM "ecoBikeSystem"."DockStation" as d
+    JOIN ("ecoBikeSystem"."Bike" b JOIN "ecoBikeSystem"."BikeInfo" bi on b.bikeinfoid = bi.id)
+         on b."dockId" = d.id AND b."dockId" = $1
+  ORDER BY b.id;`;
   try {
     const { rows } = await queryDb(queryDetail, [id]);
     if (rows.length != 0) {
