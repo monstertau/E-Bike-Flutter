@@ -1,5 +1,6 @@
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
+import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/common/section_banner.dart';
@@ -117,14 +118,14 @@ class _BikeScreenState extends State<BikeScreen> {
             _detailSection("Color", "${widget.bike.bikeInfo.color}"),
             _detailSection("Category", "${widget.bike.category}"),
             _detailSection("Battery", "${widget.bike.showBattery()}"),
-            _detailSection("Bike Value", "${widget.bike.bikeInfo.bikeValue} VND"),
+            _detailSection("Bike Value", "${Utils.numberFormat(widget.bike.bikeInfo.bikeValue)} VND"),
             SectionBanner(title: "PRICE"),
             _priceSection("Deposit Charges",
-                "${_rentingCon.calculateDepositMoney(widget.bike.bikeInfo.bikeValue)} VND"),
+                "${Utils.numberFormat(_rentingCon.calculateDepositMoney(widget.bike.bikeInfo.bikeValue))} VND"),
             _priceSection("First 30 minutes Charges",
-                "${widget.bike.bikeInfo.baseRentAmount} VND"),
+                "${Utils.numberFormat(widget.bike.bikeInfo.baseRentAmount)} VND"),
             _priceSection(
-                "Next 15 minutes Charges", "${widget.bike.bikeInfo.addRentAmount} VND"),
+                "Next 15 minutes Charges", "${Utils.numberFormat(widget.bike.bikeInfo.addRentAmount)} VND"),
             Container(margin: EdgeInsets.only(bottom: 15)),
             widget.bike.bikeInfo.lock
                 ? FlatButton(

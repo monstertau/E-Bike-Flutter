@@ -2,6 +2,7 @@ import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
   @override
   Widget build(BuildContext context) {
     var depositMoney =
-        rentingController.calculateDepositMoney(widget.bike.bikeInfo.bikeValue);
+        rentingController.calculateDepositMoney(widget.bike.bikeValue);
     DateTime startRent = DateTime.now().toUtc();
     return Scaffold(
       appBar: CustomAppBar(title: "Rent Bike", centerTitle: true),
@@ -58,6 +59,7 @@ class _ConfirmRentBikeScreenState extends State<ConfirmRentBikeScreen> {
                         rentingController.generateRentalCode());
                     Navigator.pushNamed(context, choosePaymentRoute,
                         arguments: payment);
+                    rentingController.lockBike(widget.bike);
                   },
                   child: Container(
                       padding: EdgeInsets.only(top: 15,bottom: 15,left: 5,right: 5),

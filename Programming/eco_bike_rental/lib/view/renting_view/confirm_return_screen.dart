@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/services/Payment/payment_service.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
@@ -105,6 +106,9 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
     } else {
       // AlertCustom.show(context, "Choose a dock for returning bike", AlertType.warning)
       //     .show();
+      setState(() {
+        _state = 0;
+      });
       Fluttertoast.showToast(
           msg: "Warning: Choose dock before return",
           toastLength: Toast.LENGTH_SHORT,

@@ -13,8 +13,13 @@ class ListDockScreen extends StatefulWidget {
 }
 
 class _ListDockScreenState extends State<ListDockScreen> {
+  TextEditingController controller = new TextEditingController();
   final DockController dockController = new DockController();
   final logger = Logger();
+  List<DockStation> _searchResult = [];
+  List<DockStation> lstDock;
+  String searchValue;
+  bool isOpen = false;
 
   Widget _itemTitle(String title) {
     return Container(
@@ -55,63 +60,120 @@ class _ListDockScreenState extends State<ListDockScreen> {
     );
   }
 
+  void onTapSearch() {
+    setState(() {
+      isOpen = !isOpen;
+    });
+  }
+
+  onSearchTextChanged(String text) async {
+    _searchResult.clear();
+    if (text.isEmpty) {
+      setState(() {});
+      return;
+    }
+    lstDock.forEach((element) {
+      if (element.dockName.contains(text) ||
+          element.dockName.toLowerCase().contains(text)) {
+        _searchResult.add(element);
+      }
+    });
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: complete design screen
     return Scaffold(
-      appBar: CustomAppBar(title: "List Dock Stations", oneScreen: true),
+      resizeToAvoidBottomInset: false,
+      appBar: CustomAppBar(
+        title: "List Dock Stations",
+        oneScreen: true,
+        search: true,
+        callback: onTapSearch,
+      ),
       body: Container(
           alignment: Alignment.center,
-          child: FutureBuilder(
-            future: dockController.getAllDocks(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData != null) {
-                List<DockStation> lstDock = snapshot.data;
-                return Column(
-                  children: [
-                    Image.asset(
-                      "lib/assets/images/dock_new.jpg",
-                      fit: BoxFit.fitWidth,
-                      height: 200,
-                    ),
-                    _buildTableTitle(),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: lstDock.length * 2,
-                        itemBuilder: (context, index) {
-                          if (index.isOdd) return Divider();
-                          final i = index ~/ 2;
-                          return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, detailedDockRoute,
-                                  arguments: lstDock[i]);
-                            },
-                            child: ListTile(
-                              selectedTileColor: Colors.black,
-                              title: Row(
-                                children: [
-                                  Expanded(child: Text(lstDock[i].dockName)),
-                                  Expanded(child: Text(lstDock[i].dockAddress)),
-                                  Expanded(child: Text(lstDock[i].dockArea)),
-                                  Expanded(
-                                      child: Text(
-                                          "${lstDock[i].available}/${lstDock[i].dockSize}"))
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        padding: EdgeInsets.only(bottom: 13.0),
-                      ),
-                    )
-                  ],
-                );
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
+          child: Column(
+            children: [
+              AnimatedCrossFade(
+                duration: new Duration(milliseconds: 200),
+                firstChild: Container(), // When you don't want to show menu..
+                secondChild: Card(
+                    child: new ListTile(
+                        leading: new Icon(Icons.search),
+                        title: new TextField(
+                          controller: controller,
+                          decoration: new InputDecoration(
+                              hintText: 'Search', border: InputBorder.none),
+                          onChanged: onSearchTextChanged,
+                        ),
+                        trailing: new IconButton(
+                          icon: new Icon(Icons.cancel),
+                          onPressed: () {
+                            controller.clear();
+                            onSearchTextChanged('');
+                          },
+                        ))),
+                crossFadeState: isOpen
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+              ),
+              Image.asset(
+                "lib/assets/images/dock_new.jpg",
+                fit: BoxFit.fitWidth,
+                height: 200,
+              ),
+              _buildTableTitle(),
+              FutureBuilder(
+                future: dockController.getAllDocks(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData != null) {
+                    lstDock = snapshot.data;
+                    return Expanded(
+                      child: _searchResult.length != 0 ||
+                              controller.text.isNotEmpty
+                          ? CustomItem(_searchResult)
+                          : CustomItem(lstDock),
+                    );
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              ),
+            ],
           )),
+    );
+  }
+
+  Widget CustomItem(lstDock) {
+    return ListView.builder(
+      itemCount: lstDock.length * 2,
+      itemBuilder: (context, index) {
+        if (index.isOdd) return Divider();
+        final i = index ~/ 2;
+        return InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, detailedDockRoute,
+                arguments: lstDock[i].id);
+          },
+          child: ListTile(
+            selectedTileColor: Colors.black,
+            title: Row(
+              children: [
+                Expanded(child: Text(lstDock[i].dockName)),
+                Expanded(child: Text(lstDock[i].dockAddress)),
+                Expanded(child: Text(lstDock[i].dockArea)),
+                Expanded(
+                    child:
+                        Text("${lstDock[i].available}/${lstDock[i].dockSize}"))
+              ],
+            ),
+          ),
+        );
+      },
+      padding: EdgeInsets.only(bottom: 13.0),
     );
   }
 }

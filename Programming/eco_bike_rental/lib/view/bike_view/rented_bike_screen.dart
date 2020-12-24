@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/common/section_banner.dart';
@@ -117,7 +118,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
         _verticalDivider(),
         Expanded(child: _sessionItem("Time Rented", timeRented)),
         _verticalDivider(),
-        Expanded(child: _sessionItem("Rent Amount", "$rentingAmount VND")),
+        Expanded(child: _sessionItem("Rent Amount", "${Utils.numberFormat(rentingAmount)} VND")),
       ],
     );
   }
@@ -158,7 +159,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
                             ),
                             SectionBanner(title: "RENTAL DETAIL"),
                             _rentalDetail(
-                                "${payment.depositAmount} VND",
+                                "${Utils.numberFormat(payment.depositAmount)} VND",
                                 payment.bike.category,
                                 "#${payment.bike.bikeInfo.barcode}"),
                             SectionBanner(title: "SESSION SUMMARY"),
