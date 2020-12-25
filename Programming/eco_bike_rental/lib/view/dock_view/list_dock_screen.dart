@@ -115,7 +115,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
                             onSearchTextChanged('');
                           },
                         ))),
-                crossFadeState: isOpen
+                crossFadeState: !isOpen
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,
               ),
@@ -147,6 +147,7 @@ class _ListDockScreenState extends State<ListDockScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget CustomItem(lstDock) {
     return ListView.builder(
       itemCount: lstDock.length * 2,

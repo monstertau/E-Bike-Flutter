@@ -1,4 +1,3 @@
-import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/services/Bike/bike_service.dart';
 
 class BikeController {
