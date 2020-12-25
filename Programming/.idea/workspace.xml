@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand />
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="66244057-0824-42cf-94a1-f3e94e338cac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/eco_bike_rental/lib/model/Payment/Transaction.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eco_bike_rental/lib/utils/Utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/controller/PaymentController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/controller/PaymentController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/controller/RentingController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/controller/RentingController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/model/Payment/Payment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/model/Payment/Payment.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/subsystem/InterbankSubsystem.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/subsystem/InterbankSubsystem.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/subsystem/interbank/InterbankSubsystemController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/subsystem/interbank/InterbankSubsystemController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/utils/API.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/utils/API.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/view/common/routing.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/view/common/routing.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eco_bike_rental/lib/view/payment_view/choose_payment_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/eco_bike_rental/lib/view/payment_view/choose_payment_screen.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1lCgzgbZoqZbWGJkkUMlstTlBes" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ISD.ICT.20201.20176763.NguyenXuanHoang/Programming" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="66244057-0824-42cf-94a1-f3e94e338cac" name="Default Changelist" comment="" />
+      <created>1607106750330</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607106750330</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.dart" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="418" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607264872424">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="418" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1032@0.0.1920.1032" timestamp="1607264872424" />
+    <state x="743" y="273" width="424" height="484" key="FileChooserDialogImpl" timestamp="1607326865870">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="743" y="273" width="424" height="484" key="FileChooserDialogImpl/0.0.1920.1032@0.0.1920.1032" timestamp="1607326865870" />
+    <state x="449" y="150" key="SettingsEditor" timestamp="1607326848068">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="449" y="150" key="SettingsEditor/0.0.1920.1032@0.0.1920.1032" timestamp="1607326848068" />
+  </component>
+</project>
