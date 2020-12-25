@@ -3,7 +3,10 @@ import 'package:eco_bike_rental/model/Bike/BikeFactory.dart';
 import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/model/DB/db_connection.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
-
+///Each of the services in this package handles the task of connecting with the server or database
+///* Request data from server and send responds to the controller
+///* Retrieve data for manipulating
+///This is class for services related to [Payment]
 class PaymentService {
   factory PaymentService() {
     if (_this == null) _this = PaymentService._();

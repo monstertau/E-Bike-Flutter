@@ -6,14 +6,16 @@ import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+///This [PaymentController] handles all the business logic related to payment flows.
+///* Manipulate data returned in services package and send to the view in MVC model
+///* Accompany with services package, it plays the role of controller in MVC model
 class PaymentController {
   InterbankInterface _interbank;
   PaymentService _paymentService = new PaymentService();
 
-  // Description: Deduct money from card
-  // @param: - creditCard card - card information
-  //         - Int amount - amount of money
-  // @return - Map message information
+  ///This method is used for deducting money from card
+  ///* Input: card entity, amount to deduct
+  ///* Output: <Map> of result
   Future<Map> deductMoney(card, amount) async {
     //TODO
     Map result;
@@ -26,10 +28,9 @@ class PaymentController {
     return result;
   }
 
-  // Description: Deposit money to card
-  // @param: - creditCard card - card information
-  //         - Int amount - amount of money
-  // @return - Map message information
+  ///This method is used for returning deposit money to card
+  ///* Input: card entity, deposit amount and rent amount
+  ///* Output: <Map> of result
   Future<Map> returnDepositMoney(card, deposit, rentAmount) async {
     //TODO
     Map result;
@@ -48,13 +49,13 @@ class PaymentController {
     return result;
   }
 
-// Description: validate cardCode of CreditCard
-// @param: - String cardCode - card code of CreditCard
-// @return - true if valid
+  ///This method is used for validating card code
+  ///* Input: card code
+  ///* Output: true or false
   bool validateCardCode(cardCode) {
     //TODO
     RegExp regexCardCode =
-        new RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9 \\-\\.\\_\\,\\/]*$");
+    new RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9 \\-\\.\\_\\,\\/]*$");
     try {
       if (cardCode == null) return false;
       return regexCardCode.hasMatch(cardCode);
@@ -63,9 +64,9 @@ class PaymentController {
     }
   }
 
-// Description: validate cvvCode of CreditCard
-// @param: - String cvvCode - cvv code of CreditCard
-// @return - true if valid
+  ///This method is used for validating cvv code
+  ///* Input: cvv code
+  ///* Output: true or false
   bool validateCvvCode(cvvCode) {
     //TODO
     try {
@@ -78,9 +79,9 @@ class PaymentController {
     }
   }
 
-// Description: validate dateExpired of CreditCard
-// @param: - String dateExpired - expired date of CreditCard
-// @return - true if valid
+  ///This method is used for validating expiration date
+  ///* Input: expiration date
+  ///* Output: true or false
   bool validateDateExpired(dateExpired) {
     //TODO
     if (dateExpired == null) return false;
@@ -104,9 +105,9 @@ class PaymentController {
     }
   }
 
-// Description: validate owner of CreditCard
-// @param: - String owner - owner of CreditCard
-// @return - true if valid
+  ///This method is used for validating owner name
+  ///* Input: owner name
+  ///* Output: true or false
   bool validateOwner(owner) {
     //TODO
     RegExp ownerRegex = new RegExp(r"^[a-zA-Z ]*$");
@@ -118,24 +119,25 @@ class PaymentController {
     }
   }
 
+  ///This method create an instance of payment with full of initial value
   Payment createPayment(
       Bike bike, int depositMoney, DateTime start, String rentalCode) {
     return new Payment(
         bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
   }
-
-  void savePayment(Payment payment,cardId) async =>
-      await _paymentService.save(payment,cardId);
-
+  ///This method is used for saving payment
+  void savePayment(Payment payment, cardId) async =>
+      await _paymentService.save(payment, cardId);
+  ///This method is used for updating payment
   Future<Map> updatePayment(Payment payment) async {
     return await _paymentService.update(payment);
   }
-
+  ///This method is used for saving rentalCode to local device
   Future<void> saveRentalCodeToLocal(String rentalCode) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("rentalCode", rentalCode);
   }
-
+  ///This method is used for getting rentalCode from local device
   Future<String> getRentalCodeFromLocal() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String rentalCode = pref.getString("rentalCode");

@@ -1,7 +1,10 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Bike/BikeFactory.dart';
 import 'package:eco_bike_rental/model/DB/db_connection.dart';
-
+///Each of the services in this package handles the task of connecting with the server or database
+///* Request data from server and send responds to the controller
+///* Retrieve data for manipulating
+///This is class for services related to [Bike]
 class BikeService {
   factory BikeService() {
     if (_this == null) _this = BikeService._();

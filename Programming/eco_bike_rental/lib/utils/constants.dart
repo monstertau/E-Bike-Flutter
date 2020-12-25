@@ -1,6 +1,6 @@
 import 'package:logger/logger.dart';
 
-// Routing path
+/// Routing screen path
 const String homeRoute = "/";
 const String detailedDockRoute = "/dock-detail";
 const String detailedBikeRoute = "/bike-detail";
@@ -12,10 +12,11 @@ const String rentedBikeRoute = "/rented-detail";
 const String returnBikeRoute = "/return-bike";
 const String confirmReturnRoute = "/confirm-return";
 const String chooseReturnDockRoute = '/choose-return-dock';
-// setup logger
+/// Setup logger
+///* For more information, see [Logger]
 final logger = Logger();
 
-// path to get database
+/// Path to get database
 const String baseUrl = "https://lunar-bonus-297614.df.r.appspot.com";
 const String getAllDockPath = "/dock/get-all";
 const String getDockDetailPath = "/dock/get-detail";

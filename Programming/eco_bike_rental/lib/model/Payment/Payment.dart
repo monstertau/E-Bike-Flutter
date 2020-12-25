@@ -1,15 +1,22 @@
 import '../Bike/Bike.dart';
 import '../CreditCard/CreditCard.dart';
-
+///This class represents the model of [Payment]
 class Payment {
+  ///[Bike] entity
   Bike _bike;
+  /// [CreditCard] entity
   CreditCard _card;
-
+///Rent amount user have to pay
   int _rentAmount;
+  ///Deposit amount
   int _depositAmount;
+  ///Starting rent time of payment
   DateTime _startRentTime;
+  ///Ending rent time of payment
   DateTime _endRentTime;
+  ///payment status
   String _paymentStatus;
+  ///rental code
   String _rentalCode;
   Payment(this._bike, this._card, this._startRentTime, this._depositAmount,
       this._paymentStatus, this._rentalCode);

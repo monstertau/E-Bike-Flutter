@@ -5,6 +5,7 @@ import 'package:eco_bike_rental/model/Bike/StandardBike.dart';
 import 'package:eco_bike_rental/model/Bike/TwinBike.dart';
 import 'package:eco_bike_rental/model/Bike/TwinEBike.dart';
 
+///[BikeFactory] is used for getting an instance of [Bike]. Usually, it's a [Bike] model in database
 class BikeFactory {
   static Bike getBike(Map res) {
     BikeInfo bikeInfo = new BikeInfo(

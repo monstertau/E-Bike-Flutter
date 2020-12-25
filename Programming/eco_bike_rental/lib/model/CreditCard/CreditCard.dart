@@ -1,9 +1,14 @@
+///This class represents the model of [CreditCard] entity
 class CreditCard {
+  ///Card code
   String _cardCode;
 
   String get cardCode => _cardCode;
+  ///Owner name
   String _owner;
+  ///security code
   int _cvvCode;
+  ///expiration date
   String _dateExpired;
 
 
