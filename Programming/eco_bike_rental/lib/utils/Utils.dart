@@ -4,11 +4,12 @@ import 'package:intl/intl.dart';
 
 class Utils {
   static final oCcy = new NumberFormat("#,##0", "en_US");
-
+///Get the date in type of day & month
   static String getNow() {
     var now = (new DateTime.now()).toString();
     return (now.substring(0, now.length - 4));
   }
+
 
   static String makeHash(Map data) {
     final secretKey = "BUgboJpO5w4=";

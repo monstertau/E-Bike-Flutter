@@ -1,7 +1,11 @@
 import 'dart:async';
 
+import 'package:eco_bike_rental/controller/BikeController.dart';
+import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/utils/Utils.dart';
+import 'package:eco_bike_rental/services/Payment/payment_service.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
@@ -28,7 +32,11 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   String _timeString;
   int _initTime;
   int _state = 0;
-  PaymentController paymentController = new PaymentController();
+  PaymentController _paymentController = new PaymentController();
+
+  BikeController _bikeController = new BikeController();
+
+  CreditCardController _creditCardController = new CreditCardController();
 
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
@@ -78,7 +86,7 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
     if (_dockName != null) {
       Map res;
       try {
-        res = await paymentController.returnDepositMoney(widget._payment.card,
+        res = await _paymentController.returnDepositMoney(widget._payment.card,
             widget._payment.depositAmount, widget._payment.rentAmount);
       } catch (e) {
         // AlertCustom.show(context, e, AlertType.error).show();
@@ -93,7 +101,10 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
         _state = 0;
       });
       if (res['success']) {
-        widget._payment.update(index);
+        Map res = await _paymentController.updatePayment(widget._payment);
+        _bikeController.returnBikeToDock(index, res["bikeId"]);
+        _bikeController.lockBike(widget._payment.bike.bikeInfo.barcode);
+        _creditCardController.unlockCard(res["cardId"]);
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.remove("rentalCode");
 
@@ -104,6 +115,9 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
     } else {
       // AlertCustom.show(context, "Choose a dock for returning bike", AlertType.warning)
       //     .show();
+      setState(() {
+        _state = 0;
+      });
       Fluttertoast.showToast(
           msg: "Warning: Choose dock before return",
           toastLength: Toast.LENGTH_SHORT,
@@ -118,7 +132,7 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: "Return Bike #${widget._payment.bike.barcode}",
+          title: "Return Bike #${widget._payment.bike.bikeInfo.barcode}",
           centerTitle: true),
       body: Container(
         margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 10.0),
@@ -161,13 +175,12 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
                       ? Text("PROCEED RETURN", style: TextStyle(fontSize: 16))
                       : CircularProgressIndicator(
                           backgroundColor: Colors.white,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.red[400])
-              )),
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Colors.red[400]))),
               textColor: Colors.white,
               color: Colors.red[700],
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
-
             ),
           ],
         ),

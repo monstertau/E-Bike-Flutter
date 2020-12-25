@@ -20,8 +20,7 @@ exports.HMACAuth = (req, res, next) => {
   if (!authStr) {
     return res.status(403).json({
       success: false,
-      error: "01",
-      message: "missing_authorization_header",
+      error: "missing_authorization_header",
     });
   }
   const arr = authStr.split(" ");
@@ -31,8 +30,7 @@ exports.HMACAuth = (req, res, next) => {
   if (ident != process.env.IDENTIFIER) {
     return res.status(403).json({
       success: false,
-      error: "02",
-      message: "wrong_identifier_on_authorization",
+      error: "wrong_identifier_on_authorization",
     });
   }
   const hashStr = arr[1].trim();
@@ -40,8 +38,7 @@ exports.HMACAuth = (req, res, next) => {
   if (!hashStr) {
     return res.status(403).json({
       success: false,
-      error: "03",
-      message: "hmac_authentication_failed",
+      error: "hmac_authentication_failed",
     });
   }
 
@@ -50,8 +47,7 @@ exports.HMACAuth = (req, res, next) => {
   if (pk != encryptedPK) {
     return res.status(403).json({
       success: false,
-      error: "03",
-      message: "hmac_authentication_failed",
+      error: "hmac_authentication_failed",
     });
   }
 
@@ -74,8 +70,7 @@ exports.HMACAuth = (req, res, next) => {
   if (compute_hmac != hmac) {
     return res.status(403).json({
       success: false,
-      error: "03",
-      message: "hmac_authentication_failed",
+      error: "hmac_authentication_failed",
     });
   }
   next();

@@ -4,12 +4,12 @@ import 'package:eco_bike_rental/common/exception/server_exception.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
-///Database boudary
+///Database boundary
 class DatabaseBoundary {
   static final String publicKey = "841a6ad1b24833c266b8683ab63fc368348fa913";
   static final String secretKey = "40cc022cad1477cb5d5c79d65dc4f41057e98c65";
   static final String identifier = "GROUP10";
-///generate signature for access database
+///Generate signature for access database
   static String generateSignature(String method, String body, String baseUrl) {
     String contentMD5 = "";
     String type = "";

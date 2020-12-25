@@ -1,30 +1,31 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
-///This [BikeController] maintain all the logical business related to [Bike]
-///* connecting with the database and retrieving information
-///* return necessary information to display in the view
-class BikeController extends ControllerMVC {
-  BikeController([StateMVC state]) : super(state) {
-    bikeModel = Bike.newBike();
-  }
+import 'package:eco_bike_rental/services/Bike/bike_service.dart';
+///This [BikeController] handles all the business logic related to [Bike] entity.
+///* Manipulate data returned in services package
+///* Accompany with services package, it plays the role of controller in MVC model
+class BikeController {
+  static BikeController _this;
+  BikeService _bikeService = new BikeService();
 
-  Bike bikeModel;
-///Get bike info
-  List getBikeInfo() {
-    // TODO: implement this
-    // return bikeModel.lstInfo;
-    return List();
+  BikeController._();
+
+  factory BikeController() {
+    if (_this == null) _this = BikeController._();
+    return _this;
   }
-///Get rented bike info
-  List getRentedBikeInfo() {
-    // TODO: implement this
-    // return bikeModel.lstInfo;
-    return List();
-  }
-///Get bike lock status
-  bool getBikeLockStatus() {
-    // TODO: implement this
-    // return bikeModel.lock;
-    return bikeModel.lock;
-  }
+///Unlock bike
+  ///* Input: barcode
+  ///* Output: Bike unlocked
+  Future<bool> unlockBike(String barcode) async =>
+      await _bikeService.unlockBike(barcode);
+///Lock bike
+  ///* Input: barcode
+  ///* Output: bike locked
+  Future<bool> lockBike(String barcode) async =>
+      await _bikeService.lockBike(barcode);
+///Return Bike to dock station
+  ///* Input: dockID, bikeID
+  ///* Output: bike returned to dock station
+  Future<bool> returnBikeToDock(int dockId, int bikeId) async =>
+      await _bikeService.returnBikeToDock(dockId, bikeId);
 }

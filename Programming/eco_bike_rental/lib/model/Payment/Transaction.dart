@@ -1,16 +1,18 @@
-import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
-///transaction model
+import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
+///This class represents the model of [PaymentTransaction]
 class Transaction {
+  ///[CreditCard] entity
   CreditCard _card;
-
+///Command for transaction, instances: pay, refund, ...
   String _command;
+  ///
   String _transactionContent;
   int _amount;
   String _createdAt;
-///constructor
+
   Transaction(this._card, this._command, this._transactionContent, this._amount,
       this._createdAt);
-///get transaction properties in one object
+
   Map getData() {
     return {
       "cardCode": this._card.cardCode,

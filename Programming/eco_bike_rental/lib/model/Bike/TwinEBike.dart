@@ -1,18 +1,18 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-///Twin Ebike model
+import 'package:eco_bike_rental/model/Bike/BikeInfo.dart';
+///This class represents for [TwinEBike] model
 class TwinEBike extends Bike {
+  ///Battery
   int _battery;
-///get battery
+
   @override
-  String getBattery() {
+  String showBattery() {
     return "$_battery%";
   }
-///constructor
-  TwinEBike.init(int id, String barcode, String color, String category,
-      bool lock, int battery, int pedal, int saddle, int rear, String imagePath)
-      : super.init(id, barcode, color, category, lock, pedal, saddle, rear,
-            imagePath) {
+
+  TwinEBike.init(
+      int id, String category, BikeInfo bikeInfo, int battery, String imagePath)
+      : super.init(id, category, bikeInfo, imagePath) {
     this._battery = battery;
-    super.setAmount(700000, (10000 * 2).round(), (3000 * 2).round());
   }
 }

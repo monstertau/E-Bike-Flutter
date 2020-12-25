@@ -107,12 +107,12 @@ class _InvoiceScreen extends State<InvoiceScreen> {
                                   _colorRow(
                                       "Barcode",
                                       "",
-                                      widget.invoice.bike.barcode,
+                                      widget.invoice.bike.bikeInfo.barcode,
                                       Colors.black),
                                   _colorRow(
                                       "Battery",
                                       "",
-                                      widget.invoice.bike.getBattery(),
+                                      widget.invoice.bike.showBattery(),
                                       Colors.black),
                                   _colorRow(
                                       "Bike Category",
@@ -120,7 +120,7 @@ class _InvoiceScreen extends State<InvoiceScreen> {
                                       widget.invoice.bike.category,
                                       Colors.black),
                                   _colorRow("Bike Color", "",
-                                      widget.invoice.bike.color, Colors.black),
+                                      widget.invoice.bike.bikeInfo.color, Colors.black),
                                 ],
                               ),
                             )

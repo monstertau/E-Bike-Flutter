@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: _listScreen[_lastSelected],
       // bottom navigation, don't need to care about this part
       bottomNavigationBar: FABBottomAppBar(
