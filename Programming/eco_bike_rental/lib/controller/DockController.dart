@@ -1,7 +1,6 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/services/DockStation/dock_station_service.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
 
 ///
 class DockController {

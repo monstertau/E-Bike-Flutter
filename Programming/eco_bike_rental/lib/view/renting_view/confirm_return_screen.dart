@@ -4,8 +4,6 @@ import 'package:eco_bike_rental/controller/BikeController.dart';
 import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
-import 'package:eco_bike_rental/utils/Utils.dart';
-import 'package:eco_bike_rental/services/Payment/payment_service.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';

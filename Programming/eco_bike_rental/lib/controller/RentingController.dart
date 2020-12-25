@@ -45,6 +45,8 @@ class RentingController {
   int calculateRentingAmount(
       Duration rentDuration, int baseRentAmount, int addRentAmount) {
     int rentTime = rentDuration.inSeconds;
+    if(rentTime <=10*60)
+      return 0;
     if (rentTime <= 30 * 60) {
       return baseRentAmount;
     }

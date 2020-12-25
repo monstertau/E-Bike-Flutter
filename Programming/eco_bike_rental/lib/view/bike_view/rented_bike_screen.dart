@@ -9,7 +9,6 @@ import 'package:eco_bike_rental/view/common/section_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:flutter/painting.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RentedBikeScreen extends StatefulWidget {
   @override
