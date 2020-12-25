@@ -37,7 +37,6 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
     );
   }
 
-  _handlingError(String errorText) {}
 
   @override
   Widget build(BuildContext context) {

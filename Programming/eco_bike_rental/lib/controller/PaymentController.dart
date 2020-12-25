@@ -1,5 +1,4 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-import 'package:eco_bike_rental/model/DB/db_connection.dart';
 import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/services/Payment/payment_service.dart';

@@ -1,15 +1,11 @@
-import 'package:eco_bike_rental/common/exception/payment_exception.dart';
-import 'package:eco_bike_rental/controller/BikeController.dart';
 import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
-import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:logger/logger.dart';
 
 class ChoosePaymentScreen extends StatefulWidget {
   final Payment payment;
@@ -24,7 +20,6 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   int _state = 0;
   PaymentController _paymentController = new PaymentController();
   CreditCardController _creditCardController = new CreditCardController();
-  BikeController _bikeController = new BikeController();
 
   // TextEditingController ownerController = new TextEditingController();
   // TextEditingController dateExpiredController = new TextEditingController();
@@ -46,7 +41,6 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   bool _validatede = true;
 
   void _processCard() async {
-    final logger = new Logger();
     setState(() {
       _validatename = !_paymentController.validateOwner(ownerController.text);
       _validatede =
@@ -92,7 +86,6 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
             int cardId = await _creditCardController.searchOrCreateCard(card);
             widget.payment.card = card;
             _paymentController.savePayment(widget.payment, cardId);
-            bool res = await _bikeController.unlockBike(widget.payment.bike.bikeInfo.barcode);
             _paymentController.saveRentalCodeToLocal(widget.payment.rentalCode);
             Navigator.pushNamedAndRemoveUntil(
                 context, invoiceRoute, (Route<dynamic> route) => false,

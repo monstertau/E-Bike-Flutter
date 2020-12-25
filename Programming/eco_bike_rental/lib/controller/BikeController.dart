@@ -1,4 +1,3 @@
-import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/services/Bike/bike_service.dart';
 ///This [BikeController] handles all the business logic related to [Bike] entity.
 ///* Manipulate data returned in services package and send to the view in MVC model

@@ -2,7 +2,6 @@ import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
-import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:flutter/material.dart';
