@@ -5,12 +5,12 @@ import 'package:eco_bike_rental/services/Bike/bike_service.dart';
 import 'package:eco_bike_rental/services/Payment/payment_service.dart';
 import 'package:uuid/uuid.dart';
 ///This [RentingController] handles all the business logic related to renting bike flows.
-///* Manipulate data returned in services package
+///* Manipulate data returned in services package and send to the view in MVC model
 ///* Accompany with services package, it plays the role of controller in MVC model
 class RentingController {
 
   static RentingController _this;
-
+  ///Create a singleton [RentingController] instance
   factory RentingController() {
     if (_this == null) _this = RentingController._();
     return _this;
@@ -42,13 +42,15 @@ class RentingController {
   void returnBike(DockStation dock, Bike bike) {
     // TODO: implement this
   }
-  ///Generate a rental code in uuid form
+  ///Generate a rental code in uuid form with timestamp
   ///* see more in [Uuid]
   String generateRentalCode() {
     var uuid = Uuid();
     return uuid.v1();
   }
-  ///Calculate renting amount: baseAmount*x + rentAmount*y
+  ///Calculate renting amount
+  ///* Input: rent duration, base renting Amount, additional rent amount
+  ///* Output: rent amount
   int calculateRentingAmount(
       Duration rentDuration, int baseRentAmount, int addRentAmount) {
     int rentTime = rentDuration.inSeconds;
@@ -59,10 +61,14 @@ class RentingController {
     return baseRentAmount + addRentAmount * (addTime);
   }
   ///Calculate deposit money
+  ///* Input: base rent amount
+  ///* Output: deposit money
   int calculateDepositMoney(int baseRentAmount) {
     return (baseRentAmount * 40 / 100).round();
   }
   ///Calculate renting time
+  ///* Input: starting time, ending time
+  ///* Output: renting time
   Duration calculateRentingTime(DateTime startTime, DateTime endTime) {
     return endTime.difference(startTime.toLocal());
   }

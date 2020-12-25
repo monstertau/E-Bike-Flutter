@@ -4,14 +4,14 @@ import 'package:eco_bike_rental/services/DockStation/dock_station_service.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 ///This [DockController] handles all the business logic related to [DockStation] entity.
-///* Manipulate data returned in services package
+///* Manipulate data returned in services package and send to the view in MVC model
 ///* Accompany with services package, it plays the role of controller in MVC model
 class DockController {
   static DockController _this;
   DockStationService _dockStationService = new DockStationService();
 
   DockController._();
-
+  ///Create a singleton [DockController] instance
   factory DockController() {
     if (_this == null) _this = DockController._();
 
@@ -20,7 +20,7 @@ class DockController {
 
   ///Method for getting all bikes in dock by dockID
   ///* Input: dock station entity
-  ///* Output: List<Bike>
+  ///* Output: List<Bike> in dock station entity
   Future<List<Bike>> getAllBikes(DockStation dockStation) async {
     // TODO: implement this
     DockStation dock = await _dockStationService.getBikeInDock(dockStation);

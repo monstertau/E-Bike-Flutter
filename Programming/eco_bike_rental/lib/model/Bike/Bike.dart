@@ -3,7 +3,7 @@ import 'package:eco_bike_rental/model/Bike/BikeInfo.dart';
 class Bike {
 ///Id of bike, example: 123456
   int _id;
-  ///Category of bike: samples: [TwinBike], [TwinEBike], [Ebike], [Bike](standard)
+  ///Category of bike: samples: [TwinBike], [TwinEBike], [Ebike]
   String _category;
   ///Path to image directory
   String _imagePath;

@@ -1,14 +1,14 @@
 import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/services/CreditCard/credit_card_service.dart';
 ///This [CreditCardController] handles all the business logic related to [Card] entity.
-///* Manipulate data returned in services package
+///* Manipulate data returned in services package and send to the view in MVC model
 ///* Accompany with services package, it plays the role of controller in MVC model
 class CreditCardController {
   static CreditCardController _this;
   CreditCardService _creditCardService = new CreditCardService();
 
   CreditCardController._();
-
+///Create a singleton [CreditCardController] instance
   factory CreditCardController() {
     if (_this == null) _this = CreditCardController._();
     return _this;

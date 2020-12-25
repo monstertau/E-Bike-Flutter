@@ -1,7 +1,7 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/services/Bike/bike_service.dart';
 ///This [BikeController] handles all the business logic related to [Bike] entity.
-///* Manipulate data returned in services package
+///* Manipulate data returned in services package and send to the view in MVC model
 ///* Accompany with services package, it plays the role of controller in MVC model
 class BikeController {
   static BikeController _this;
@@ -15,7 +15,7 @@ class BikeController {
   }
 ///Unlock bike
   ///* Input: barcode
-  ///* Output: Bike unlocked
+  ///* Output: bike unlocked
   Future<bool> unlockBike(String barcode) async =>
       await _bikeService.unlockBike(barcode);
 ///Lock bike

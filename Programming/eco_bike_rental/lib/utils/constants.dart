@@ -1,6 +1,6 @@
 import 'package:logger/logger.dart';
 
-/// Routing path
+/// Routing screen path
 const String homeRoute = "/";
 const String detailedDockRoute = "/dock-detail";
 const String detailedBikeRoute = "/bike-detail";

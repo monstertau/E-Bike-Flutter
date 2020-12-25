@@ -8,7 +8,7 @@ import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ///This [PaymentController] handles all the business logic related to payment flows.
-///* Manipulate data returned in services package
+///* Manipulate data returned in services package and send to the view in MVC model
 ///* Accompany with services package, it plays the role of controller in MVC model
 class PaymentController {
   InterbankInterface _interbank;
@@ -30,7 +30,7 @@ class PaymentController {
   }
 
   ///This method is used for returning deposit money to card
-  ///* Input: card entity, deposit amount, and rent amount
+  ///* Input: card entity, deposit amount and rent amount
   ///* Output: <Map> of result
   Future<Map> returnDepositMoney(card, deposit, rentAmount) async {
     //TODO
@@ -133,12 +133,12 @@ class PaymentController {
   Future<Map> updatePayment(Payment payment) async {
     return await _paymentService.update(payment);
   }
-  ///This method is used for saving [RentalCode] to local device
+  ///This method is used for saving rentalCode to local device
   Future<void> saveRentalCodeToLocal(String rentalCode) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("rentalCode", rentalCode);
   }
-  ///This method is used for getting [RentalCode] from local device
+  ///This method is used for getting rentalCode from local device
   Future<String> getRentalCodeFromLocal() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String rentalCode = pref.getString("rentalCode");
