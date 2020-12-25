@@ -19,6 +19,7 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
   List<DockStation> lstDock;
   String searchValue;
 
+
   onSearchTextChanged(String text) async {
     _searchResult.clear();
     if (text.isEmpty) {
@@ -33,13 +34,17 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
       }
     });
 
+    setState(() {});
+  }
+
+  void handleOnTap(lstDock) {
+    returnMap['name'] = lstDock.dockName;
+    returnMap['index'] = lstDock.dockID;
+    Navigator.pop(context, returnMap);
+  }
+
   @override
   Widget build(BuildContext context) {
-    void handleOnTap(lstDock){
-      returnMap['name'] = lstDock.dockName;
-      returnMap['index'] = lstDock.dockID;
-      Navigator.pop(context, returnMap);
-    }
     return Scaffold(
       appBar: CustomAppBar(
         title: "Choose Dock To Return",
@@ -47,44 +52,44 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
       ),
       body: Container(
           child: Column(
-        children: [
-          Container(
-              child: Card(
-                  child: new ListTile(
-                      leading: new Icon(Icons.search),
-                      title: new TextField(
-                        controller: controller,
-                        decoration: new InputDecoration(
-                            hintText: 'Search', border: InputBorder.none),
-                        onChanged: onSearchTextChanged,
-                      ),
-                      trailing: new IconButton(
-                        icon: new Icon(Icons.cancel),
-                        onPressed: () {
-                          controller.clear();
-                          onSearchTextChanged('');
-                        },
-                      )))),
-          Divider(),
-          FutureBuilder(
-            future: dockController.getAllDocks(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData != null) {
-                lstDock = snapshot.data;
-                return Expanded(
-                    // margin: EdgeInsets.only(left: 5),
-                    child:
+            children: [
+              Container(
+                  child: Card(
+                      child: new ListTile(
+                          leading: new Icon(Icons.search),
+                          title: new TextField(
+                            controller: controller,
+                            decoration: new InputDecoration(
+                                hintText: 'Search', border: InputBorder.none),
+                            onChanged: onSearchTextChanged,
+                          ),
+                          trailing: new IconButton(
+                            icon: new Icon(Icons.cancel),
+                            onPressed: () {
+                              controller.clear();
+                              onSearchTextChanged('');
+                            },
+                          )))),
+              Divider(),
+              FutureBuilder(
+                future: dockController.getAllDocks(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData != null) {
+                    lstDock = snapshot.data;
+                    return Expanded(
+                      // margin: EdgeInsets.only(left: 5),
+                        child:
                         _searchResult.length != 0 || controller.text.isNotEmpty
                             ? CustomItemList(_searchResult)
                             : CustomItemList(lstDock));
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          ),
-        ],
-      )),
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              ),
+            ],
+          )),
     );
   }
 
