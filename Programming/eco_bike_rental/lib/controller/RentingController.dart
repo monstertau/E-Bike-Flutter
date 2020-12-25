@@ -1,34 +1,30 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/services/Bike/bike_service.dart';
+import 'package:eco_bike_rental/services/Payment/payment_service.dart';
 import 'package:uuid/uuid.dart';
 
 class RentingController {
-  RentingController() {
-    bikeModel = Bike.newBike();
-    paymentModel = Payment.init();
+  static RentingController _this;
+
+  factory RentingController() {
+    if (_this == null) _this = RentingController._();
+    return _this;
   }
 
-  Bike bikeModel;
-  Payment paymentModel;
+  RentingController._();
+
+  BikeService _bikeService = new BikeService();
+  PaymentService _paymentService = new PaymentService();
 
   Future<Bike> requestRentBike(String barcode) async {
-    Bike bike = await bikeModel.getBikeByBarcode(barcode);
+    Bike bike = await _bikeService.getBikeByBarcode(barcode);
     return bike;
   }
 
-  bool lockBike(Bike bike) {
-    // TODO: implement this
-    return false;
-  }
-
-  bool unlockBike(Bike bike) {
-    // TODO: implement this
-    return false;
-  }
-
   Future<Payment> getRentedBikeInformation(String rentalCode) async {
-    Payment payment = await paymentModel.getPaymentInfo(rentalCode);
+    Payment payment = await _paymentService.getPaymentInfo(rentalCode);
     return payment;
   }
 
@@ -63,5 +59,4 @@ class RentingController {
   Duration calculateRentingTime(DateTime startTime, DateTime endTime) {
     return endTime.difference(startTime.toLocal());
   }
-
 }

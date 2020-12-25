@@ -33,17 +33,13 @@ class _ChooseReturnDockScreenState extends State<ChooseReturnDockScreen> {
       }
     });
 
-    setState(() {});
-  }
-
-  void handleOnTap(lstDock) {
-    returnMap['name'] = lstDock.dockName;
-    returnMap['index'] = lstDock.dockID;
-    Navigator.pop(context, returnMap);
-  }
-
   @override
   Widget build(BuildContext context) {
+    void handleOnTap(lstDock){
+      returnMap['name'] = lstDock.dockName;
+      returnMap['index'] = lstDock.dockID;
+      Navigator.pop(context, returnMap);
+    }
     return Scaffold(
       appBar: CustomAppBar(
         title: "Choose Dock To Return",

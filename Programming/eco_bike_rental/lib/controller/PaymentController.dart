@@ -1,16 +1,15 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-import 'package:eco_bike_rental/model/DB/db_interface.dart';
-import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
-import 'package:eco_bike_rental/model/Payment/CreditCard.dart';
+import 'package:eco_bike_rental/model/DB/db_connection.dart';
+import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
+import 'package:eco_bike_rental/services/Payment/payment_service.dart';
 import 'package:eco_bike_rental/subsystem/InterbankInterface.dart';
 import 'package:eco_bike_rental/subsystem/InterbankSubsystem.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class PaymentController extends ControllerMVC {
+class PaymentController {
   InterbankInterface _interbank;
-
-  final DatabaseSubsystemInterface db = new DatabaseSubsystem();
+  PaymentService _paymentService = new PaymentService();
 
   // Description: Deduct money from card
   // @param: - creditCard card - card information
@@ -23,7 +22,7 @@ class PaymentController extends ControllerMVC {
     try {
       result = await _interbank.pay(card, amount);
     } catch (e) {
-      throw(e);
+      throw (e);
     }
     return result;
   }
@@ -45,7 +44,7 @@ class PaymentController extends ControllerMVC {
         result = await _interbank.refund(card, amount);
     } catch (e) {
       // print(e);
-      throw(e);
+      throw (e);
     }
     return result;
   }
@@ -124,5 +123,23 @@ class PaymentController extends ControllerMVC {
       Bike bike, int depositMoney, DateTime start, String rentalCode) {
     return new Payment(
         bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
+  }
+
+  void savePayment(Payment payment,cardId) async =>
+      await _paymentService.save(payment,cardId);
+
+  Future<Map> updatePayment(Payment payment) async {
+    return await _paymentService.update(payment);
+  }
+
+  Future<void> saveRentalCodeToLocal(String rentalCode) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("rentalCode", rentalCode);
+  }
+
+  Future<String> getRentalCodeFromLocal() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String rentalCode = pref.getString("rentalCode");
+    return rentalCode;
   }
 }

@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:eco_bike_rental/controller/BikeController.dart';
+import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/Utils.dart';
+import 'package:eco_bike_rental/services/Payment/payment_service.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/renting_view/confirm_rent_screen.dart';
@@ -29,7 +32,11 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   String _timeString;
   int _initTime;
   int _state = 0;
-  PaymentController paymentController = new PaymentController();
+  PaymentController _paymentController = new PaymentController();
+
+  BikeController _bikeController = new BikeController();
+
+  CreditCardController _creditCardController = new CreditCardController();
 
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
@@ -79,7 +86,7 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
     if (_dockName != null) {
       Map res;
       try {
-        res = await paymentController.returnDepositMoney(widget._payment.card,
+        res = await _paymentController.returnDepositMoney(widget._payment.card,
             widget._payment.depositAmount, widget._payment.rentAmount);
       } catch (e) {
         // AlertCustom.show(context, e, AlertType.error).show();
@@ -94,7 +101,10 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
         _state = 0;
       });
       if (res['success']) {
-        widget._payment.update(index);
+        Map res = await _paymentController.updatePayment(widget._payment);
+        _bikeController.returnBikeToDock(index, res["bikeId"]);
+        _bikeController.lockBike(widget._payment.bike.bikeInfo.barcode);
+        _creditCardController.unlockCard(res["cardId"]);
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.remove("rentalCode");
 
@@ -122,7 +132,7 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: "Return Bike #${widget._payment.bike.barcode}",
+          title: "Return Bike #${widget._payment.bike.bikeInfo.barcode}",
           centerTitle: true),
       body: Container(
         margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 10.0),
@@ -143,15 +153,15 @@ class _ConfirmReturnScreenState extends State<ConfirmReturnScreen> {
             ItemList("Card Name", widget._payment.card.owner, Colors.grey[200]),
             ItemList(
                 "Card Number", widget._payment.card.cardCode, Colors.grey[200]),
-            ItemList("Deposit Amount", Utils.numberFormat(widget._payment.depositAmount).toString()+ " VND",
+            ItemList("Deposit Amount", widget._payment.depositAmount.toString(),
                 Colors.grey[200]),
-            ItemList("Renting Price", "${Utils.numberFormat(widget._payment.rentAmount)} VND",
+            ItemList("Renting Price", "${widget._payment.rentAmount}",
                 Colors.grey[200]),
             Container(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: ItemList(
                   "Total",
-                  "${Utils.numberFormat(widget._payment.depositAmount - widget._payment.rentAmount)} VND",
+                  "${widget._payment.depositAmount - widget._payment.rentAmount}",
                   Colors.deepOrange[100]),
             ),
             FlatButton(

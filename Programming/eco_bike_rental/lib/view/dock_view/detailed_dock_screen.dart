@@ -1,5 +1,6 @@
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
+import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
 import 'package:eco_bike_rental/view/common/section_banner.dart';
@@ -8,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 class DetailedDockScreen extends StatefulWidget {
-  final int id;
+  final DockStation dockStation;
 
-  const DetailedDockScreen({Key key, this.id}) : super(key: key);
+  const DetailedDockScreen({Key key, this.dockStation}) : super(key: key);
 
   @override
   _DetailedDockScreenState createState() => _DetailedDockScreenState();
@@ -34,7 +35,7 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
       body: Container(
           alignment: Alignment.center,
           child: FutureBuilder(
-            future: dockController.getAllBikes(widget.id),
+            future: dockController.getAllBikes(widget.dockStation),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData != null) {
@@ -175,7 +176,7 @@ Widget buildBike(Bike bike, int index) {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: Text("${bike.barcode}",
+              child: Text("${bike.bikeInfo.barcode}",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -193,7 +194,7 @@ Widget buildBike(Bike bike, int index) {
           ),
         ),
         SizedBox(height: 8),
-        Text(bike.lock ? "Status: Available" : "Status: In Used",
+        Text(bike.bikeInfo.lock ? "Status: Available" : "Status: In Used",
             style: TextStyle(fontSize: 14)),
         SizedBox(height: 8),
         Text(
@@ -202,7 +203,7 @@ Widget buildBike(Bike bike, int index) {
               TextStyle(fontSize: 18, fontWeight: FontWeight.bold, height: 1),
         ),
         Text(
-          "Battery: ${bike.getBattery()}",
+          "Battery: ${bike.showBattery()}",
           style: TextStyle(fontSize: 14, color: Color(0xFF18C29C)),
         ),
       ],

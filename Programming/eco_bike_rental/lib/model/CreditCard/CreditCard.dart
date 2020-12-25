@@ -1,6 +1,3 @@
-import 'package:eco_bike_rental/model/DB/db_interface.dart';
-import 'package:eco_bike_rental/model/DB/db_subsystem.dart';
-
 class CreditCard {
   String _cardCode;
 
@@ -9,7 +6,6 @@ class CreditCard {
   int _cvvCode;
   String _dateExpired;
 
-  final DatabaseSubsystemInterface database = new DatabaseSubsystem();
 
   CreditCard.init();
 
@@ -21,9 +17,4 @@ class CreditCard {
 
   String get dateExpired => _dateExpired;
 
-  Future<bool> checkInUse() async {
-    var tmp = await database.checkLockCard(this._cardCode);
-    print(tmp);
-    return tmp['isLock'];
-  }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
@@ -21,17 +22,17 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
   DateTime _rentEndTime;
   Timer _timer;
   Future<Payment> _payment;
-  final RentingController rentingController = new RentingController();
-
+  RentingController _rentingController = new RentingController();
+  PaymentController _paymentController = new PaymentController();
   @override
   void initState() {
     super.initState();
-    _getRentalCode().then((value) {
+    _paymentController.getRentalCodeFromLocal().then((value) {
       if (value != null) {
         setState(() {
           _state = 1;
           _rentalCode = value;
-          _payment = rentingController.getRentedBikeInformation(_rentalCode);
+          _payment = _rentingController.getRentedBikeInformation(_rentalCode);
         });
       }
     });
@@ -57,12 +58,6 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
     String minutes = "${duration.inMinutes.remainder(60)}";
     String seconds = "${duration.inSeconds.remainder(60)}";
     return "$hour :$minutes :$seconds ";
-  }
-
-  Future<String> _getRentalCode() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String rentalCode = pref.getString("rentalCode");
-    return rentalCode;
   }
 
   Widget _rentalDetailRow(String key, String value) {
@@ -147,13 +142,13 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
                           snapshot.hasData != null) {
                         Payment payment = snapshot.data;
                         Duration rentTime =
-                            rentingController.calculateRentingTime(
+                            _rentingController.calculateRentingTime(
                                 payment.startRentTime, _rentEndTime);
                         int rentingAmount =
-                            rentingController.calculateRentingAmount(
+                            _rentingController.calculateRentingAmount(
                                 rentTime,
-                                payment.bike.baseRentAmount,
-                                payment.bike.addRentAmount);
+                                payment.bike.bikeInfo.baseRentAmount,
+                                payment.bike.bikeInfo.addRentAmount);
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -166,9 +161,9 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
                             _rentalDetail(
                                 "${Utils.numberFormat(payment.depositAmount)} VND",
                                 payment.bike.category,
-                                "#${payment.bike.barcode}"),
+                                "#${payment.bike.bikeInfo.barcode}"),
                             SectionBanner(title: "SESSION SUMMARY"),
-                            _sessionDetail(payment.bike.getBattery(),
+                            _sessionDetail(payment.bike.showBattery(),
                                 _formatDateTime(rentTime), rentingAmount),
                             Container(margin: EdgeInsets.only(bottom: 15,top: 15)),
                             FlatButton(

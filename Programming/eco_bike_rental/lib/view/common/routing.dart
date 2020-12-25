@@ -1,4 +1,5 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
+import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/bike_view/bike_screen.dart';
@@ -21,7 +22,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => ListDockScreen());
         break;
       case detailedDockRoute:
-        int id = settings.arguments;
+        DockStation dockStation = settings.arguments;
         return PageRouteBuilder(
             transitionDuration: Duration(milliseconds: 200),
             transitionsBuilder: (context, animation, animationTime, child) =>
@@ -33,7 +34,7 @@ class AppRouter {
                   child: child,
                 ),
             pageBuilder: (context, animation, animationTime) =>
-                DetailedDockScreen(id: id));
+                DetailedDockScreen(dockStation: dockStation));
         break;
       case detailedBikeRoute:
         Bike bike = settings.arguments;
