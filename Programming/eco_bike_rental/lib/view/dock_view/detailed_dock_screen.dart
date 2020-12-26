@@ -1,3 +1,4 @@
+import 'package:eco_bike_rental/common/exception/server_exception.dart';
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
@@ -21,44 +22,8 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
   final DockController dockController = new DockController();
   final logger = Logger();
 
-  Widget _itemTitle(String title) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      child: Text(
-        title,
-        style:
-            TextStyle(height: 3.0, fontSize: 15.2, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Widget _verticalDivider() {
-    return Container(
-      height: 30.0,
-      width: 1.0,
-      color: Colors.grey,
-      margin: EdgeInsets.only(left: 10.0, right: 10.0),
-    );
-  }
-
-  Widget _buildTableTitle() {
-    return Container(
-      color: Colors.grey[200],
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(child: _itemTitle("BikeId")),
-          _verticalDivider(),
-          Expanded(child: _itemTitle("Type")),
-          _verticalDivider(),
-          Expanded(child: _itemTitle("Color")),
-          _verticalDivider(),
-          Expanded(child: _itemTitle("Status")),
-        ],
-      ),
-    );
-  }
+  static const filterState = ["All", "Available", "In Used"];
+  int selectedFilter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -73,43 +38,124 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
           child: FutureBuilder(
             future: dockController.getAllBikes(widget.dockStation),
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                if (snapshot.error is ServerException) {
+                  var error = snapshot.error as ServerException;
+                  return Text(error.message);
+                }
+                return Text(snapshot.error.toString());
+              }
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData != null) {
                 List<Bike> lstBike = snapshot.data;
-                return Container(
-                  margin: EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    children: [
-                      SectionBanner(title: "TOTAL BIKES: 8"),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Expanded(
-                        child: GridView.count(
-                          physics: BouncingScrollPhysics(),
-                          childAspectRatio: 1 / 1.55,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
-                          children: lstBike.map((e) {
-                            return GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, detailedBikeRoute,
-                                      arguments: e);
-                                },
-                                child: buildBike(e, null));
-                          }).toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                List<Bike> availableBike = [];
+                List<Bike> unavailableBike = [];
+                lstBike.forEach((element) {
+                  if (!element.bikeInfo.lock)
+                    unavailableBike.add(element);
+                  else
+                    availableBike.add(element);
+                });
+                return selectedFilter == 0
+                    ? lstBikeWidget(lstBike)
+                    : (selectedFilter == 1
+                        ? lstBikeWidget(availableBike)
+                        : lstBikeWidget(unavailableBike));
               } else {
                 return CircularProgressIndicator();
               }
             },
           )),
+      bottomNavigationBar: Container(
+        height: 80,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Row(
+          children: [
+            buildFilterIcon(),
+            Row(
+              children: buildFilters(),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> buildFilters() {
+    List<Widget> list = [];
+    for (var i = 0; i < filterState.length; i++) {
+      list.add(buildFilter(i));
+    }
+    return list;
+  }
+
+  Widget buildFilter(i) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedFilter = i;
+        });
+      },
+      child: Padding(
+        padding: EdgeInsets.only(right: 16),
+        child: Text(
+          filterState[i],
+          style: TextStyle(
+              color: selectedFilter == i ? Color(0xFF18C29F) : Colors.grey[300],
+              fontSize: 17,
+              fontWeight:
+                  selectedFilter == i ? FontWeight.bold : FontWeight.normal),
+        ),
+      ),
+    );
+  }
+
+  Widget buildFilterIcon() {
+    return Container(
+        width: 50,
+        height: 50,
+        margin: EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+            color: Color(0xFF18C29F),
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        child: GestureDetector(
+          onTap: () {},
+          child: Icon(
+            Icons.filter_list,
+            size: 24.0,
+            color: Colors.white,
+          ),
+        ));
+  }
+
+  Widget lstBikeWidget(lstBike) {
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        children: [
+          SectionBanner(title: "TOTAL BIKES: ${lstBike.length}"),
+          SizedBox(
+            height: 16,
+          ),
+          Expanded(
+            child: GridView.count(
+              physics: BouncingScrollPhysics(),
+              childAspectRatio: 1 / 1.55,
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              children: lstBike.map<Widget>((e) {
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, detailedBikeRoute,
+                          arguments: e);
+                    },
+                    child: buildBike(e, null));
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -152,8 +198,7 @@ Widget buildBike(Bike bike, int index) {
           child: Center(
             child: Hero(
                 tag: "${bike.id}",
-                child: Image.asset(bike.imagePath,
-                    fit: BoxFit.fitWidth)),
+                child: Image.asset(bike.imagePath, fit: BoxFit.fitWidth)),
           ),
         ),
         SizedBox(height: 8),

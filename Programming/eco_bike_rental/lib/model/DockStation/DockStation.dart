@@ -1,13 +1,19 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
-
+///This class represents the model of [DockStation]
 class DockStation {
+  ///Dock station id
   int id;
+  ///Dock station name
   String _dockName;
+  ///Dock station area, example: 100x200
   String _dockArea;
+  ///Dock station size, example: 23
   int _dockSize;
+  ///Dock station address, samples: hanoi, HCM, ...
   String _dockAddress;
+  ///Available status: available or not
   String _available;
-
+///List<Bike>
   List<Bike> _lstBike;
   DockStation.origin();
 

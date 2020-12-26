@@ -6,27 +6,11 @@ exports.createPayment = async (req, res) => {
     startRentTime,
     endRentTime,
     bikeId,
+    cardId,
     status,
-    card,
   } = req.body.payment;
-  const { cardCode, cardName, dateExpired, cvvCode } = card;
-  const querySearchCard = `SELECT * FROM "ecoBikeSystem"."Card" WHERE "cardCode" = $1`;
-  const queryCreateCard = `INSERT INTO "ecoBikeSystem"."Card" ("cardCode", "cardName", "dateExpired", "cvvCode") VALUES ( $1, $2, $3, $4) RETURNING *`;
   const queryCreatePayment = `INSERT INTO "ecoBikeSystem"."Payment" ("rentalCode", "rentAmount", "depositAmount", "startRentTime", "endRentTime", statusid, "bikeId", "cardId") VALUES ($1, 0, $2, $3 , $4, $5, $6,$7) RETURNING *;`;
-  const queryLockBike = `UPDATE "ecoBikeSystem"."Bike" SET lockbike = false WHERE id = $1 RETURNING *;`;
   try {
-    let cardId = undefined;
-    let cardInst = await queryDb(querySearchCard, [cardCode]);
-    if (cardInst.rows.length == 0) {
-      cardInst = await queryDb(queryCreateCard, [
-        cardCode,
-        cardName,
-        dateExpired,
-        cvvCode,
-      ]);
-    }
-    cardId = cardInst.rows[0].id;
-    const bikeInst = await queryDb(queryLockBike, [bikeId]);
     const paymentInst = await queryDb(queryCreatePayment, [
       rentalCode,
       depositAmount,
@@ -42,7 +26,7 @@ exports.createPayment = async (req, res) => {
       payment: {
         paymentId: paymentInst.rows[0].id,
         bikeId: bikeId,
-        cardCode: cardCode,
+        cardId: cardId,
         rentalCode: rentalCode,
         rentAmount: 0,
         depositAmount: depositAmount,
@@ -132,37 +116,30 @@ exports.searchPayment = async (req, res) => {
   }
 };
 exports.updatePayment = async (req, res) => {
-  const {
-    rentalCode,
-    rentAmount,
-    endRentTime,
-    bike,
-    card,
-    status,
-  } = req.body.payment;
-  const { dockId } = bike;
-  const queryCheckFullDock = `SELECT * FROM "ecoBikeSystem"."DockStation" as d
-  WHERE (SELECT count(b.id) FROM "ecoBikeSystem"."Bike" b WHERE b."dockId" = d.id AND b.lockbike = true AND d.id = $1 GROUP BY d.id ) < d.size;`;
+  const { rentalCode, rentAmount, endRentTime, status } = req.body.payment;
+  // const { dockId } = bike;
+  // const queryCheckFullDock = `SELECT * FROM "ecoBikeSystem"."DockStation" as d
+  // WHERE (SELECT count(b.id) FROM "ecoBikeSystem"."Bike" b WHERE b."dockId" = d.id AND b.lockbike = true AND d.id = $1 GROUP BY d.id ) < d.size;`;
   const queryUpdatePayment = `UPDATE "ecoBikeSystem"."Payment"
   SET statusid        = $1,
       "endRentTime" = $2,
       "rentAmount"  = $3
   WHERE "rentalCode" = $4 RETURNING *;`;
-  const queryUpdateCard = `UPDATE "ecoBikeSystem"."Card"
-  SET lock = false
-  WHERE id = $1 RETURNING *;`;
-  const queryUpdateBike = `UPDATE "ecoBikeSystem"."Bike"
-  SET "dockId" = $1,
-      lockbike = true
-  WHERE id = $2 RETURNING *;`;
+  // const queryUpdateCard = `UPDATE "ecoBikeSystem"."Card"
+  // SET lock = false
+  // WHERE id = $1 RETURNING *;`;
+  // const queryUpdateBike = `UPDATE "ecoBikeSystem"."Bike"
+  // SET "dockId" = $1,
+  //     lockbike = true
+  // WHERE id = $2 RETURNING *;`;
   try {
-    const checkDockRows = await queryDb(queryCheckFullDock, [dockId]);
-    if (checkDockRows.rows.length == 0) {
-      return res.status(400).json({
-        success: false,
-        error: `choosen_dock_is_full`,
-      });
-    }
+    // const checkDockRows = await queryDb(queryCheckFullDock, [dockId]);
+    // if (checkDockRows.rows.length == 0) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     error: `choosen_dock_is_full`,
+    //   });
+    // }
     const paymentRows = await queryDb(queryUpdatePayment, [
       status,
       endRentTime,
@@ -176,27 +153,31 @@ exports.updatePayment = async (req, res) => {
         error: `wrong_rental_code`,
       });
     }
-    const cardId = paymentRows.rows[0].cardId;
-    const cardRows = await queryDb(queryUpdateCard, [cardId]);
+    // const cardId = paymentRows.rows[0].cardId;
+    // const cardRows = await queryDb(queryUpdateCard, [cardId]);
 
-    if (cardRows.rows.length == 0) {
-      return res.status(400).json({
-        success: false,
-        error: `wrong_card_id`,
-      });
-    }
+    // if (cardRows.rows.length == 0) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     error: `wrong_card_id`,
+    //   });
+    // }
 
-    const bikeId = paymentRows.rows[0].bikeId;
-    const bikeRows = await queryDb(queryUpdateBike, [dockId, bikeId]);
-    if (bikeRows.rows.length == 0) {
-      return res.status(400).json({
-        success: false,
-        error: `wrong_bike_id`,
-      });
-    }
+    // const bikeId = paymentRows.rows[0].bikeId;
+    // const bikeRows = await queryDb(queryUpdateBike, [dockId, bikeId]);
+    // if (bikeRows.rows.length == 0) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     error: `wrong_bike_id`,
+    //   });
+    // }
 
     return res.status(200).json({
       success: true,
+      rentalCode: rentalCode,
+      status: status,
+      bikeId: paymentRows.rows[0].bikeId,
+      cardId: paymentRows.rows[0].cardId,
     });
   } catch (err) {
     return res.status(400).json({

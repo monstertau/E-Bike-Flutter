@@ -1,7 +1,8 @@
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Bike/BikeInfo.dart';
-
+///This class represents for [EBike] model
 class EBike extends Bike {
+  ///Battery of the bike
   int _battery;
 
   @override

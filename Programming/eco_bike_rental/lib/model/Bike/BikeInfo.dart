@@ -1,12 +1,22 @@
+///This class represents the model of [BikeInfo] class which shows bike's information
 class BikeInfo {
+  ///Bike saddle
   int _saddle;
+  ///Bike pedal
   int _pedal;
+  ///Bike rear
   int _rear;
+  ///Bike value
   int _bikeValue;
+  ///Basic rent amount user have to pay
   int _baseRentAmount;
+  ///Basic add amount per hour(after an amount of tinme) user have to pay
   int _addRentAmount;
+  ///Barcode, example: abc123
   String _barcode;
+  ///Color, example: black, white, ...
   String _color;
+  ///Locking status: locked or unlocked
   bool _lock;
 
   BikeInfo(

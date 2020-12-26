@@ -47,6 +47,7 @@
     "pug": "^3.0.0",
     "sequelize": "^6.3.5",
     "stripe": "^8.110.0",
+    "swagger-ui-express": "^4.1.6",
     "twilio": "^3.49.4",
     "validator": "^13.1.17"
   },

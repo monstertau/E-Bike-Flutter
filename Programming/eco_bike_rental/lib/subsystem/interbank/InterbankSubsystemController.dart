@@ -7,12 +7,13 @@ import 'package:eco_bike_rental/utils/Utils.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
 import 'InterbankBoundary.dart';
-
+///Generate string of  md5 code by md5 hash function
 String generateMd5(String input) {
   return md5.convert(utf8.encode(input)).toString();
 }
-
+///
 class InterbankController {
+  /// appCode to
   final appCode = "B96b7GPvoZs=";
   final payCommand = "pay";
   final refundCommand = "refund";
@@ -62,7 +63,7 @@ class InterbankController {
       throw InvalidTransaction.init(parseError(result['errorCode']));
     return response;
   }
-
+///Error code for parsing
   String parseError(String errorCode) {
     switch (errorCode) {
       case "00":

@@ -1,4 +1,5 @@
 import 'package:eco_bike_rental/common/exception/bike_exception.dart';
+import 'package:eco_bike_rental/common/exception/server_exception.dart';
 import 'package:eco_bike_rental/controller/RentingController.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 import 'package:eco_bike_rental/view/common/app_bar.dart';
@@ -37,7 +38,6 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
     );
   }
 
-  _handlingError(String errorText) {}
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,14 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
                         errorText = "Bike Already In Used";
                         _validate = true;
                       });
-                    }, test: (e) => e is BikeInUsedException);
+                    }, test: (e) => e is BikeInUsedException).catchError(
+                            (err) {
+                          setState(() {
+                            _state = 0;
+                            errorText = "Connection To Server Error";
+                            _validate = true;
+                          });
+                        }, test: (e) => e is ServerException);
                   }
                 });
               },

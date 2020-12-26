@@ -2,7 +2,11 @@ import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/Bike/BikeFactory.dart';
 import 'package:eco_bike_rental/model/DB/db_connection.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
-
+///Each of the services in this package handles the task of connecting with the server or database
+/// and does the logic of retrieving and getting data
+///* Request data from server and send responds to the controller
+///* Retrieve data for manipulating
+///This is class for services related to [DockStation]
 class DockStationService {
   factory DockStationService() {
     if (_this == null) _this = DockStationService._();
