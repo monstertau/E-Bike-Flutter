@@ -1,0 +1,1968 @@
+{
+	"info": {
+		"_postman_id": "0e4112e7-8dae-4bb1-9458-4c7004343332",
+		"name": "EcoBikeRental API Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Bike Request",
+			"item": [
+				{
+					"name": "Search for bike by barcode",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "GROUP10 841a6ad1b24833c266b8683ab63fc368348fa913:YzI3M2RhNWE2MGY3NWFhNTc0NmRkZmNmNjI1YTIxY2RkYjg4ZDI5Mw==",
+								"type": "text"
+							},
+							{
+								"key": "Timestamp",
+								"value": "1437604131",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://lunar-bonus-297614.df.r.appspot.com/bike/search?barcode=12344",
+							"protocol": "https",
+							"host": [
+								"lunar-bonus-297614",
+								"df",
+								"r",
+								"appspot",
+								"com"
+							],
+							"path": [
+								"bike",
+								"search"
+							],
+							"query": [
+								{
+									"key": "barcode",
+									"value": "12344"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Wrong Barcode",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "GROUP10 841a6ad1b24833c266b8683ab63fc368348fa913:YzI3M2RhNWE2MGY3NWFhNTc0NmRkZmNmNjI1YTIxY2RkYjg4ZDI5Mw==",
+										"type": "text"
+									},
+									{
+										"key": "Timestamp",
+										"value": "1437604131",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{gg_cloud_ebr}}/bike/search?barcode=1222",
+									"host": [
+										"{{gg_cloud_ebr}}"
+									],
+									"path": [
+										"bike",
+										"search"
+									],
+									"query": [
+										{
+											"key": "barcode",
+											"value": "1222"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:44:25 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-nWKc6VNlSNB/dqO7pkNJdArc33M\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"wrong_barcode\"\n}"
+						},
+						{
+							"name": "Search Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "GROUP10 841a6ad1b24833c266b8683ab63fc368348fa913:YzI3M2RhNWE2MGY3NWFhNTc0NmRkZmNmNjI1YTIxY2RkYjg4ZDI5Mw==",
+										"type": "text"
+									},
+									{
+										"key": "Timestamp",
+										"value": "1437604131",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{gg_cloud_ebr}}/bike/search?barcode=12344",
+									"host": [
+										"{{gg_cloud_ebr}}"
+									],
+									"path": [
+										"bike",
+										"search"
+									],
+									"query": [
+										{
+											"key": "barcode",
+											"value": "12344"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:43:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d3-/92TU5fZvWRexDWQrHFZapxOiYM\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"bike\": {\n        \"id\": 7,\n        \"barcode\": \"12344\",\n        \"color\": \"Blue\",\n        \"category\": \"Standardbike\",\n        \"lockbike\": true,\n        \"dockId\": 1,\n        \"bikevalue\": 400000,\n        \"baserentamount\": 10000,\n        \"addrentamount\": 3000,\n        \"saddle\": 1,\n        \"pedal\": 1,\n        \"rear\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Unlock bike by barcode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://lunar-bonus-297614.df.r.appspot.com/bike/unlock-bike?barcode=12344",
+							"protocol": "https",
+							"host": [
+								"lunar-bonus-297614",
+								"df",
+								"r",
+								"appspot",
+								"com"
+							],
+							"path": [
+								"bike",
+								"unlock-bike"
+							],
+							"query": [
+								{
+									"key": "barcode",
+									"value": "12344"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unlock bike Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/bike/unlock-bike?barcode=12344",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"bike",
+										"unlock-bike"
+									],
+									"query": [
+										{
+											"key": "barcode",
+											"value": "12344"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:52:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-mhtw8w8GYTz2OcH5ZOSJgXSh9Uo\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"barcode\": \"12344\"\n}"
+						},
+						{
+							"name": "Wrong barcode",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/bike/unlock-bike?barcode=1222",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"bike",
+										"unlock-bike"
+									],
+									"query": [
+										{
+											"key": "barcode",
+											"value": "1222"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:52:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-nWKc6VNlSNB/dqO7pkNJdArc33M\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"wrong_barcode\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Lock bike by barcode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://lunar-bonus-297614.df.r.appspot.com/bike/lock-bike?barcode=12344",
+							"protocol": "https",
+							"host": [
+								"lunar-bonus-297614",
+								"df",
+								"r",
+								"appspot",
+								"com"
+							],
+							"path": [
+								"bike",
+								"lock-bike"
+							],
+							"query": [
+								{
+									"key": "barcode",
+									"value": "12344"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lock bike success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/bike/lock-bike?barcode=12344",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"bike",
+										"lock-bike"
+									],
+									"query": [
+										{
+											"key": "barcode",
+											"value": "12344"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:52:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-mhtw8w8GYTz2OcH5ZOSJgXSh9Uo\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"barcode\": \"12344\"\n}"
+						},
+						{
+							"name": "Wrong barcode",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/bike/lock-bike?barcode=1222",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"bike",
+										"lock-bike"
+									],
+									"query": [
+										{
+											"key": "barcode",
+											"value": "1222"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:53:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-nWKc6VNlSNB/dqO7pkNJdArc33M\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"wrong_barcode\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Return Bike to Dock",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dockId\":1,\n    \"bikeId\":99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lunar-bonus-297614.df.r.appspot.com/bike/return-to-dock"
+					},
+					"response": [
+						{
+							"name": "Return Bike to Dock success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"dockId\":1,\n    \"bikeId\":7\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/bike/return-to-dock"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:53:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26-udWSO4F77DtaMB5Ui2UaVdw//J8\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"bikeId\": 7,\n    \"dockId\": 1\n}"
+						},
+						{
+							"name": "Return Bike to Dock Failed with wrong bikeid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"dockId\":1,\n    \"bikeId\":99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/bike/return-to-dock"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:54:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-yu/Y35Bo33TMlBISVYahzILPVMk\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"wrong_bike_id\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "DockStation Request",
+			"item": [
+				{
+					"name": "Get list bike from a dockstation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://lunar-bonus-297614.df.r.appspot.com/dock/get-detail?id=1",
+							"protocol": "https",
+							"host": [
+								"lunar-bonus-297614",
+								"df",
+								"r",
+								"appspot",
+								"com"
+							],
+							"path": [
+								"dock",
+								"get-detail"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get detail success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/dock/get-detail?id=1",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"dock",
+										"get-detail"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:55:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"87b-h1YmTMDbnxSRPh7e7UOYGs4RLzg\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"bikes\": [\n        {\n            \"id\": 3,\n            \"barcode\": \"12345\",\n            \"color\": \"Yellow\",\n            \"category\": \"Ebike\",\n            \"lockbike\": true,\n            \"bikevalue\": 700000,\n            \"baserentamount\": 15000,\n            \"addrentamount\": 4500,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1,\n            \"battery\": 40\n        },\n        {\n            \"id\": 5,\n            \"barcode\": \"23456\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 7,\n            \"barcode\": \"12344\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 8,\n            \"barcode\": \"12343\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 9,\n            \"barcode\": \"12342\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": false,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 10,\n            \"barcode\": \"12341\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 11,\n            \"barcode\": \"12346\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 12,\n            \"barcode\": \"12347\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 13,\n            \"barcode\": \"12348\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 14,\n            \"barcode\": \"12367\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 15,\n            \"barcode\": \"56323\",\n            \"color\": \"Blue\",\n            \"category\": \"Standardbike\",\n            \"lockbike\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        {\n            \"id\": 20,\n            \"barcode\": \"34583\",\n            \"color\": \"Red\",\n            \"category\": \"Ebike\",\n            \"lockbike\": true,\n            \"bikevalue\": 700000,\n            \"baserentamount\": 15000,\n            \"addrentamount\": 4500,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1,\n            \"battery\": 70\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get list dockstation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://lunar-bonus-297614.df.r.appspot.com/dock/get-all"
+					},
+					"response": [
+						{
+							"name": "Get list dockstation success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/dock/get-all"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:56:31 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b4-1PBTfTUSXEA/7PadnnFx6WlQZJI\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"docks\": [\n        {\n            \"id\": 1,\n            \"name\": \"Thanh Xuân\",\n            \"area\": \"252x252\",\n            \"size\": 30,\n            \"address\": \"Hà Nội\",\n            \"available\": \"11\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Ba Vì\",\n            \"area\": \"252x252\",\n            \"size\": 40,\n            \"address\": \"Hà Nội\",\n            \"available\": \"9\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Quận 1\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"HCM\",\n            \"available\": \"8\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Quận 2\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"HCM\",\n            \"available\": \"10\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Quận 3\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"HCM\",\n            \"available\": \"0\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Đống Đa\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"Hà Nội\",\n            \"available\": \"0\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Cầu Giấy\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"Hà Nội\",\n            \"available\": \"0\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Hai Bà Trưng\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"Hà Nội\",\n            \"available\": \"0\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Hà Đông\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"Hà Nội\",\n            \"available\": \"0\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Tây Hồ\",\n            \"area\": \"252x253\",\n            \"size\": 50,\n            \"address\": \"Hà Nội\",\n            \"available\": \"0\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Payment Request",
+			"item": [
+				{
+					"name": "Create Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "GROUP10 841a6ad1b24833c266b8683ab63fc368348fa913:YzI3M2RhNWE2MGY3NWFhNTc0NmRkZmNmNjI1YTIxY2RkYjg4ZDI5Mw==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment\": {\n        \"rentalCode\": \"rentalCodelewlew\",\n        \"depositAmount\": 200000,\n        \"startRentTime\": \"2020-12-14 11:47:50\",\n        \"endRentTime\": \"2020-12-14 11:47:50\",\n        \"bikeId\": 5,\n        \"status\": 1,\n        \"cardId\": 5\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/create"
+					},
+					"response": [
+						{
+							"name": "Create Payment Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "GROUP10 841a6ad1b24833c266b8683ab63fc368348fa913:YzI3M2RhNWE2MGY3NWFhNTc0NmRkZmNmNjI1YTIxY2RkYjg4ZDI5Mw==",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"payment\": {\n        \"rentalCode\": \"rentalCodelewlew\",\n        \"depositAmount\": 200000,\n        \"startRentTime\": \"2020-12-14 11:47:50\",\n        \"endRentTime\": \"2020-12-14 11:47:50\",\n        \"bikeId\": 5,\n        \"status\": 1,\n        \"cardId\": 5\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/create"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:57:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "184"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b8-M4m4FrFxgjBFRXAmlY5f1ohcAo8\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"payment\": {\n        \"paymentId\": 48,\n        \"bikeId\": 5,\n        \"cardId\": 5,\n        \"rentalCode\": \"rentalCodelewlew\",\n        \"rentAmount\": 0,\n        \"depositAmount\": 200000,\n        \"startRentTime\": \"2020-12-14 11:47:50\",\n        \"status\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Search Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rentalCode\":\"afaf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/search"
+					},
+					"response": [
+						{
+							"name": "Search Payment Failed with wrong rental code",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"rentalCode\":\"afaf\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/search"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:57:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "53"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"35-wX9w9ogMpc6Y2g5vr7aqoR8qx3o\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"cant_find_renting_payment\"\n}"
+						},
+						{
+							"name": "Search Payment Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"rentalCode\":\"rentalCodeaa\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/search"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:56:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "494"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ee-F+GuP1uHReooDUh8xEgS7/ZoaXM\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"payment\": {\n        \"paymentId\": 2,\n        \"rentalCode\": \"rentalCodeaa\",\n        \"depositAmount\": 200000,\n        \"startRentTime\": \"2020-12-14T11:47:50.000Z\",\n        \"endRentTime\": \"2020-12-14T11:47:50.000Z\",\n        \"status\": \"Finish\",\n        \"bike\": {\n            \"id\": 5,\n            \"color\": \"Blue\",\n            \"barcode\": \"23456\",\n            \"category\": \"Standardbike\",\n            \"lock\": true,\n            \"bikevalue\": 400000,\n            \"baserentamount\": 10000,\n            \"addrentamount\": 3000,\n            \"saddle\": 1,\n            \"pedal\": 1,\n            \"rear\": 1\n        },\n        \"card\": {\n            \"id\": 5,\n            \"cardCode\": \"121319_group10_2020\",\n            \"cardName\": \"Group 10\",\n            \"dateExpired\": \"1125\",\n            \"cvvCode\": 323,\n            \"lock\": false\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment\": {\n        \"rentalCode\": \"rentalCodehaf\",\n        \"rentAmount\": 20000,\n        \"endRentTime\": \"2020-12-14 11:47:50\",\n        \"status\": 2\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/update"
+					},
+					"response": [
+						{
+							"name": "Update Payment Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"payment\": {\n        \"rentalCode\": \"rentalCodeaa\",\n        \"rentAmount\": 20000,\n        \"endRentTime\": \"2020-12-14 11:47:50\",\n        \"status\": 2\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/update"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:57:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4d-wQvVz3DgoTbqKqX4QxcGuaxvyBQ\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"rentalCode\": \"rentalCodeaa\",\n    \"status\": 2,\n    \"bikeId\": 5,\n    \"cardId\": 5\n}"
+						},
+						{
+							"name": "Update Payment Failed with Wrong rental code",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"payment\": {\n        \"rentalCode\": \"rentalCodehaf\",\n        \"rentAmount\": 20000,\n        \"endRentTime\": \"2020-12-14 11:47:50\",\n        \"status\": 2\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/payment/update"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:58:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d-ZFBHePiD5WiB1XpvP1VmkkSZIIs\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"wrong_rental_code\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Card Request",
+			"item": [
+				{
+					"name": "Check for card lock status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gg_cloud_ebr}}/card/check-locked?cardCode=121319",
+							"host": [
+								"{{gg_cloud_ebr}}"
+							],
+							"path": [
+								"card",
+								"check-locked"
+							],
+							"query": [
+								{
+									"key": "cardCode",
+									"value": "121319"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Check for card lock status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/card/check-locked?cardCode=121319",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"card",
+										"check-locked"
+									],
+									"query": [
+										{
+											"key": "cardCode",
+											"value": "121319"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:58:42 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1f-qPcbeWMuGgdbDrl/DAGqL4ezesA\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"isLock\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Search or create card",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cardCode\": \"121319_group10_2020\",\n    \"cardName\": \"Group 10\",\n    \"dateExpired\": \"1125\",\n    \"cvvCode\": \"323\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lunar-bonus-297614.df.r.appspot.com/card/search-or-create"
+					},
+					"response": [
+						{
+							"name": "Search or create card success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cardCode\": \"121319_group10_2020\",\n    \"cardName\": \"Group 10\",\n    \"dateExpired\": \"1125\",\n    \"cvvCode\": \"323\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://lunar-bonus-297614.df.r.appspot.com/card/search-or-create"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 18:00:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-1GIgEfIfm+Vz7a5ZtVsCM5tF5MY\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"cardId\": 5\n}"
+						}
+					]
+				},
+				{
+					"name": "Unlock card",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://lunar-bonus-297614.df.r.appspot.com/card/unlock-card?cardId=10",
+							"protocol": "https",
+							"host": [
+								"lunar-bonus-297614",
+								"df",
+								"r",
+								"appspot",
+								"com"
+							],
+							"path": [
+								"card",
+								"unlock-card"
+							],
+							"query": [
+								{
+									"key": "cardId",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unlock card failed with wrong card id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/card/unlock-card?cardId=10",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"card",
+										"unlock-card"
+									],
+									"query": [
+										{
+											"key": "cardId",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:59:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28-12tVm4VB9l/u6NAS/pOfa+rPLGc\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"wrong_cardId\"\n}"
+						},
+						{
+							"name": "Unlock card success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/card/unlock-card?cardId=5",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"card",
+										"unlock-card"
+									],
+									"query": [
+										{
+											"key": "cardId",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 17:59:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d-U4LY5XerabKlf04TVFOSrxNQtmQ\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"cardId\": \"5\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Lock card",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://lunar-bonus-297614.df.r.appspot.com/card/lock-card?cardId=10",
+							"protocol": "https",
+							"host": [
+								"lunar-bonus-297614",
+								"df",
+								"r",
+								"appspot",
+								"com"
+							],
+							"path": [
+								"card",
+								"lock-card"
+							],
+							"query": [
+								{
+									"key": "cardId",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lock card failed with wrong card id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/card/lock-card?cardId=10",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"card",
+										"lock-card"
+									],
+									"query": [
+										{
+											"key": "cardId",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 18:00:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28-12tVm4VB9l/u6NAS/pOfa+rPLGc\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"wrong_cardId\"\n}"
+						},
+						{
+							"name": "Lock card success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://lunar-bonus-297614.df.r.appspot.com/card/lock-card?cardId=5",
+									"protocol": "https",
+									"host": [
+										"lunar-bonus-297614",
+										"df",
+										"r",
+										"appspot",
+										"com"
+									],
+									"path": [
+										"card",
+										"lock-card"
+									],
+									"query": [
+										{
+											"key": "cardId",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 25 Dec 2020 18:00:19 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d-U4LY5XerabKlf04TVFOSrxNQtmQ\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"cardId\": \"5\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

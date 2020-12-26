@@ -1,0 +1,2426 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "- The Database Subsystem is the Basic Back-end Endpoints for doing several CRUD task on the EcoBikeRental PostgreSQL Database, and it sends the data to the main app through standard REST API.\n- Authentication method for each request to secure API:\n+ We use HMAC Authentication with AWS Signature Style. So the header will need The `Authorization` part with following format: \n`Authorization = 'GROUP10' + publicKey + ':' + signature`\nThe signature will be hashed as follow: \n`[signature] = Base64(HMAC-SHA-256(PrivateKey, StringToSign ))`\nwith `StringToSign =  HTTP-Verb + '{newlinechar}' + Content-MD5 + '{newlinechar}' + Content-Type + '{newlinechar}' + BaseRequestURI`\nExample 1: Request to GET `/bike/search` path will be:\n`StringToSign=GET{newlinechar}{newlinechar}{newlinechar}/bike/search` since GET request doest have any Request Body or Content-Type\nExample 2: Request to POST `/payment/create` path will be:\n`StringToSign=GET{newlinechar}{MD5-HashedRequestBody}{newlinechar}Application/json{newlinechar}/payment/create` since POST request have Request Body and Content-Type ",
+    "version": "1.0",
+    "title": "EcoBikeRental API Backend",
+    "contact": {}
+  },
+  "host": "lunar-bonus-297614.df.r.appspot.com",
+  "basePath": "/",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/bike/search": {
+      "get": {
+        "summary": "Search for bike by barcode",
+        "tags": [
+          "Bike Request"
+        ],
+        "operationId": "Searchforbikebybarcode",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "barcode",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Timestamp",
+            "in": "header",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SearchSuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "bike": {
+                  "id": 7,
+                  "barcode": "12344",
+                  "color": "Blue",
+                  "category": "Standardbike",
+                  "lockbike": true,
+                  "dockId": 1,
+                  "bikevalue": 400000,
+                  "baserentamount": 10000,
+                  "addrentamount": 3000,
+                  "saddle": 1,
+                  "pedal": 1,
+                  "rear": 1
+                }
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:43:46 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"d3-/92TU5fZvWRexDWQrHFZapxOiYM\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json": {
+                "success": false,
+                "error": "wrong_barcode"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/bike/unlock-bike": {
+      "get": {
+        "summary": "Unlock bike by barcode",
+        "tags": [
+          "Bike Request"
+        ],
+        "operationId": "Unlockbikebybarcode",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "barcode",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UnlockbikeSuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "barcode": "12344"
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:52:09 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"22-mhtw8w8GYTz2OcH5ZOSJgXSh9Uo\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json": {
+                "success": false,
+                "error": "wrong_barcode"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bike/lock-bike": {
+      "get": {
+        "summary": "Lock bike by barcode",
+        "tags": [
+          "Bike Request"
+        ],
+        "operationId": "Lockbikebybarcode",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "barcode",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Lockbikesuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "barcode": "12344"
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:52:52 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"22-mhtw8w8GYTz2OcH5ZOSJgXSh9Uo\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json": {
+                "success": false,
+                "error": "wrong_barcode"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bike/return-to-dock": {
+      "post": {
+        "summary": "Return Bike to Dock",
+        "tags": [
+          "Bike Request"
+        ],
+        "operationId": "ReturnBiketoDock",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ReturnBiketoDockRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ReturnBiketoDocksuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "bikeId": 7,
+                "dockId": 1
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:53:55 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"26-udWSO4F77DtaMB5Ui2UaVdw//J8\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json": {
+                "success": false,
+                "error": "wrong_bike_id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dock/get-detail": {
+      "get": {
+        "summary": "Get list bike from a dockstation",
+        "tags": [
+          "DockStation Request"
+        ],
+        "operationId": "Getlistbikefromadockstation",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Getdetailsuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "bikes": [
+                  {
+                    "id": 3,
+                    "barcode": "12345",
+                    "color": "Yellow",
+                    "category": "Ebike",
+                    "lockbike": true,
+                    "bikevalue": 700000,
+                    "baserentamount": 15000,
+                    "addrentamount": 4500,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1,
+                    "battery": 40
+                  },
+                  {
+                    "id": 5,
+                    "barcode": "23456",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 7,
+                    "barcode": "12344",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 8,
+                    "barcode": "12343",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 9,
+                    "barcode": "12342",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": false,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 10,
+                    "barcode": "12341",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 11,
+                    "barcode": "12346",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 12,
+                    "barcode": "12347",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 13,
+                    "barcode": "12348",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 14,
+                    "barcode": "12367",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 15,
+                    "barcode": "56323",
+                    "color": "Blue",
+                    "category": "Standardbike",
+                    "lockbike": true,
+                    "bikevalue": 400000,
+                    "baserentamount": 10000,
+                    "addrentamount": 3000,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1
+                  },
+                  {
+                    "id": 20,
+                    "barcode": "34583",
+                    "color": "Red",
+                    "category": "Ebike",
+                    "lockbike": true,
+                    "bikevalue": 700000,
+                    "baserentamount": 15000,
+                    "addrentamount": 4500,
+                    "saddle": 1,
+                    "pedal": 1,
+                    "rear": 1,
+                    "battery": 70
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:55:57 GMT"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"87b-h1YmTMDbnxSRPh7e7UOYGs4RLzg\""
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dock/get-all": {
+      "get": {
+        "summary": "Get list dockstation",
+        "tags": [
+          "DockStation Request"
+        ],
+        "operationId": "Getlistdockstation",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Getlistdockstationsuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "docks": [
+                  {
+                    "id": 1,
+                    "name": "Thanh Xuân",
+                    "area": "252x252",
+                    "size": 30,
+                    "address": "Hà Nội",
+                    "available": "11"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Ba Vì",
+                    "area": "252x252",
+                    "size": 40,
+                    "address": "Hà Nội",
+                    "available": "9"
+                  },
+                  {
+                    "id": 3,
+                    "name": "Quận 1",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "HCM",
+                    "available": "8"
+                  },
+                  {
+                    "id": 4,
+                    "name": "Quận 2",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "HCM",
+                    "available": "10"
+                  },
+                  {
+                    "id": 5,
+                    "name": "Quận 3",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "HCM",
+                    "available": "0"
+                  },
+                  {
+                    "id": 6,
+                    "name": "Đống Đa",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "Hà Nội",
+                    "available": "0"
+                  },
+                  {
+                    "id": 7,
+                    "name": "Cầu Giấy",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "Hà Nội",
+                    "available": "0"
+                  },
+                  {
+                    "id": 8,
+                    "name": "Hai Bà Trưng",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "Hà Nội",
+                    "available": "0"
+                  },
+                  {
+                    "id": 9,
+                    "name": "Hà Đông",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "Hà Nội",
+                    "available": "0"
+                  },
+                  {
+                    "id": 10,
+                    "name": "Tây Hồ",
+                    "area": "252x253",
+                    "size": 50,
+                    "address": "Hà Nội",
+                    "available": "0"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:56:31 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"3b4-1PBTfTUSXEA/7PadnnFx6WlQZJI\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/create": {
+      "post": {
+        "summary": "Create Payment",
+        "tags": [
+          "Payment Request"
+        ],
+        "operationId": "CreatePayment",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreatePaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreatePaymentSuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "payment": {
+                  "paymentId": 48,
+                  "bikeId": 5,
+                  "cardId": 5,
+                  "rentalCode": "rentalCodelewlew",
+                  "rentAmount": 0,
+                  "depositAmount": 200000,
+                  "startRentTime": "2020-12-14 11:47:50",
+                  "status": 1
+                }
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:57:37 GMT"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "184"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"b8-M4m4FrFxgjBFRXAmlY5f1ohcAo8\""
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/payment/search": {
+      "post": {
+        "summary": "Search Payment",
+        "tags": [
+          "Payment Request"
+        ],
+        "operationId": "SearchPayment",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": false,
+                "error": "cant_find_renting_payment"
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:57:09 GMT"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "53"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"35-wX9w9ogMpc6Y2g5vr7aqoR8qx3o\""
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/update": {
+      "post": {
+        "summary": "Update Payment",
+        "tags": [
+          "Payment Request"
+        ],
+        "operationId": "UpdatePayment",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpdatePaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpdatePaymentSuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "rentalCode": "rentalCodeaa",
+                "status": 2,
+                "bikeId": 5,
+                "cardId": 5
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:57:56 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"4d-wQvVz3DgoTbqKqX4QxcGuaxvyBQ\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json": {
+                "success": false,
+                "error": "wrong_rental_code"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/check-locked": {
+      "get": {
+        "summary": "Check for card lock status",
+        "tags": [
+          "Card Request"
+        ],
+        "operationId": "Checkforcardlockstatus",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "cardCode",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Checkforcardlockstatus"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "isLock": false
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:58:42 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"1f-qPcbeWMuGgdbDrl/DAGqL4ezesA\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/card/search-or-create": {
+      "post": {
+        "summary": "Search or create card",
+        "tags": [
+          "Card Request"
+        ],
+        "operationId": "Searchorcreatecard",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SearchorcreatecardRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Searchorcreatecardsuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "cardId": 5
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 18:00:57 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"1b-1GIgEfIfm+Vz7a5ZtVsCM5tF5MY\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/card/unlock-card": {
+      "get": {
+        "summary": "Unlock card",
+        "tags": [
+          "Card Request"
+        ],
+        "operationId": "Unlockcard",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Unlockcardsuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "cardId": "5"
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 17:59:32 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"1d-U4LY5XerabKlf04TVFOSrxNQtmQ\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json": {
+                "success": false,
+                "error": "wrong_cardId"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/card/lock-card": {
+      "get": {
+        "summary": "Lock card",
+        "tags": [
+          "Card Request"
+        ],
+        "operationId": "Lockcard",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Lockcardsuccess"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "success": true,
+                "cardId": "5"
+              }
+            },
+            "headers": {
+              "Date": {
+                "type": "string",
+                "default": "Fri, 25 Dec 2020 18:00:19 GMT"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Accept-Encoding"
+              },
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"1d-U4LY5XerabKlf04TVFOSrxNQtmQ\""
+              },
+              "Content-Encoding": {
+                "type": "string",
+                "default": "gzip"
+              },
+              "Via": {
+                "type": "string",
+                "default": "1.1 google"
+              },
+              "Alt-Svc": {
+                "type": "string",
+                "default": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""
+              },
+              "Transfer-Encoding": {
+                "type": "string",
+                "default": "chunked"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/SearchPaymentFailedwithwrongrentalcode"
+            },
+            "examples": {
+              "application/json": {
+                "success": false,
+                "error": "wrong_cardId"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SearchSuccess": {
+      "title": "SearchSuccess",
+      "example": {
+        "success": true,
+        "bike": {
+          "id": 7,
+          "barcode": "12344",
+          "color": "Blue",
+          "category": "Standardbike",
+          "lockbike": true,
+          "dockId": 1,
+          "bikevalue": 400000,
+          "baserentamount": 10000,
+          "addrentamount": 3000,
+          "saddle": 1,
+          "pedal": 1,
+          "rear": 1
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "bike": {
+          "$ref": "#/definitions/Bike"
+        }
+      },
+      "required": [
+        "success",
+        "bike"
+      ]
+    },
+    "Bike": {
+      "title": "Bike",
+      "example": {
+        "id": 7,
+        "barcode": "12344",
+        "color": "Blue",
+        "category": "Standardbike",
+        "lockbike": true,
+        "dockId": 1,
+        "bikevalue": 400000,
+        "baserentamount": 10000,
+        "addrentamount": 3000,
+        "saddle": 1,
+        "pedal": 1,
+        "rear": 1
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "barcode": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "lockbike": {
+          "type": "boolean"
+        },
+        "dockId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "bikevalue": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "baserentamount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "addrentamount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "saddle": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pedal": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rear": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "id",
+        "barcode",
+        "color",
+        "category",
+        "lockbike",
+        "dockId",
+        "bikevalue",
+        "baserentamount",
+        "addrentamount",
+        "saddle",
+        "pedal",
+        "rear"
+      ]
+    },
+    "UnlockbikeSuccess": {
+      "title": "UnlockbikeSuccess",
+      "example": {
+        "success": true,
+        "barcode": "12344"
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "barcode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "success",
+        "barcode"
+      ]
+    },
+    "Lockbikesuccess": {
+      "title": "Lockbikesuccess",
+      "example": {
+        "success": true,
+        "barcode": "12344"
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "barcode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "success",
+        "barcode"
+      ]
+    },
+    "ReturnBiketoDockRequest": {
+      "title": "ReturnBiketoDockRequest",
+      "example": {
+        "dockId": 1,
+        "bikeId": 99
+      },
+      "type": "object",
+      "properties": {
+        "dockId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "bikeId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "dockId",
+        "bikeId"
+      ]
+    },
+    "ReturnBiketoDocksuccess": {
+      "title": "ReturnBiketoDocksuccess",
+      "example": {
+        "success": true,
+        "bikeId": 7,
+        "dockId": 1
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "bikeId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dockId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "success",
+        "bikeId",
+        "dockId"
+      ]
+    },
+    "Getdetailsuccess": {
+      "title": "Getdetailsuccess",
+      "example": {
+        "success": true,
+        "bikes": [
+          {
+            "id": 3,
+            "barcode": "12345",
+            "color": "Yellow",
+            "category": "Ebike",
+            "lockbike": true,
+            "bikevalue": 700000,
+            "baserentamount": 15000,
+            "addrentamount": 4500,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1,
+            "battery": 40
+          },
+          {
+            "id": 5,
+            "barcode": "23456",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 7,
+            "barcode": "12344",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 8,
+            "barcode": "12343",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 9,
+            "barcode": "12342",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": false,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 10,
+            "barcode": "12341",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 11,
+            "barcode": "12346",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 12,
+            "barcode": "12347",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 13,
+            "barcode": "12348",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 14,
+            "barcode": "12367",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 15,
+            "barcode": "56323",
+            "color": "Blue",
+            "category": "Standardbike",
+            "lockbike": true,
+            "bikevalue": 400000,
+            "baserentamount": 10000,
+            "addrentamount": 3000,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1
+          },
+          {
+            "id": 20,
+            "barcode": "34583",
+            "color": "Red",
+            "category": "Ebike",
+            "lockbike": true,
+            "bikevalue": 700000,
+            "baserentamount": 15000,
+            "addrentamount": 4500,
+            "saddle": 1,
+            "pedal": 1,
+            "rear": 1,
+            "battery": 70
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "bikes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Bike1"
+          }
+        }
+      },
+      "required": [
+        "success",
+        "bikes"
+      ]
+    },
+    "Bike1": {
+      "title": "Bike1",
+      "example": {
+        "id": 3,
+        "barcode": "12345",
+        "color": "Yellow",
+        "category": "Ebike",
+        "lockbike": true,
+        "bikevalue": 700000,
+        "baserentamount": 15000,
+        "addrentamount": 4500,
+        "saddle": 1,
+        "pedal": 1,
+        "rear": 1,
+        "battery": 40
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "barcode": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "lockbike": {
+          "type": "boolean"
+        },
+        "bikevalue": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "baserentamount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "addrentamount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "saddle": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pedal": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rear": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "battery": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "id",
+        "barcode",
+        "color",
+        "category",
+        "lockbike",
+        "bikevalue",
+        "baserentamount",
+        "addrentamount",
+        "saddle",
+        "pedal",
+        "rear"
+      ]
+    },
+    "Getlistdockstationsuccess": {
+      "title": "Getlistdockstationsuccess",
+      "example": {
+        "success": true,
+        "docks": [
+          {
+            "id": 1,
+            "name": "Thanh Xuân",
+            "area": "252x252",
+            "size": 30,
+            "address": "Hà Nội",
+            "available": "11"
+          },
+          {
+            "id": 2,
+            "name": "Ba Vì",
+            "area": "252x252",
+            "size": 40,
+            "address": "Hà Nội",
+            "available": "9"
+          },
+          {
+            "id": 3,
+            "name": "Quận 1",
+            "area": "252x253",
+            "size": 50,
+            "address": "HCM",
+            "available": "8"
+          },
+          {
+            "id": 4,
+            "name": "Quận 2",
+            "area": "252x253",
+            "size": 50,
+            "address": "HCM",
+            "available": "10"
+          },
+          {
+            "id": 5,
+            "name": "Quận 3",
+            "area": "252x253",
+            "size": 50,
+            "address": "HCM",
+            "available": "0"
+          },
+          {
+            "id": 6,
+            "name": "Đống Đa",
+            "area": "252x253",
+            "size": 50,
+            "address": "Hà Nội",
+            "available": "0"
+          },
+          {
+            "id": 7,
+            "name": "Cầu Giấy",
+            "area": "252x253",
+            "size": 50,
+            "address": "Hà Nội",
+            "available": "0"
+          },
+          {
+            "id": 8,
+            "name": "Hai Bà Trưng",
+            "area": "252x253",
+            "size": 50,
+            "address": "Hà Nội",
+            "available": "0"
+          },
+          {
+            "id": 9,
+            "name": "Hà Đông",
+            "area": "252x253",
+            "size": 50,
+            "address": "Hà Nội",
+            "available": "0"
+          },
+          {
+            "id": 10,
+            "name": "Tây Hồ",
+            "area": "252x253",
+            "size": 50,
+            "address": "Hà Nội",
+            "available": "0"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "docks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dock"
+          }
+        }
+      },
+      "required": [
+        "success",
+        "docks"
+      ]
+    },
+    "Dock": {
+      "title": "Dock",
+      "example": {
+        "id": 1,
+        "name": "Thanh Xuân",
+        "area": "252x252",
+        "size": 30,
+        "address": "Hà Nội",
+        "available": "11"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "area": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "address": {
+          "type": "string"
+        },
+        "available": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "area",
+        "size",
+        "address",
+        "available"
+      ]
+    },
+    "CreatePaymentRequest": {
+      "title": "CreatePaymentRequest",
+      "example": {
+        "payment": {
+          "rentalCode": "rentalCodelewlew",
+          "depositAmount": 200000,
+          "startRentTime": "2020-12-14 11:47:50",
+          "endRentTime": "2020-12-14 11:47:50",
+          "bikeId": 5,
+          "status": 1,
+          "cardId": 5
+        }
+      },
+      "type": "object",
+      "properties": {
+        "payment": {
+          "$ref": "#/definitions/Payment"
+        }
+      },
+      "required": [
+        "payment"
+      ]
+    },
+    "Payment": {
+      "title": "Payment",
+      "example": {
+        "rentalCode": "rentalCodelewlew",
+        "depositAmount": 200000,
+        "startRentTime": "2020-12-14 11:47:50",
+        "endRentTime": "2020-12-14 11:47:50",
+        "bikeId": 5,
+        "status": 1,
+        "cardId": 5
+      },
+      "type": "object",
+      "properties": {
+        "rentalCode": {
+          "type": "string"
+        },
+        "depositAmount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startRentTime": {
+          "type": "string"
+        },
+        "endRentTime": {
+          "type": "string"
+        },
+        "bikeId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cardId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "rentalCode",
+        "depositAmount",
+        "startRentTime",
+        "endRentTime",
+        "bikeId",
+        "status",
+        "cardId"
+      ]
+    },
+    "CreatePaymentSuccess": {
+      "title": "CreatePaymentSuccess",
+      "example": {
+        "success": true,
+        "payment": {
+          "paymentId": 48,
+          "bikeId": 5,
+          "cardId": 5,
+          "rentalCode": "rentalCodelewlew",
+          "rentAmount": 0,
+          "depositAmount": 200000,
+          "startRentTime": "2020-12-14 11:47:50",
+          "status": 1
+        }
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "payment": {
+          "$ref": "#/definitions/Payment1"
+        }
+      },
+      "required": [
+        "success",
+        "payment"
+      ]
+    },
+    "Payment1": {
+      "title": "Payment1",
+      "example": {
+        "paymentId": 48,
+        "bikeId": 5,
+        "cardId": 5,
+        "rentalCode": "rentalCodelewlew",
+        "rentAmount": 0,
+        "depositAmount": 200000,
+        "startRentTime": "2020-12-14 11:47:50",
+        "status": 1
+      },
+      "type": "object",
+      "properties": {
+        "paymentId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "bikeId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cardId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rentalCode": {
+          "type": "string"
+        },
+        "rentAmount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "depositAmount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startRentTime": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "paymentId",
+        "bikeId",
+        "cardId",
+        "rentalCode",
+        "rentAmount",
+        "depositAmount",
+        "startRentTime",
+        "status"
+      ]
+    },
+    "SearchPaymentRequest": {
+      "title": "SearchPaymentRequest",
+      "example": {
+        "rentalCode": "afaf"
+      },
+      "type": "object",
+      "properties": {
+        "rentalCode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rentalCode"
+      ]
+    },
+    "SearchPaymentFailedwithwrongrentalcode": {
+      "title": "SearchPaymentFailedwithwrongrentalcode",
+      "example": {
+        "success": false,
+        "error": "cant_find_renting_payment"
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "success",
+        "error"
+      ]
+    },
+    "UpdatePaymentRequest": {
+      "title": "UpdatePaymentRequest",
+      "example": {
+        "payment": {
+          "rentalCode": "rentalCodehaf",
+          "rentAmount": 20000,
+          "endRentTime": "2020-12-14 11:47:50",
+          "status": 2
+        }
+      },
+      "type": "object",
+      "properties": {
+        "payment": {
+          "$ref": "#/definitions/Payment2"
+        }
+      },
+      "required": [
+        "payment"
+      ]
+    },
+    "Payment2": {
+      "title": "Payment2",
+      "example": {
+        "rentalCode": "rentalCodehaf",
+        "rentAmount": 20000,
+        "endRentTime": "2020-12-14 11:47:50",
+        "status": 2
+      },
+      "type": "object",
+      "properties": {
+        "rentalCode": {
+          "type": "string"
+        },
+        "rentAmount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endRentTime": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "rentalCode",
+        "rentAmount",
+        "endRentTime",
+        "status"
+      ]
+    },
+    "UpdatePaymentSuccess": {
+      "title": "UpdatePaymentSuccess",
+      "example": {
+        "success": true,
+        "rentalCode": "rentalCodeaa",
+        "status": 2,
+        "bikeId": 5,
+        "cardId": 5
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "rentalCode": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "bikeId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cardId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "success",
+        "rentalCode",
+        "status",
+        "bikeId",
+        "cardId"
+      ]
+    },
+    "Checkforcardlockstatus": {
+      "title": "Checkforcardlockstatus",
+      "example": {
+        "success": true,
+        "isLock": false
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "isLock": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "isLock"
+      ]
+    },
+    "SearchorcreatecardRequest": {
+      "title": "SearchorcreatecardRequest",
+      "example": {
+        "cardCode": "121319_group10_2020",
+        "cardName": "Group 10",
+        "dateExpired": "1125",
+        "cvvCode": "323"
+      },
+      "type": "object",
+      "properties": {
+        "cardCode": {
+          "type": "string"
+        },
+        "cardName": {
+          "type": "string"
+        },
+        "dateExpired": {
+          "type": "string"
+        },
+        "cvvCode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "cardCode",
+        "cardName",
+        "dateExpired",
+        "cvvCode"
+      ]
+    },
+    "Searchorcreatecardsuccess": {
+      "title": "Searchorcreatecardsuccess",
+      "example": {
+        "success": true,
+        "cardId": 5
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "cardId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "success",
+        "cardId"
+      ]
+    },
+    "Unlockcardsuccess": {
+      "title": "Unlockcardsuccess",
+      "example": {
+        "success": true,
+        "cardId": "5"
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "cardId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "success",
+        "cardId"
+      ]
+    },
+    "Lockcardsuccess": {
+      "title": "Lockcardsuccess",
+      "example": {
+        "success": true,
+        "cardId": "5"
+      },
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "cardId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "success",
+        "cardId"
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "Bike Request"
+    },
+    {
+      "name": "DockStation Request"
+    },
+    {
+      "name": "Payment Request"
+    },
+    {
+      "name": "Card Request"
+    }
+  ]
+}
