@@ -14,18 +14,18 @@ void main() {
     ];
     testMap.forEach((element) {
       test("Test $element", () {
-        String start = element.elementAt(0);
+        String start =  element.elementAt(0);
         String end = element.elementAt(1);
         int expected = element.elementAt(2);
-        expect(rentingController.calculateRentingTime(DateTime.parse(start), DateTime.parse(end)), expected);
+        expect(rentingController.calculateRentingAmount(), expected);
       });
     });
   });
   group("Validate Set Start Renting Time", () {});
   group("Validate Set End Renting Time", () {});
   test("Get rented bike infomation ", () async {
-    Payment payment =
-        await rentingController.getRentedBikeInformation("28560dd0-4166-11eb-bc38-c3fcbddcbe31");
+    Payment payment = await rentingController
+        .getRentedBikeInformation("28560dd0-4166-11eb-bc38-c3fcbddcbe31");
     print(payment);
   });
 }

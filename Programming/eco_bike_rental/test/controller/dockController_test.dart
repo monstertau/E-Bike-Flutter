@@ -4,29 +4,37 @@ import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-
   group('Dock Controller Test', () {
     //Example invalid data
     //End example data
-    final DatabaseSubsystemInterface database = new DatabaseConnection();
-    test('get all bikes test', ()  {
+    // Setup
+    final DatabaseConnection database = new DatabaseConnection();
+
+    test('get all bikes test', () async {
       // Setup
       DockController dockController = new DockController();
-      // Implement
-      var expected =  database.getDetailDock(1);
-      Future<List<dynamic>> actual = dockController.getAllBikes(1);
-      // Verify
-      expect(actual, expected);
+      List<DockStation> lstDock = await dockController.getAllDocks();
+
+      lstDock.forEach((element) async {
+        var expected = element.lstBike;
+        var actual = await dockController.getAllBikes(element);
+        expect(actual, expected);
+      });
     });
+
     test('get all docks test', () async {
       // Setup
-      List expected = List<DockStation>();
+      List<DockStation> expected, actual;
       DockController dockController = new DockController();
       // Implement
-      var actual = await dockController.getAllDocks();
+      try {
+        expected = await database.getAllDock();
+        actual = await dockController.getAllDocks();
+      } catch (e) {
+        expect(e, null);
+      }
       // Verify
       expect(actual, expected);
     });
   });
-
 }
