@@ -20,11 +20,8 @@ class PaymentController {
     //TODO
     Map result;
     this._interbank = new InterbankSubsystem();
-    try {
-      result = await _interbank.pay(card, amount);
-    } catch (e) {
-      throw (e);
-    }
+    result = await _interbank.pay(card, amount);
+
     return result;
   }
 
@@ -55,7 +52,7 @@ class PaymentController {
   bool validateCardCode(cardCode) {
     //TODO
     RegExp regexCardCode =
-    new RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9 \\-\\.\\_\\,\\/]*$");
+        new RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9 \\-\\.\\_\\,\\/]*$");
     try {
       if (cardCode == null) return false;
       return regexCardCode.hasMatch(cardCode);
@@ -125,18 +122,22 @@ class PaymentController {
     return new Payment(
         bike, CreditCard.init(), start, depositMoney, "0", rentalCode);
   }
+
   ///This method is used for saving payment
   void savePayment(Payment payment, cardId) async =>
       await _paymentService.save(payment, cardId);
+
   ///This method is used for updating payment
   Future<Map> updatePayment(Payment payment) async {
     return await _paymentService.update(payment);
   }
+
   ///This method is used for saving rentalCode to local device
   Future<void> saveRentalCodeToLocal(String rentalCode) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("rentalCode", rentalCode);
   }
+
   ///This method is used for getting rentalCode from local device
   Future<String> getRentalCodeFromLocal() async {
     SharedPreferences pref = await SharedPreferences.getInstance();

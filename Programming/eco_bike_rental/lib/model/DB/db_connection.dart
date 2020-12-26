@@ -76,5 +76,6 @@ class DatabaseConnection {
   Future<Map> searchPayment(String rentalCode) async {
     Map response = await _con.searchPayment(rentalCode);
     return response["payment"];
+
   }
 }

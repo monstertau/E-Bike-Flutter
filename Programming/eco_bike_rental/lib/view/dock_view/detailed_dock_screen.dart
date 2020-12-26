@@ -1,3 +1,4 @@
+import 'package:eco_bike_rental/common/exception/server_exception.dart';
 import 'package:eco_bike_rental/controller/DockController.dart';
 import 'package:eco_bike_rental/model/Bike/Bike.dart';
 import 'package:eco_bike_rental/model/DockStation/DockStation.dart';
@@ -37,6 +38,13 @@ class _DetailedDockScreenState extends State<DetailedDockScreen> {
           child: FutureBuilder(
             future: dockController.getAllBikes(widget.dockStation),
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                if (snapshot.error is ServerException) {
+                  var error = snapshot.error as ServerException;
+                  return Text(error.message);
+                }
+                return Text(snapshot.error.toString());
+              }
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData != null) {
                 List<Bike> lstBike = snapshot.data;

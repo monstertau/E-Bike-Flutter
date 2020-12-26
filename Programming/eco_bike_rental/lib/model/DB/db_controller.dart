@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:eco_bike_rental/common/exception/bike_exception.dart';
+import 'package:eco_bike_rental/common/exception/payment_exception.dart';
 import 'package:eco_bike_rental/model/DB/db_boundary.dart';
 import 'package:eco_bike_rental/utils/constants.dart';
 
@@ -90,7 +91,11 @@ class DatabaseConnectionController {
   Future<Map> checkLockedCard(String cardCode) async {
     var response = await DatabaseBoundary.get(checkLockedCardPath,
         optionalQuery: "?cardCode=$cardCode");
-    return jsonDecode(response.body);
+    Map jsonRes = jsonDecode(response.body);
+    if (jsonRes["isLock"] == true) {
+      throw CardInUsedException.init("Cant find Rental Code!");
+    }
+    return jsonRes;
   }
 
   Future<Map> savePayment(Map payment) async {
@@ -106,6 +111,11 @@ class DatabaseConnectionController {
   Future<Map> searchPayment(String rentalCode) async {
     Map body = {"rentalCode": "$rentalCode"};
     var response = await DatabaseBoundary.post(searchPaymentPath, body);
-    return jsonDecode(response.body);
+    Map jsonRes = jsonDecode(response.body);
+    if (jsonRes["error"] == "cant_find_renting_payment") {
+      throw WrongRentalCodeException.init("Cant find Rental Code!");
+    }
+    return jsonRes;
+
   }
 }
