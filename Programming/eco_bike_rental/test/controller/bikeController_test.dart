@@ -1,31 +1,56 @@
+import 'package:eco_bike_rental/common/exception/bike_exception.dart';
 import 'package:eco_bike_rental/controller/BikeController.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Bike Controller Test', () {
-    test('getBikeInfo test', () {
-      // Setup
-      BikeController bikeController = new BikeController();
-      // Implement
-      List actual = bikeController.getBikeInfo();
-      // Verify
-      expect(actual, new List());
+    //Setup
+    BikeController controller = new BikeController();
+    test('Lock Bike test', () async {
+      bool res;
+      try {
+        res = await controller.lockBike("12344");
+      } catch (lockError) {
+        expect(lockError, null);
+      }
+      expect(res, true);
     });
-    test('getRentedBikeInfo test', () {
-      // Setup
-      BikeController bikeController = new BikeController();
-      // Implement
-      List actual = bikeController.getRentedBikeInfo();
-      // Verify
-      expect(actual, new List());
+    test('Lock Bike Unsuccessful test', () async {
+      bool res;
+      try {
+        res = await controller.lockBike("12300");
+      } catch (lockError) {
+        expect(lockError is InvalidBarcodeException,true);
+      }
+      expect(res, null);
     });
-    test('getBikeLockStatus test', () {
-      // Setup
-      BikeController bikeController = new BikeController();
-      // Implement
-      bool actual = bikeController.getBikeLockStatus();
-      // Verify
-      expect(actual, false);
+    test('Unlock Bike Successful test', () async {
+      bool res;
+      try {
+        res = await controller.unlockBike("12344");
+      } catch (unlockError) {
+        expect(unlockError, null);
+      }
+      expect(res, true);
     });
+    test('Unlock Bike Unsuccessful test', () async {
+      bool res;
+      try {
+        res = await controller.unlockBike("12300");
+      } catch (unlockError) {
+        expect(unlockError is InvalidBarcodeException,true);
+      }
+      expect(res, null);
+    });
+    test('return bike to dock test', () async {
+      bool res;
+      try {
+        res = await controller.returnBikeToDock(1, 1);
+      } catch (returnError) {
+        expect(returnError, null);
+      }
+      expect(res, true);
+    });
+
   });
 }
