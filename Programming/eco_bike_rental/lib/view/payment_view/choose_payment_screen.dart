@@ -1,4 +1,5 @@
 import 'package:eco_bike_rental/common/exception/payment_exception.dart';
+import 'package:eco_bike_rental/controller/BikeController.dart';
 import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
@@ -21,7 +22,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
   int _state = 0;
   PaymentController _paymentController = new PaymentController();
   CreditCardController _creditCardController = new CreditCardController();
-
+  BikeController _bikeController = new BikeController();
   // TextEditingController ownerController = new TextEditingController();
   // TextEditingController dateExpiredController = new TextEditingController();
   // TextEditingController cardNumberController = new TextEditingController();
@@ -78,6 +79,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
             widget.payment.card = card;
             await _paymentController.savePayment(widget.payment, cardId);
             await _creditCardController.lockCard(cardId);
+            await _bikeController.unlockBike(widget.payment.bike.bikeInfo.barcode);
             await _paymentController.saveRentalCodeToLocal(widget.payment.rentalCode);
             setState(() {
               Navigator.pushNamedAndRemoveUntil(
