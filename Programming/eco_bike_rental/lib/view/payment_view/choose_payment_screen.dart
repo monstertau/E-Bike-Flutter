@@ -1,3 +1,4 @@
+import 'package:eco_bike_rental/common/exception/payment_exception.dart';
 import 'package:eco_bike_rental/controller/CreditCardController.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/CreditCard/CreditCard.dart';
@@ -56,23 +57,13 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           int.parse(cvvCodeController.text),
           dateExpiredController.text,
           ownerController.text);
-      if (!await _creditCardController.checkInUse(card)) {
+      try {
+        await _creditCardController.checkInUse(card);
         var result;
-        try {
-          result = await _paymentController.deductMoney(
-              card, widget.payment.depositAmount);
-        } catch (e) {
-          // AlertCustom.show(context, e, AlertType.error);
-          Fluttertoast.showToast(
-              msg: "Error: ${e.message}",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 4,
-              backgroundColor: Colors.red);
-        }
-        setState(() {
-          _state = 0;
-        });
+        result = await _paymentController.deductMoney(
+            card, widget.payment.depositAmount);
+
+
         if (result['success']) {
           //save to share preference
           if (await _paymentController.getRentalCodeFromLocal() != null) {
@@ -85,13 +76,38 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
           } else {
             int cardId = await _creditCardController.searchOrCreateCard(card);
             widget.payment.card = card;
-            _paymentController.savePayment(widget.payment, cardId);
-            _paymentController.saveRentalCodeToLocal(widget.payment.rentalCode);
-            Navigator.pushNamedAndRemoveUntil(
-                context, invoiceRoute, (Route<dynamic> route) => false,
-                arguments: widget.payment);
+            await _paymentController.savePayment(widget.payment, cardId);
+            await _creditCardController.lockCard(cardId);
+            await _paymentController.saveRentalCodeToLocal(widget.payment.rentalCode);
+            setState(() {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, invoiceRoute, (Route<dynamic> route) => false,
+                  arguments: widget.payment);
+              _state = 0;
+            });
+
           }
         }
+      } on CardInUsedException {
+        setState(() {
+          _state = 0;
+        });
+        Fluttertoast.showToast(
+            msg: "1 Card Can Rent 1 Bike only",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 4,
+            backgroundColor: Colors.red);
+      } catch (e) {
+        setState(() {
+          _state = 0;
+        });
+        Fluttertoast.showToast(
+            msg: "Error: ${e.message}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 4,
+            backgroundColor: Colors.red);
       }
     } else {
       setState(() {

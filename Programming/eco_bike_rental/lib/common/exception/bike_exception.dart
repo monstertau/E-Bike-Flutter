@@ -12,3 +12,7 @@ class BikeInUsedException extends BikeException {
 class InvalidBarcodeException extends BikeException {
   InvalidBarcodeException.init(String message) : super.init(message);
 }
+/// If try to return to a full bike dockstation this exception will be throw
+class ReturnToFullDockException extends BikeException{
+  ReturnToFullDockException.init(String message) : super.init(message);
+}
