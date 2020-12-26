@@ -33,15 +33,6 @@ class RentingController {
     Payment payment = await _paymentService.getPaymentInfo(rentalCode);
     return payment;
   }
-  ///Make a request of returning bike in which dock
-  bool requestReturnBike(DockStation dock) {
-    // TODO: implement this
-    return false;
-  }
-  ///Return a bike
-  void returnBike(DockStation dock, Bike bike) {
-    // TODO: implement this
-  }
   ///Generate a rental code in uuid form with timestamp
   ///* see more in [Uuid]
   String generateRentalCode() {

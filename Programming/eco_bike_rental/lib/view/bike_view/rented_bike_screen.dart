@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:eco_bike_rental/common/exception/server_exception.dart';
 import 'package:eco_bike_rental/controller/PaymentController.dart';
 import 'package:eco_bike_rental/model/Payment/Payment.dart';
 import 'package:eco_bike_rental/utils/Utils.dart';
@@ -23,6 +24,7 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
   Future<Payment> _payment;
   RentingController _rentingController = new RentingController();
   PaymentController _paymentController = new PaymentController();
+
   @override
   void initState() {
     super.initState();
@@ -117,7 +119,9 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
         _verticalDivider(),
         Expanded(child: _sessionItem("Time Rented", timeRented)),
         _verticalDivider(),
-        Expanded(child: _sessionItem("Rent Amount", "${Utils.numberFormat(rentingAmount)} VND")),
+        Expanded(
+            child: _sessionItem(
+                "Rent Amount", "${Utils.numberFormat(rentingAmount)} VND")),
       ],
     );
   }
@@ -133,10 +137,18 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
       body: _state == 0
           ? Center(child: Text("No rented bike yet."))
           : Container(
+              alignment: Alignment.center,
               child: SingleChildScrollView(
                 child: FutureBuilder(
                     future: _payment,
                     builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        if (snapshot.error is ServerException) {
+                          var error = snapshot.error as ServerException;
+                          return Text(error.message);
+                        }
+                        return Text(snapshot.error.toString());
+                      }
                       if (snapshot.connectionState == ConnectionState.done &&
                           snapshot.hasData != null) {
                         Payment payment = snapshot.data;
@@ -164,7 +176,8 @@ class _RentedBikeScreenState extends State<RentedBikeScreen> {
                             SectionBanner(title: "SESSION SUMMARY"),
                             _sessionDetail(payment.bike.showBattery(),
                                 _formatDateTime(rentTime), rentingAmount),
-                            Container(margin: EdgeInsets.only(bottom: 15,top: 15)),
+                            Container(
+                                margin: EdgeInsets.only(bottom: 5, top: 5)),
                             FlatButton(
                                 onPressed: () {
                                   payment.rentAmount = rentingAmount;
