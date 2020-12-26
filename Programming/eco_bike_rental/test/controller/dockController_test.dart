@@ -24,7 +24,7 @@ void main() {
 
     test('get all docks test', () async {
       // Setup
-      List<DockStation> expected, actual;
+      List expected, actual;
       DockController dockController = new DockController();
       // Implement
       try {
@@ -34,7 +34,7 @@ void main() {
         expect(e, null);
       }
       // Verify
-      expect(actual, expected);
+      expect(actual.length, expected.length);
     });
   });
 }
