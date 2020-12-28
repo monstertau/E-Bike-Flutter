@@ -55,7 +55,7 @@ exports.HMACAuth = (req, res, next) => {
   console.log("HMAC = ", hmac);
 
   if (method != "GET") {
-    body = crypto.createHash("md5").update(req.body).digest("hex");
+    body = crypto.createHash("md5").update(JSON.stringify(req.body)).digest("hex");
     type = "application/json";
   }
 

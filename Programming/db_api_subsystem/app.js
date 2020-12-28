@@ -104,19 +104,19 @@ app.get("/test", dockController.test);
 app.get("/dock/get-all", dockController.getAll);
 app.get("/dock/get-detail", dockController.getDetail);
 
-app.get("/bike/search", bikeController.search);
-app.get("/bike/lock-bike", bikeController.lockBike);
-app.get("/bike/unlock-bike", bikeController.unlockBike);
-app.post("/bike/return-to-dock", bikeController.returnToDock);
+app.get("/bike/search",HMACAuth ,bikeController.search);
+app.get("/bike/lock-bike",HMACAuth, bikeController.lockBike);
+app.get("/bike/unlock-bike",HMACAuth, bikeController.unlockBike);
+app.post("/bike/return-to-dock",HMACAuth, bikeController.returnToDock);
 
-app.get("/card/check-locked", cardController.checkLock);
-app.post("/card/search-or-create", cardController.searchAndCreateCard);
-app.get("/card/lock-card",cardController.lockCard)
-app.get("/card/unlock-card",cardController.unlockCard)
+app.get("/card/check-locked",HMACAuth, cardController.checkLock);
+app.post("/card/search-or-create",HMACAuth, cardController.searchAndCreateCard);
+app.get("/card/lock-card",HMACAuth,cardController.lockCard)
+app.get("/card/unlock-card",HMACAuth,cardController.unlockCard)
 
-app.post("/payment/create", paymentController.createPayment);
-app.post("/payment/search", paymentController.searchPayment);
-app.post("/payment/update", paymentController.updatePayment);
+app.post("/payment/create",HMACAuth, paymentController.createPayment);
+app.post("/payment/search",HMACAuth, paymentController.searchPayment);
+app.post("/payment/update",HMACAuth, paymentController.updatePayment);
 /**
  * Error Handler.
  */
